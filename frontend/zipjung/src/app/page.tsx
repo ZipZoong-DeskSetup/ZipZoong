@@ -1,6 +1,7 @@
 import "@/styles/reset.css";
 
 export default function Page() {
+  
   return (
     <>
     <h1>zipjung</h1>
