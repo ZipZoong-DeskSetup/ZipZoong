@@ -1,10 +1,11 @@
 import "@/styles/reset.css";
+import Header from "@/components/Common/Header";
 
 export default function Page() {
   
   return (
     <>
-    <h1>zipjung</h1>
+    <Header></Header>
     </>
   );
 }
