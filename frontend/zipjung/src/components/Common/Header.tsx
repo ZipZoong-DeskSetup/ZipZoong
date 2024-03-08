@@ -26,25 +26,27 @@ function Header() {
 
             <div className={styles.Navbar}>
 
-                <Link href="./survey">추천</Link> 
+                <a href="./survey">추천</a> 
 
-                <Link href="./board">게시판</Link> 
+                <a href="./board">게시판</a> 
 
                 {isLogin ?
                     <div className={styles.Logout}>
                         <div >
-                            {userName} 님
+                            <a href="./mypage">{userName} 님</a>
                             <button onClick={toggleDropdown} id="dropdownButton">
                                 <IoIosArrowDown />
                             </button>
                         </div>
                         <div className={styles.LogoutToggle}>
                             {isDropdownOpen && (
-                                <button onClick={() => setIsLogin(false)}>로그아웃</button>
-                            )}
+                                <div className={styles.LogoutToggleContents}>
+                                    <button onClick={() => setIsLogin(false)}>로그아웃</button>
+                                </div>
+                                )}
                         </div>
                     </div>
-                    : <Link href="./user/login">로그인</Link>}
+                    : <a href="./user/login">로그인</a>}
                 <Image
                     src="/Images/person.png"
                     width={40}
