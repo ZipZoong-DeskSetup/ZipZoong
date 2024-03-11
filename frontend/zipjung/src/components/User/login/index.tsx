@@ -13,7 +13,7 @@ function Form() {
         },
         {
             id: '2',
-            link: `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&state=STATE_STRING`,
+            link: `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&state=sdwirnsfk4563&redirect_uri=http://localhost:3000`,
             image: '/images/LoginNaverButton.png',
         },
         {
@@ -34,7 +34,7 @@ function Form() {
             />
             <div className={styles.loginText}>Login</div>
             <div className={styles.loginContent}>소셜 계정으로 쉽게 로그인하세요.</div>
-            <div className={styles.loginButtons}>
+            <div className={styles.loginButtons}>       
                 {loginlinks.map(({ id, link, image }) => <LoginButton key={id} loginLink={link} loginImg={image} />)}
             </div>
         </div>

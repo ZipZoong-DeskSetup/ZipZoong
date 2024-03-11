@@ -1,6 +1,8 @@
+import styles from '@/components/Common/PhotoUpload.module.scss'
+
 function PhotoUpload() {
     return (
-        <div>
+        <div className={styles.photoUpload}>
             사진
         </div>
     )
