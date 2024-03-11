@@ -21,8 +21,10 @@ function Form() {
                 />
             </a>
             <div className={styles.signUpTitle}>사용하실 닉네임을 입력해주세요.</div>
-            <PhotoUpload />
-            <NicknameInput />
+            <div className={styles.signUpInfo}>
+                <PhotoUpload />
+                <NicknameInput />
+            </div>
             <MoveRecommend address={address} detail={detail} styleName={styleName} />
         </div>
     )
