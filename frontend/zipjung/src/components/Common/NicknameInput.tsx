@@ -6,7 +6,6 @@ import useDebounce from '@/hooks/useDebounce';
 import axios from 'axios';
 
 function NicknameInput() {
-    //TODO: 서버 연결까지 합시다~!!!
 
     const { ZustandNickname, setZustandNickname } = useUserInfoStore();
 
@@ -15,8 +14,8 @@ function NicknameInput() {
     useEffect(() => {
         const checkNickname = async () => {
             try {
-                const response = await axios.get<boolean>('/api/check-nickname', { params: { nickname: ZustandNickname } });
-                setIscheckNickname(response.data);
+                const response = await axios.get<boolean>(`${process.env.NEXT_PUBLIC_BASE_URL}/nickname/check/${ZustandNickname}`);
+                // setIscheckNickname(response.data.isAvailable);
             } catch (error) {
                 console.error('닉네임 중복 확인 중 오류 발생', error);
                 setIscheckNickname(false);

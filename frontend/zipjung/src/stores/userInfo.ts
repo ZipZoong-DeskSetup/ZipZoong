@@ -6,7 +6,7 @@ import { UserInfo } from "@/types/UserInfo";
 interface IUserInfoStore {
     ZustandNickname?: UserInfo['nickname'];
     setZustandNickname: (newNickname: string) => void;
-    ZustandImageUrl?: UserInfo['imageUrl'];
+    ZustandImageUrl: UserInfo['imageUrl'];
     setZustandImageUrl: (newImageUrl: string) => void;
 }
 
@@ -16,10 +16,9 @@ const useUserInfoStore = create<IUserInfoStore>()(
             ZustandNickname: undefined,
             setZustandNickname: (newNickname: string) =>
                 set({ ZustandNickname: newNickname }),
-            ZustandImageUrl: undefined,
+            ZustandImageUrl: '/Images/profileImg.png',
             setZustandImageUrl: (newImageUrl: string) =>
                 set({ ZustandImageUrl: newImageUrl }),
-
         }),
         {
             name: 'UserInfo',

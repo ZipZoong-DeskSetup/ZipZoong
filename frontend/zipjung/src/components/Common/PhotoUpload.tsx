@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useState, useRef } from 'react'
 import { BiBorderRadius } from 'react-icons/bi';
 
-function PhotoUpload() {
+function PhotoUpload({ firstImg, setFirstImg }: { firstImg: string | null, setFirstImg: React.Dispatch<React.SetStateAction<string | null>> }) {
     // // selectedFile의 타입을 File | null로 변경
     // const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -21,6 +21,7 @@ function PhotoUpload() {
     const imgRef = useRef<HTMLInputElement>(null);
 
 
+
     // 이미지 업로드 input의 onChange
     const saveImgFile = () => {
         if (imgRef.current && imgRef.current.files && imgRef.current.files[0]) {
@@ -30,6 +31,7 @@ function PhotoUpload() {
             reader.onloadend = () => {
                 if (typeof reader.result === 'string') {
                     setImgFile(reader.result);
+                    setFirstImg(reader.result);
                 }
             };
         }
