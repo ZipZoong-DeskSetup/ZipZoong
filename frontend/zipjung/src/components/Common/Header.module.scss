@@ -24,6 +24,12 @@
     font-weight: 600;
 }
 
+.Logoutdiv{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
 .Logout{
    position: relative;
 }
@@ -33,3 +39,6 @@
     top: 25px;
 }
 
+.profileImg {
+    border-radius: 100px;
+}

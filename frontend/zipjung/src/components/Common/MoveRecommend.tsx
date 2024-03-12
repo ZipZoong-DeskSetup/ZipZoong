@@ -1,11 +1,10 @@
 import Link from 'next/link'
+import styles from '@/components/Common/MoveRecommend.module.scss';
 
-const MoveRecommend = ({detail, address}: {detail: string, address: string}) => {
-    // const address: string = "/recommend";
-    // const detail: string = "설명";
-
-
-    return(<Link href = {address}><button>{detail}</button></Link>);
+function MoveRecommend({detail, address, styleName}: {detail: string, address: string, styleName: string}) {
+    return (
+        <a href = {address}><button className={styles[styleName]}>{detail}</button></a>
+    )
 }
 
 export default MoveRecommend;
