@@ -1,0 +1,49 @@
+.container {
+    // display: flex;
+    // flex-direction: column;
+    position: absolute;
+    z-index: 999;
+    left: 50%;
+    top: 50%;
+    width: 300px;
+    height: 130px;
+    transform: translate(-50%, -50%);
+  
+    padding: 8px 8px;
+    border-radius: 10px;
+  
+    background: #fff;
+}
+
+.Header{
+    display:flex;
+    flex-direction: row-reverse;
+}
+
+.Body{
+    height: 80%;
+    width: 100%;
+    display: flex;
+}
+.content{
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+}
+.shadow{
+    position: fixed;
+    top: 0;
+    left: 0;
+    
+    width: 100%;
+    height: 100%;
+    
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 998;
+}
+
+.modalImg{
+    width: 24px;
+    height: 24px;
+}
