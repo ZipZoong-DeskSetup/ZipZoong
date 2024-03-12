@@ -25,13 +25,15 @@ function Form() {
 
     return (
         <div className={styles.login}>
-            <Image
-                src="/images/zipjung_logo.png"
-                width={150}
-                height={80}
-                alt='zipjung_logo'
-                className={styles.logo}
-            />
+            <a href="/">
+                <Image
+                    src="/images/zipjung_logo.png"
+                    width={150}
+                    height={80}
+                    alt='zipjung_logo'
+                    className={styles.logo}
+                />
+            </a>
             <div className={styles.loginText}>Login</div>
             <div className={styles.loginContent}>소셜 계정으로 쉽게 로그인하세요.</div>
             <div className={styles.loginButtons}>       
