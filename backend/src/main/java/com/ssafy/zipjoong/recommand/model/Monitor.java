@@ -28,12 +28,13 @@ public class Monitor extends Product {
     private String monitorAspectRatio;
 
     // 주사율
-    private String monitorRefreshRate;
+    private Integer monitorRefreshRate;
 
     // 패널 종류
     @Enumerated(EnumType.STRING)
     private MonitorPanelType monitorPanelType;
 
     // 패널 형태
+    @Enumerated(EnumType.STRING)
     private MonitorPanelFormType monitorPanelForm;
 }
