@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from '@/components/Recommend/RecommendImgList.module.scss'
+import styles from '@/components/Common/Recommend/RecommendImgList.module.scss'
 
 function RecommendImgList ({monitorImg, keyboardImg, mouseImg} : {monitorImg:string, keyboardImg:string, mouseImg:string}) {
     

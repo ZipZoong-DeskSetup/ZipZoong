@@ -19,3 +19,19 @@
     font-size: 20px;
     font-weight: bold;
 }
+
+.ImgPrice{
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    
+}
+
+.BtnPrice {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}

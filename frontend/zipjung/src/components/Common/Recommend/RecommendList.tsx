@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Hardware, MonitorDetail, KeyboardDetail, MouseDetail } from '@/types/Recommendation';
-import styles from '@/components/Recommend/RecommendList.module.scss'
+import styles from '@/components/Common/Recommend/RecommendList.module.scss'
 
 interface RecommendListProps {
     item: Hardware;
