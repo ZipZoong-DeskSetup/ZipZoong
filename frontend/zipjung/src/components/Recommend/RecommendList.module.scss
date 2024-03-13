@@ -1,0 +1,42 @@
+.recommendList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.productDiv1 {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.productDiv2 {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.productTitle{
+    font-size: 15px;
+    font-weight: bold;
+    color: #696B73;
+}
+
+.productModel{
+    font-size: 15px;
+}   
+
+.productPrice{
+    font-size: 22px;
+    font-weight: bold;
+    color: #696B73;
+}
+
+.monitorDiv{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
