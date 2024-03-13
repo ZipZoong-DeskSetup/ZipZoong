@@ -30,9 +30,6 @@ public class Keyboard extends Product {
     // led 색상
     private String keyboardLed;
 
-    // 배열
-    private String keyboardLayout;
-
     // 색상
     private String keyboardColor;
 

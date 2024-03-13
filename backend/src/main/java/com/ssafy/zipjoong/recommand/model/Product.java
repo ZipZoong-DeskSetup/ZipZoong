@@ -31,4 +31,7 @@ public abstract class Product {
 
     // 제조사
     private String productBrand;
+
+    // 제품 주소
+    private String productUrl;
 }
