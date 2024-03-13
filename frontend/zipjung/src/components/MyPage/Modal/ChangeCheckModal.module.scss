@@ -1,6 +1,4 @@
 .container {
-    // display: flex;
-    // flex-direction: column;
     position: absolute;
     z-index: 999;
     left: 50%;
@@ -26,10 +24,13 @@
     display: flex;
 }
 .content{
+    // background-color: red;
     display: flex;
     width: fit-content;
     height: fit-content;
     margin: auto;
+    padding: 0px 10px 0px 0px;
+    font-size: 16px;
 }
 .shadow{
     position: fixed;
@@ -46,4 +47,5 @@
 .modalImg{
     width: 24px;
     height: 24px;
+    margin-top: 3px;
 }

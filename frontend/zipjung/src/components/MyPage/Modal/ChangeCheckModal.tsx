@@ -1,10 +1,10 @@
 import styles from "@/components/MyPage/Modal/ChangeCheckModal.module.scss";
 import { AiOutlineClose } from "react-icons/ai";
 
-const ChangeCheckModal = ({contents, isOpen, onClose, ModalImg}: {contents: string, isOpen: boolean, onClose: () => void, ModalImg: string }) => {
+const ChangeCheckModal = ({contents, isOpen, onClose, ModalImg}: {contents: JSX.Element, isOpen: boolean, onClose: () => void, ModalImg: string }) => {
 
     if(!isOpen)return null;
-
+    
     return(
         <div>
             <div className = {styles.container}>
