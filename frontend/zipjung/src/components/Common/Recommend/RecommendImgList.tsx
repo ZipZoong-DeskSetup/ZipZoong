@@ -11,6 +11,7 @@ function RecommendImgList ({monitorImg, keyboardImg, mouseImg} : {monitorImg:str
                 height={120}
                 alt="모니터이미지"
                 className={styles.productImg}
+                priority
             />
             <Image 
                 src={keyboardImg}
@@ -18,6 +19,7 @@ function RecommendImgList ({monitorImg, keyboardImg, mouseImg} : {monitorImg:str
                 height={120}
                 alt="키보드이미지"
                 className={styles.productImg}
+                priority
             />
             <Image 
                 src={mouseImg}
@@ -25,6 +27,7 @@ function RecommendImgList ({monitorImg, keyboardImg, mouseImg} : {monitorImg:str
                 height={120}
                 alt="마우스이미지"
                 className={styles.productImg}
+                priority
             />
         </div>
     );
