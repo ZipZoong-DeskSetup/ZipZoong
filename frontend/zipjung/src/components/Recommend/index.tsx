@@ -129,7 +129,7 @@ function Form() {
                         </div>
                         <div className={styles.toggleButton}>
                             <button onClick={() => toggleDropdown(item.id)} id="dropdownButton">
-                                <TiArrowSortedDown />
+                                <TiArrowSortedDown className={styles.toggleBtn}/>
                             </button>
                         </div>
                         {openDropdownId === item.id && (
