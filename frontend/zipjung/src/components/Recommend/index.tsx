@@ -18,18 +18,21 @@ function Form() {
         {
             id: 1,
             monitor: [{
+                id: 1,
                 model: '모니터이름',
                 detail: '모니터상세',
                 img: '/Images/monitor.png',
                 price: 10000,
             }],
             keyboard: {
+                id: 2,
                 model: '키보드이름',
                 detail: '키보드상세',
                 img: '/Images/keyboard.png',
                 price: 10000,
             },
             mouse: {
+                id: 3,
                 model: '마우스이름',
                 detail: '마우스상세',
                 img: '/Images/mouse.png',
@@ -39,24 +42,28 @@ function Form() {
         {
             id: 2,
             monitor: [{
+                id: 1,
                 model: '모니터이름1',
                 detail: '모니터상세',
                 img: '/Images/monitor.png',
                 price: 10000,
             },
             {
+                id: 2,
                 model: '모니터이름2',
                 detail: '모니터상세',
                 img: '/Images/monitor.png',
                 price: 10000,
             }],
             keyboard: {
+                id: 1,
                 model: '키보드이름',
                 detail: '키보드상세',
                 img: '/Images/keyboard.png',
                 price: 10000,
             },
             mouse: {
+                id: 2,
                 model: '마우스이름',
                 detail: '마우스상세',
                 img: '/Images/mouse.png',

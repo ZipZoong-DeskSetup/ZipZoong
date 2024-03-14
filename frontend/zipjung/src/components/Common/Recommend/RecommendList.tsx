@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Hardware, MonitorDetail, KeyboardDetail, MouseDetail } from '@/types/Recommendation';
+import ProductLikeButton from '@/components/Common/Recommend/ProductLikeButton';
 import styles from '@/components/Common/Recommend/RecommendList.module.scss'
 
 interface RecommendListProps {
@@ -23,7 +24,10 @@ const RecommendList: React.FC<RecommendListProps> = ({ item }) => {
                     <div className={styles.productTitle}>{title}</div>
                     <div className={styles.productModel}>{monitorItem.model}</div>
                 </div>
-                <div className={styles.productPrice}>{monitorItem.price}</div>
+                <div className={styles.PriceBtn}>
+                    <div className={styles.productPrice}>{monitorItem.price}</div>
+                    <ProductLikeButton key={monitorItem.model} itemId={monitorItem.id} />
+                </div>
                 <hr />
             </div>
         ));
@@ -40,7 +44,10 @@ const RecommendList: React.FC<RecommendListProps> = ({ item }) => {
                 <div className={styles.productTitle}>{title}</div>
                 <div className={styles.productModel}>{product.model}</div>
             </div>
-            <div className={styles.productPrice}>{product.price}</div>
+            <div className={styles.PriceBtn}>
+                <div className={styles.productPrice}>{product.price}</div>
+                <ProductLikeButton key={product.id} itemId={product.id} />
+            </div>
             <hr />
         </div>
     );
