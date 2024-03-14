@@ -1,4 +1,5 @@
 interface MonitorDetail {
+    id: number;
     model: string;
     detail: string;
     img: string;
@@ -6,6 +7,7 @@ interface MonitorDetail {
 }
 
 interface KeyboardDetail {
+    id: number;
     model: string;
     detail: string;
     img: string;
@@ -13,6 +15,7 @@ interface KeyboardDetail {
 }
 
 interface MouseDetail {
+    id: number;
     model: string;
     detail: string;
     img: string;
