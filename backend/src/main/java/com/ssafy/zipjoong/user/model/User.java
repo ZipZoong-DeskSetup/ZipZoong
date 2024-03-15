@@ -22,16 +22,17 @@ import java.util.List;
 @AllArgsConstructor
 public class User extends EntityDate {
     @Id
-    private Integer userId;
+    private String userId;
 
     // 닉네임
     private String userNickname;
 
-    // 이메일
-    private String userEmail;
-
     // 프로필 이미지
     private String userImg;
+
+    // 권한
+    @Enumerated(EnumType.STRING)
+    private UserRoleType userRole;
 
     // 삭제 여부
     private Boolean userIsDeleted;
