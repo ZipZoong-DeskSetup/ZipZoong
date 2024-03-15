@@ -22,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 public class User extends EntityDate {
     @Id
-    private Integer userId;
+    private String userId;
 
     // 닉네임
     private String userNickname;
