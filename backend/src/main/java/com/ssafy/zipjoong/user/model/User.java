@@ -30,6 +30,10 @@ public class User extends EntityDate {
     // 프로필 이미지
     private String userImg;
 
+    // 권한
+    @Enumerated(EnumType.STRING)
+    private UserRoleType userRole;
+
     // 삭제 여부
     private Boolean userIsDeleted;
 
