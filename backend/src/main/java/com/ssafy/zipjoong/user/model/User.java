@@ -3,6 +3,7 @@ package com.ssafy.zipjoong.user.model;
 import com.ssafy.zipjoong.board.model.Board;
 import com.ssafy.zipjoong.like.model.CombinationLike;
 import com.ssafy.zipjoong.like.model.ProductLike;
+import com.ssafy.zipjoong.recommand.model.Combination;
 import com.ssafy.zipjoong.util.model.EntityDate;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,10 +40,15 @@ public class User extends EntityDate {
     @OneToMany(mappedBy = "user")
     private List<Board> boards;
 
+    // 조합 목록
+    @OneToMany(mappedBy = "user")
+    private List<Combination> combinations;
+
     // 좋아요한 제품 목록
     @OneToMany(mappedBy = "user")
     private List<ProductLike> productLikes;
 
     @OneToMany(mappedBy = "user")
     private List<CombinationLike> combinationLikes;
+
 }
