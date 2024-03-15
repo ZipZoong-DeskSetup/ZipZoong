@@ -5,7 +5,7 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 import styles from '@/components/Common/Recommend/RecommendLikeButton.module.scss';
 
 
-function RecommendLikeButton({ itemId }: { itemId: number }) {
+function RecommendLikeButton({ itemId }: { itemId: number | undefined }) {
     const [isLiked, setIsLiked] = useState<boolean | null>(null);
     const [combinationId, setCombinationId] = useState<number | null>(null);
 
