@@ -27,9 +27,6 @@ public class User extends EntityDate {
     // 닉네임
     private String userNickname;
 
-    // 이메일
-    private String userEmail;
-
     // 프로필 이미지
     private String userImg;
 
