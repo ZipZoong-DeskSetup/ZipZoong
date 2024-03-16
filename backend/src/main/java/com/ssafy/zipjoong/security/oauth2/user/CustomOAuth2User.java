@@ -13,9 +13,9 @@ public class CustomOAuth2User implements OAuth2User {
     private Collection<? extends GrantedAuthority> authorities;
     private Map<String, Object> attributes;
 
-    public CustomOAuth2User(User user, Map<String, Object> attributes) {
+    public CustomOAuth2User(User user, Collection<? extends GrantedAuthority> authorities) {
         this.user = user;
-        this.attributes = attributes;
+        this.authorities = authorities;
     }
 
     public CustomOAuth2User(User user, Collection<? extends GrantedAuthority> authorities, Map<String, Object> attributes) {
