@@ -16,7 +16,7 @@ import java.io.PrintWriter;
 import java.util.Map;
 
 @Slf4j
-public class CommonLoginSuccessHandler implements AuthenticationSuccessHandler {
+public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         log.info("--------------------------- CommonLoginSuccessHandler ---------------------------");
