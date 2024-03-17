@@ -13,7 +13,7 @@ import java.io.PrintWriter;
 import java.util.Map;
 
 @Slf4j
-public class CommonLoginFailHandler implements AuthenticationFailureHandler {
+public class LoginFailHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         log.info("--------------------------- CommonLoginFailHandler ---------------------------");
