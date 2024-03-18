@@ -1,11 +1,9 @@
-import Form from "@/components/User/login";
-
+import Form from '@/components/User/login';
 
 export default function Page() {
-
-    return (
-        <>
-            <Form />
-        </>
-    );
-};
+  return (
+    <>
+      <Form />
+    </>
+  );
+}
