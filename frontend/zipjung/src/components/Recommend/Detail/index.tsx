@@ -18,6 +18,7 @@ function Form() {
                 <div>
                     <GoBackButton />
                 </div>
+                {ZustandRecommendDetail ? 
                 <div className={styles.detailDiv}>
                     <div className={styles.detailHead}>
                         <div className={styles.detailId}>
@@ -29,9 +30,10 @@ function Form() {
                         </div>
                     </div>
                     <div>
-                        <RecommendTotalImgList />
+                        <RecommendTotalImgList key={ZustandRecommendDetail?.id} carouselList={ZustandRecommendDetail}/>
                     </div>
                 </div>
+                : "조합을 선택하세요"}
 
             </div>
         </div>

@@ -4,6 +4,7 @@ interface MonitorDetail {
     detail: string;
     img: string;
     price: number;
+    link: string;
 }
 
 interface KeyboardDetail {
@@ -12,6 +13,7 @@ interface KeyboardDetail {
     detail: string;
     img: string;
     price: number;
+    link: string;
 }
 
 interface MouseDetail {
@@ -20,7 +22,9 @@ interface MouseDetail {
     detail: string;
     img: string;
     price: number;
+    link: string;
 }
+
 
 interface Hardware {
     id: number;
