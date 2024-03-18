@@ -5,6 +5,7 @@ import com.ssafy.zipjoong.security.jwt.exception.CustomJwtException;
 import com.ssafy.zipjoong.security.oauth2.user.CustomOAuth2User;
 import com.ssafy.zipjoong.user.model.User;
 import com.ssafy.zipjoong.user.model.UserRoleType;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -13,6 +14,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -22,6 +24,8 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
+@Component
+@Slf4j
 public class JwtUtils {
 
     public static String secretKey;
