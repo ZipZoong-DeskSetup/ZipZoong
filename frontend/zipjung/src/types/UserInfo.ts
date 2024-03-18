@@ -1,6 +1,6 @@
 interface UserInfo {
-    nickname: string;
-    imageUrl: string;
+  nickname: string;
+  imageUrl: string;
 }
 
-export type { UserInfo }
+export type {UserInfo};
