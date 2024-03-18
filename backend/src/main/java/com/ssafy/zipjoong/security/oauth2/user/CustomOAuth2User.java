@@ -2,13 +2,14 @@ package com.ssafy.zipjoong.security.oauth2.user;
 
 import com.ssafy.zipjoong.user.model.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomOAuth2User implements OAuth2User {
+public class CustomOAuth2User implements UserDetails, OAuth2User {
 
     private User user;
     private Collection<? extends GrantedAuthority> authorities;
@@ -33,6 +34,11 @@ public class CustomOAuth2User implements OAuth2User {
     }
 
     @Override
+    public String getName() {
+        return user.getUserNickname();
+    }
+
+    @Override
     public Map<String, Object> getAttributes() {
         return attributes;
     }
@@ -43,7 +49,32 @@ public class CustomOAuth2User implements OAuth2User {
     }
 
     @Override
-    public String getName() {
-        return user.getUserNickname();
+    public String getPassword() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return user.getUserId();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
