@@ -1,7 +1,6 @@
 package com.ssafy.zipjoong.board.model;
 
-import com.ssafy.zipjoong.like.model.CombinationLikeId;
-import com.ssafy.zipjoong.recommand.model.Product;
+import com.ssafy.zipjoong.product.model.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

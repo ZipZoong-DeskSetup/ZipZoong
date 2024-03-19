@@ -1,6 +1,6 @@
 package com.ssafy.zipjoong.like.model;
 
-import com.ssafy.zipjoong.recommand.model.Product;
+import com.ssafy.zipjoong.product.model.Product;
 import com.ssafy.zipjoong.user.model.User;
 import com.ssafy.zipjoong.util.model.EntityDate;
 import jakarta.persistence.*;
@@ -8,8 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter

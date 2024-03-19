@@ -1,5 +1,6 @@
 package com.ssafy.zipjoong.recommand.model;
 
+import com.ssafy.zipjoong.product.model.Product;
 import com.ssafy.zipjoong.util.model.EntityDate;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,11 +1,9 @@
-package com.ssafy.zipjoong.recommand.model;
+package com.ssafy.zipjoong.product.model;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -34,14 +32,14 @@ public class Mouse extends Product {
     private String mouseColor;
 
     // 무게
-    private Integer mouseWeight;
+    private Float mouseWeight;
 
     // 가로 길이
-    private Integer mouseWidth;
+    private Float mouseWidth;
 
     // 세로 길이
-    private Integer mouseLength;
+    private Float mouseLength;
 
     // 높이
-    private Integer mouseHeight;
+    private Float mouseHeight;
 }
