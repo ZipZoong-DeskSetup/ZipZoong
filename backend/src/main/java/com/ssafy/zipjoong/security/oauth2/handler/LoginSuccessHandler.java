@@ -1,4 +1,4 @@
-package com.ssafy.zipjoong.security.handler;
+package com.ssafy.zipjoong.security.oauth2.handler;
 
 import com.google.gson.Gson;
 import com.ssafy.zipjoong.security.jwt.utils.JwtConstants;

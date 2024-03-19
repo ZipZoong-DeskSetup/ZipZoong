@@ -1,7 +1,7 @@
 package com.ssafy.zipjoong.security.jwt.config;
 
-import com.ssafy.zipjoong.security.handler.LoginFailHandler;
-import com.ssafy.zipjoong.security.handler.LoginSuccessHandler;
+import com.ssafy.zipjoong.security.oauth2.handler.LoginFailHandler;
+import com.ssafy.zipjoong.security.oauth2.handler.LoginSuccessHandler;
 import com.ssafy.zipjoong.security.jwt.filter.JwtVerifyFilter;
 import com.ssafy.zipjoong.security.oauth2.service.OAuth2UserService;
 import lombok.RequiredArgsConstructor;
