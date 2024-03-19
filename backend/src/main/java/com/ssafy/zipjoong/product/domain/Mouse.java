@@ -48,4 +48,8 @@ public class Mouse extends Product {
     // 높이
     @Column(name="mouse_height")
     private Float mouseHeight;
+
+    // 소음 유무
+    @Column(name="mouse_is_sound")
+    private Boolean mouseIsSound;
 }
