@@ -1,4 +1,4 @@
-package com.ssafy.zipjoong.recommand.model;
+package com.ssafy.zipjoong.product.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
