@@ -16,6 +16,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "board")
 public class Board extends EntityDate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
