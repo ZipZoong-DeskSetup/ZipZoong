@@ -1,17 +1,16 @@
-package com.ssafy.zipjoong.user.model;
+package com.ssafy.zipjoong.user.domain;
 
-import com.ssafy.zipjoong.board.model.Board;
-import com.ssafy.zipjoong.like.model.CombinationLike;
-import com.ssafy.zipjoong.like.model.ProductLike;
+import com.ssafy.zipjoong.board.domain.Board;
+import com.ssafy.zipjoong.like.domain.CombinationLike;
+import com.ssafy.zipjoong.like.domain.ProductLike;
 import com.ssafy.zipjoong.recommand.model.Combination;
-import com.ssafy.zipjoong.util.model.EntityDate;
+import com.ssafy.zipjoong.util.domain.EntityDate;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity

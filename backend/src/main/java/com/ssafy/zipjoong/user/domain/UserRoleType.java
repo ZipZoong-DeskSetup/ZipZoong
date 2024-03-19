@@ -1,4 +1,4 @@
-package com.ssafy.zipjoong.user.model;
+package com.ssafy.zipjoong.user.domain;
 
 public enum UserRoleType {
     ROLE_USER

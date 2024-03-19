@@ -1,6 +1,6 @@
-package com.ssafy.zipjoong.board.model;
+package com.ssafy.zipjoong.board.domain;
 
-import com.ssafy.zipjoong.product.model.Product;
+import com.ssafy.zipjoong.product.domain.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

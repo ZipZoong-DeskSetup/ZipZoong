@@ -1,8 +1,8 @@
-package com.ssafy.zipjoong.like.model;
+package com.ssafy.zipjoong.like.domain;
 
-import com.ssafy.zipjoong.product.model.Product;
-import com.ssafy.zipjoong.user.model.User;
-import com.ssafy.zipjoong.util.model.EntityDate;
+import com.ssafy.zipjoong.product.domain.Product;
+import com.ssafy.zipjoong.user.domain.User;
+import com.ssafy.zipjoong.util.domain.EntityDate;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

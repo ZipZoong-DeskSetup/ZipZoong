@@ -1,4 +1,4 @@
-package com.ssafy.zipjoong.util.model;
+package com.ssafy.zipjoong.util.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

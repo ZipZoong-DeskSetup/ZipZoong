@@ -1,4 +1,4 @@
-package com.ssafy.zipjoong.like.model;
+package com.ssafy.zipjoong.board.domain;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
@@ -8,12 +8,13 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+
 @Getter
 @Builder
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
-public class CombinationLikeId implements Serializable {
-    private String userId;
-    private Long combinationId;
+public class BoardProductId implements Serializable {
+    private Integer productId;
+    private Integer boardId;
 }
