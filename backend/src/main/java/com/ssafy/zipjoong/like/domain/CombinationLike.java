@@ -30,6 +30,7 @@ public class CombinationLike extends EntityDate {
     @JoinColumn(name = "combination_id")
     private Combination combination;
 
+    @Column(name="combination_like_is_deleted")
     private Boolean combinationLikeIsDeleted;
 
 }
