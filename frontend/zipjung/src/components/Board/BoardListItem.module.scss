@@ -1,0 +1,24 @@
+.ListItem{
+    width: 250px;
+    height: 300px;
+    border: 1px #292D32 solid;
+    box-shadow : 2px 2px #292D32;
+    padding: 20px;
+}
+
+.Head{
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    align-items: center;
+}
+
+.Content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%;
+}
