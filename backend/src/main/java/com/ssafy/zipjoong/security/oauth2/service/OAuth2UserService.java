@@ -34,11 +34,16 @@ public class OAuth2UserService  extends DefaultOAuth2UserService {
 
         OAuth2UserInfo oAuth2UserInfo = null;
 
+
+
         if(registrationId.equals("kakao")) {
             oAuth2UserInfo = new KakaoOAuth2UserInfo(attributes);
+        } else if(registrationId.equals("google")) {
+            oAuth2UserInfo = new GoogleOAuth2UserInfo(attributes);
         } else {
             return null;
         }
+
 
         // 리소스 서버에서 발급받은 정보로 userId 생성
         String userId = oAuth2UserInfo.getProvider() + " " + oAuth2UserInfo.getProviderId();
