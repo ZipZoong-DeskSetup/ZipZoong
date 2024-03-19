@@ -1,6 +1,6 @@
 package com.ssafy.zipjoong.security.oauth2.user;
 
-import com.ssafy.zipjoong.user.model.User;
+import com.ssafy.zipjoong.user.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;

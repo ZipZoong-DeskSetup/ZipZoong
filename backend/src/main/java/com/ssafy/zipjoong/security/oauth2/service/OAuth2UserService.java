@@ -1,12 +1,9 @@
 package com.ssafy.zipjoong.security.oauth2.service;
 
-import com.ssafy.zipjoong.security.oauth2.user.CustomOAuth2User;
-import com.ssafy.zipjoong.security.oauth2.user.KakaoOAuth2UserInfo;
-import com.ssafy.zipjoong.security.oauth2.user.OAuth2UserInfo;
-import com.ssafy.zipjoong.user.model.User;
-import com.ssafy.zipjoong.user.model.UserRoleType;
+import com.ssafy.zipjoong.security.oauth2.user.*;
+import com.ssafy.zipjoong.user.domain.User;
+import com.ssafy.zipjoong.user.domain.UserRoleType;
 import com.ssafy.zipjoong.user.repository.UserRepository;
-import com.ssafy.zipjoong.util.model.EntityDate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
