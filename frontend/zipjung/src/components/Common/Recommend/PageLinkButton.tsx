@@ -1,15 +1,20 @@
-import { FiSend } from "react-icons/fi";
+import {FiSend} from 'react-icons/fi';
 import styles from '@/components/Common/Recommend/PageLinkButton.module.scss';
 
 interface PageLinkButtonProps {
-    itemLink: string;
+  itemLink: string;
 }
 
-const PageLinkButton: React.FC<PageLinkButtonProps> = ({ itemLink }) => {
-    return (
-        <button onClick={() => window.location.href = itemLink}><FiSend className={styles.linkBtn}/></button>
-    );
-}
+const PageLinkButton: React.FC<PageLinkButtonProps> = ({itemLink}) => {
+  const handleClick = () => {
+    window.location.href = itemLink;
+  };
 
+  return (
+    <button onClick={handleClick}>
+      <FiSend className={styles.linkBtn} />
+    </button>
+  );
+};
 
-export default PageLinkButton
+export default PageLinkButton;
