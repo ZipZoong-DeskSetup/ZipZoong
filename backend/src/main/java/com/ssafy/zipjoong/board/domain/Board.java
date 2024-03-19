@@ -1,14 +1,13 @@
-package com.ssafy.zipjoong.board.model;
+package com.ssafy.zipjoong.board.domain;
 
-import com.ssafy.zipjoong.user.model.User;
-import com.ssafy.zipjoong.util.model.EntityDate;
+import com.ssafy.zipjoong.user.domain.User;
+import com.ssafy.zipjoong.util.domain.EntityDate;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -16,26 +15,31 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "board")
 public class Board extends EntityDate {
     @Id
+    @Column(name = "board_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer boardId;
 
     // 제목
-    @Column(length = 200)
+    @Column(name = "board_title", length = 200)
     private String boardTitle;
 
     // 내용
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "board_content", columnDefinition = "TEXT")
     private String boardContent;
 
     // 조회수
+    @Column(name="board_hit")
     private Integer boardHit;
 
     // 임시저장 여부
+    @Column(name="board_is_draft")
     private Boolean boardIsDraft;
 
     // 삭제 여부
+    @Column(name="board_is_deleted")
     private Boolean boardIsDeleted;
 
     // 작성자

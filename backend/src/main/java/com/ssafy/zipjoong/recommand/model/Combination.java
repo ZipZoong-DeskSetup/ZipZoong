@@ -1,7 +1,7 @@
 package com.ssafy.zipjoong.recommand.model;
 
-import com.ssafy.zipjoong.user.model.User;
-import com.ssafy.zipjoong.util.model.EntityDate;
+import com.ssafy.zipjoong.user.domain.User;
+import com.ssafy.zipjoong.util.domain.EntityDate;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,12 +15,15 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "combination")
 public class Combination extends EntityDate {
     @Id
+    @Column(name="combination_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long combinationId;
 
     // 조합 가격
+    @Column(name="combination_price")
     private Integer combinationPrice;
 
     // 조합 목록

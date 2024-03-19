@@ -1,5 +1,6 @@
-package com.ssafy.zipjoong.like.model;
+package com.ssafy.zipjoong.like.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CombinationLikeId implements Serializable {
-    private Integer userId;
+    @Column(name="user_id")
+    private String userId;
+    
+    @Column(name="combination_id")
     private Long combinationId;
 }

@@ -1,6 +1,7 @@
 package com.ssafy.zipjoong.recommand.model;
 
-import com.ssafy.zipjoong.util.model.EntityDate;
+import com.ssafy.zipjoong.product.domain.Product;
+import com.ssafy.zipjoong.util.domain.EntityDate;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,5 +28,6 @@ public class CombinationProduct extends EntityDate {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @Column(name="combination_product_num")
     private Integer combinationProductNum;
 }

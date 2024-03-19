@@ -1,11 +1,6 @@
-package com.ssafy.zipjoong.recommand.model;
+package com.ssafy.zipjoong.product.domain;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -17,31 +12,40 @@ import lombok.experimental.SuperBuilder;
 @DiscriminatorValue("MOUSE")
 public class Mouse extends Product {
     // 연결 방식
+    @Column(name="mouse_connect")
     @Enumerated(EnumType.STRING)
     private ConnectionType mouseConnect;
 
     // 연결 인터페이스 (bluetooth, receiver 등)
+    @Column(name="mouse_interface")
     @Enumerated(EnumType.STRING)
     private InterfaceType mouseInterface;
 
     // 종류
+    @Column(name="mouse_type")
     private String mouseType;
 
     // 최대 dpi
+    @Column(name="mouse_dpi")
     private Integer mouseDpi;
 
     // 색상
+    @Column(name="mouse_color")
     private String mouseColor;
 
     // 무게
-    private Integer mouseWeight;
+    @Column(name="mouse_weight")
+    private Float mouseWeight;
 
     // 가로 길이
-    private Integer mouseWidth;
+    @Column(name="mouse_width")
+    private Float mouseWidth;
 
     // 세로 길이
-    private Integer mouseLength;
+    @Column(name="mouse_length")
+    private Float mouseLength;
 
     // 높이
-    private Integer mouseHeight;
+    @Column(name="mouse_height")
+    private Float mouseHeight;
 }

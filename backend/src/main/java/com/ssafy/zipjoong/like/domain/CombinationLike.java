@@ -1,15 +1,13 @@
-package com.ssafy.zipjoong.like.model;
+package com.ssafy.zipjoong.like.domain;
 
 import com.ssafy.zipjoong.recommand.model.Combination;
-import com.ssafy.zipjoong.user.model.User;
-import com.ssafy.zipjoong.util.model.EntityDate;
+import com.ssafy.zipjoong.user.domain.User;
+import com.ssafy.zipjoong.util.domain.EntityDate;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -32,6 +30,7 @@ public class CombinationLike extends EntityDate {
     @JoinColumn(name = "combination_id")
     private Combination combination;
 
+    @Column(name="combination_like_is_deleted")
     private Boolean combinationLikeIsDeleted;
 
 }

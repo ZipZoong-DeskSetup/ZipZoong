@@ -1,4 +1,4 @@
-package com.ssafy.zipjoong.recommand.model;
+package com.ssafy.zipjoong.product.domain;
 
 public enum MonitorPanelType {
     TN, IPS, VA, OLED
