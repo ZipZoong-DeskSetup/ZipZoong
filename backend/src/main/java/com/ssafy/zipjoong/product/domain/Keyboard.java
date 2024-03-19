@@ -1,4 +1,4 @@
-package com.ssafy.zipjoong.product.model;
+package com.ssafy.zipjoong.product.domain;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
