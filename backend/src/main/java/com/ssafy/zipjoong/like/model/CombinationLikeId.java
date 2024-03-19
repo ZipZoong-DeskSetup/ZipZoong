@@ -14,6 +14,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CombinationLikeId implements Serializable {
-    private Integer userId;
+    private String userId;
     private Long combinationId;
 }

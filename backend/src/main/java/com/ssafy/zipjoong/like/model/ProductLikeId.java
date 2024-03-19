@@ -11,6 +11,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductLikeId implements Serializable {
-    private Integer userId;
+    private String userId;
     private Integer productId;
 }
