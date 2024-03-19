@@ -1,5 +1,6 @@
 package com.ssafy.zipjoong.recommand.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CombinationProductId implements Serializable {
+    @Column(name="combination_id")
     private Long combinationId;
+    @Column(name="product_id")
     private Integer productId;
 }

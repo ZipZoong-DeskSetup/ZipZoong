@@ -14,26 +14,31 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "users")
 public class User extends EntityDate {
     @Id
+    @Column(name = "user_id")
     private String userId;
 
     // 닉네임
+    @Column(name = "user_nickname")
     private String userNickname;
 
     // 프로필 이미지
+    @Column(name = "user_img")
     private String userImg;
 
     // 권한
+    @Column(name = "user_role")
     @Enumerated(EnumType.STRING)
     private UserRoleType userRole;
 
     // 삭제 여부
+    @Column(name = "user_is_deleted")
     private Boolean userIsDeleted;
 
     // 게시글 목록

@@ -16,14 +16,16 @@ import lombok.NoArgsConstructor;
 @Table(name = "comment")
 public class Comment extends EntityDate {
     @Id
+    @Column(name="comment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
     // 내용
-    @Column(length = 500)
+    @Column(name = "comment_content", length = 500)
     private String commentContent;
 
     // 삭제여부
+    @Column(name="comment_is_deleted")
     private Boolean commentIsDeleted;
 
     // 작성자

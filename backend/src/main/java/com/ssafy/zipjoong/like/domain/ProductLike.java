@@ -32,5 +32,6 @@ public class ProductLike extends EntityDate {
     private Product product;
 
     // 좋아요 취소 여부
+    @Column(name="product_like_is_deleted")
     private Boolean productLikeIsDeleted;
 }

@@ -18,10 +18,12 @@ import java.util.List;
 @Table(name = "combination")
 public class Combination extends EntityDate {
     @Id
+    @Column(name="combination_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long combinationId;
 
     // 조합 가격
+    @Column(name="combination_price")
     private Integer combinationPrice;
 
     // 조합 목록

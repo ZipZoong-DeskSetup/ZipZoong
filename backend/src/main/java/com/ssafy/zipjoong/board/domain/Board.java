@@ -18,24 +18,28 @@ import java.util.List;
 @Table(name = "board")
 public class Board extends EntityDate {
     @Id
+    @Column(name = "board_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer boardId;
 
     // 제목
-    @Column(length = 200)
+    @Column(name = "board_title", length = 200)
     private String boardTitle;
 
     // 내용
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "board_content", columnDefinition = "TEXT")
     private String boardContent;
 
     // 조회수
+    @Column(name="board_hit")
     private Integer boardHit;
 
     // 임시저장 여부
+    @Column(name="board_is_draft")
     private Boolean boardIsDraft;
 
     // 삭제 여부
+    @Column(name="board_is_deleted")
     private Boolean boardIsDeleted;
 
     // 작성자

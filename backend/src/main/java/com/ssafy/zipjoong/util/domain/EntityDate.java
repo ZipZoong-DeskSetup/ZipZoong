@@ -16,12 +16,12 @@ import java.time.LocalDateTime;
 public abstract class EntityDate {
     // 생성일
     @CreatedDate
-    @Column(nullable = false, updatable = false)
+    @Column(name="create_at", nullable = false, updatable = false)
     private LocalDateTime createAt;
 
     // 수정일
     @LastModifiedDate
-    @Column(nullable = false, updatable = false)
+    @Column(name="update_at", nullable = false, updatable = false)
     private LocalDateTime updateAt;
 
 }

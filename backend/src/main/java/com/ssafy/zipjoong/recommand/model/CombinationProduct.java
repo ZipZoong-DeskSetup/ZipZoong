@@ -28,5 +28,6 @@ public class CombinationProduct extends EntityDate {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @Column(name="combination_product_num")
     private Integer combinationProductNum;
 }
