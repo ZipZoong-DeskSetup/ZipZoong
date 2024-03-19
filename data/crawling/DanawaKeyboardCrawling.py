@@ -285,38 +285,33 @@ for page in tqdm(range(1, total_page + 1)):
         driver.execute_script(move_script)
         time.sleep(2)
 
-# # DataFrame 생성 및 Excel 파일로 저장
-# data = pd.DataFrame(prod_data_total, columns=['KEYBOARD', 'product_name', 'company_name', 'prod_url', 'prod_img', 
-#                                               'prod_price', 'keyboard_connect', 'keyborad_interface', 'keyboard_contact','keyboard_num', 
-#                                               'keyboard_force', 'keyboard_form', 'keyboard_led', 'keyboard_swtich', 'keyboard_color'])
-# data.to_excel('./keyboard_final.xlsx', index=False)
 
 driver.close() # 브라우저 닫기
 
-# # MySQL에 저장
-# import mysql.connector
+# MySQL에 저장
+import mysql.connector
 
-# #MySQL 서버 연결 정보
-# config = {
+#MySQL 서버 연결 정보
+config = {
 
-# }
+}
 
-# # MySQL 서버에 연결
-# conn = mysql.connector.connect(**config)
+# MySQL 서버에 연결
+conn = mysql.connector.connect(**config)
 
-# # 커서 생성
-# cursor = conn.cursor()
+# 커서 생성
+cursor = conn.cursor()
 
-# # 데이터 삽입 쿼리
+# 데이터 삽입 쿼리
 
-# query = "INSERT INTO product (product_type, product_name, product_brand, product_url, product_img, product_price, keyboard_connect, keyboard_interface, keyboard_contact,keyboard_num, keyboard_force, keyboard_form, keyboard_led, keyboard_switch, keyboard_color) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+query = "INSERT INTO product (product_type, product_name, product_brand, product_url, product_img, product_price, keyboard_connect, keyboard_interface, keyboard_contact,keyboard_num, keyboard_force, keyboard_form, keyboard_led, keyboard_switch, keyboard_color) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
-# # 쿼리 실행
-# for data in prod_data_total:
-#     cursor.execute(query, data)
+# 쿼리 실행
+for data in prod_data_total:
+    cursor.execute(query, data)
 
-# # 변경 사항 커밋
-# conn.commit()
+# 변경 사항 커밋
+conn.commit()
 
-# # 연결 종료
-# conn.close()
+# 연결 종료
+conn.close()
