@@ -20,8 +20,15 @@
     
 }
 
-.BoardContent{
+.BoardContent {
+    width: 100%;
+}
+.BoardContentItem{
     display: flex;
-    gap: 50px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    width: 100%;
+    margin: auto;
+    gap: 50px; 
     margin-top: 50px;
 }

@@ -47,6 +47,50 @@ function Form() {
       boardCreatorImg: '/Images/person.png',
       boardCreatedAt: '20240320',
     },
+    {
+      boardId: 2,
+      boardTitle: '제목2',
+      boardContent: '내용2',
+      boardHit: 2,
+      boardIsDraft: false,
+      boardCreator: '닉네임',
+      boardCreatorId: 2,
+      boardCreatorImg: '/Images/person.png',
+      boardCreatedAt: '20240320',
+    },
+    {
+      boardId: 2,
+      boardTitle: '제목2',
+      boardContent: '내용2',
+      boardHit: 2,
+      boardIsDraft: false,
+      boardCreator: '닉네임',
+      boardCreatorId: 2,
+      boardCreatorImg: '/Images/person.png',
+      boardCreatedAt: '20240320',
+    },
+    {
+      boardId: 2,
+      boardTitle: '제목2',
+      boardContent: '내용2',
+      boardHit: 2,
+      boardIsDraft: false,
+      boardCreator: '닉네임',
+      boardCreatorId: 2,
+      boardCreatorImg: '/Images/person.png',
+      boardCreatedAt: '20240320',
+    },
+    {
+      boardId: 2,
+      boardTitle: '제목2',
+      boardContent: '내용2',
+      boardHit: 2,
+      boardIsDraft: false,
+      boardCreator: '닉네임',
+      boardCreatorId: 2,
+      boardCreatorImg: '/Images/person.png',
+      boardCreatedAt: '20240320',
+    },
   ];
 
   const [selectedTab, setSelectedTab] = useState<TabName>('all');
@@ -85,15 +129,17 @@ function Form() {
         <BoardHead selectedTab={selectedTab} onTabChange={handleTabChange} />
       </div>
       <div className={styles.BoardContent}>
-        {boardList.map((board, index) => (
-          <BoardListItem key={index} boardList={board} />
-        ))}
-        {BoardList.map(board => (
-          //   <BoardListItem key={board.boardId} boardList={board} />
-          <Link key={board.boardId} href={`/board/${board.boardId}`} passHref>
-            <BoardListItem boardList={board} />
-          </Link>
-        ))}
+        <div className={styles.BoardContentItem}>
+          {boardList.map((board, index) => (
+            <BoardListItem key={index} boardList={board} />
+          ))}
+          {BoardList.map(board => (
+            //   <BoardListItem key={board.boardId} boardList={board} />
+            <Link key={board.boardId} href={`/board/${board.boardId}`} passHref>
+              <BoardListItem boardList={board} />
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
