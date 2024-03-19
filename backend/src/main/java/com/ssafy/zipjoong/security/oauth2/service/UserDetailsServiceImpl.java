@@ -1,4 +1,4 @@
-package com.ssafy.zipjoong.security.service;
+package com.ssafy.zipjoong.security.oauth2.service;
 
 import com.ssafy.zipjoong.security.oauth2.user.CustomOAuth2User;
 import com.ssafy.zipjoong.user.repository.UserRepository;
