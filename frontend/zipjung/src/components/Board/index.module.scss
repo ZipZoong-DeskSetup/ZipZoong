@@ -1,0 +1,27 @@
+.BoardDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;    
+    margin: 20px;
+    padding: 30px;
+}
+.BoardTitle{
+    font-size: 30px;
+    font-weight: bolder;   
+}
+
+.BoardHead{
+    display: flex;
+    margin-top: 50px;
+    width: 100%;
+    gap: 50px;
+    border-bottom: 2px  solid black;
+    
+}
+
+.BoardContent{
+    display: flex;
+    gap: 50px;
+    margin-top: 50px;
+}

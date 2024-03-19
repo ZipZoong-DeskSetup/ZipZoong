@@ -1,0 +1,14 @@
+.head{
+    display: flex;
+    gap: 30px;
+    padding: 20px;
+}
+
+.tab{
+    font-size: 20px;
+}
+
+.active {
+    font-size: 20px;
+    font-weight: bold;
+  }
