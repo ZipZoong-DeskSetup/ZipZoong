@@ -1,7 +1,14 @@
-.head{
+.headDiv{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+}
+
+.headBtn{
     display: flex;
     gap: 30px;
-    padding: 20px;
 }
 
 .tab{
