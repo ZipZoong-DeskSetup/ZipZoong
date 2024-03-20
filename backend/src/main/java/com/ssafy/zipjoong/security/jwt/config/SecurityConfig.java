@@ -75,7 +75,9 @@ public class SecurityConfig {
         });
 
         httpSecurity.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
-                authorizationManagerRequestMatcherRegistry.anyRequest().permitAll());
+                authorizationManagerRequestMatcherRegistry
+                        .requestMatchers("/","/oauth2/login", "/recommend/**", "/survey/**", "/board/**").permitAll()
+                        .anyRequest().permitAll());
 
         httpSecurity.addFilterBefore(jwtVerifyFilter(), UsernamePasswordAuthenticationFilter.class);
 
