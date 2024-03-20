@@ -11,7 +11,9 @@ const PageName = styled.div`
   text-align: center;
   font-weight: 550;
   margin-bottom: 20px;
+  margin-top: 30px;
 `;
+
 const Form = () => {
   const [selectedMenu, setSelectedMenu] = useState<number>(0);
 
