@@ -1,7 +1,7 @@
 'use client';
 
 import axios from 'axios';
-import Link from 'next/link';
+// import Link from 'next/link';
 import {useState, useEffect} from 'react';
 import BoardHead from '@/components/Board/BoardHead';
 import BoardListItem from '@/components/Board/BoardListItem';
@@ -134,10 +134,8 @@ function Form() {
             <BoardListItem key={index} boardList={board} />
           ))}
           {BoardList.map(board => (
-            //   <BoardListItem key={board.boardId} boardList={board} />
-            <Link key={board.boardId} href={`/board/${board.boardId}`} passHref>
-              <BoardListItem boardList={board} />
-            </Link>
+            <BoardListItem key={board.boardId} boardList={board} />
+            // <BoardListItem boardList={board} />
           ))}
         </div>
       </div>
