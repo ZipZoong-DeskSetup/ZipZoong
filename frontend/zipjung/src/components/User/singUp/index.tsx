@@ -20,7 +20,7 @@ function Form() {
     <div className={styles.signUp}>
       <a href="/">
         <Image
-          src="/images/zipjung_logo.png"
+          src="/Images/zipjung_logo.png"
           width={150}
           height={80}
           alt="zipjung_logo"

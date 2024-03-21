@@ -7,17 +7,17 @@ function Form() {
     {
       id: '1',
       link: `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&response_type=code&scope=email profile`,
-      image: '/images/LoginGoogleButton.png',
+      image: '/Images/LoginGoogleButton.png',
     },
     {
       id: '2',
       link: `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&state=sdwirnsfk4563&redirect_uri=http://localhost:3000`,
-      image: '/images/LoginNaverButton.png',
+      image: '/Images/LoginNaverButton.png',
     },
     {
       id: '3',
       link: `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&response_type=code`,
-      image: '/images/LoginKakaoButton.png',
+      image: '/Images/LoginKakaoButton.png',
     },
   ];
 
@@ -25,7 +25,7 @@ function Form() {
     <div className={styles.login}>
       <a href="/">
         <Image
-          src="/images/zipjung_logo.png"
+          src="/Images/zipjung_logo.png"
           width={150}
           height={80}
           alt="zipjung_logo"
