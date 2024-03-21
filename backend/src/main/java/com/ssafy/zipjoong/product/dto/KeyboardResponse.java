@@ -5,10 +5,12 @@ import com.ssafy.zipjoong.product.domain.InterfaceType;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class KeyboardResponse extends ProductResponse{
     private ConnectionType connect;
