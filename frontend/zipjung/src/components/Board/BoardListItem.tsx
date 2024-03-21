@@ -1,5 +1,7 @@
 import Image from 'next/image';
+import {useRouter} from 'next/navigation';
 import styles from '@/components/Board/BoardListItem.module.scss';
+import useBoardStore from '@/stores/board';
 
 interface Board {
   boardId: number;
@@ -18,8 +20,16 @@ interface BoardListItemProps {
 }
 
 function BoardListItem({boardList}: BoardListItemProps) {
+  const router = useRouter();
+  const {setZustandBoardId} = useBoardStore();
+
+  const handleClick = () => {
+    setZustandBoardId(boardList.boardId);
+    router.push(`/board/${boardList.boardId}`);
+  };
+
   return (
-    <div className={styles.ListItem}>
+    <div className={styles.ListItem} onClick={handleClick}>
       <div className={styles.Head}>
         <Image
           src={boardList.boardCreatorImg}
