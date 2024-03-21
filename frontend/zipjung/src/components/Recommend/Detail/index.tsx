@@ -16,7 +16,7 @@ function Form() {
     <div className={styles.detailContains}>
       <div className={styles.detailContain}>
         <div>
-          <GoBackButton />
+          <GoBackButton text="이전" />
         </div>
         {ZustandRecommendDetail ? (
           <div className={styles.detailDiv}>

@@ -35,6 +35,7 @@ import {SelectAll} from '@ckeditor/ckeditor5-select-all';
 import {Table, TableToolbar} from '@ckeditor/ckeditor5-table';
 import {TextTransformation} from '@ckeditor/ckeditor5-typing';
 import {Undo} from '@ckeditor/ckeditor5-undo';
+import {mention} from '@ckeditor/ckeditor5-mention';
 
 // You can read more about extending the build with additional plugins in the "Installing plugins" guide.
 // See https://ckeditor.com/docs/ckeditor5/latest/installation/plugins/installing-plugins.html for details.
@@ -72,6 +73,7 @@ class Editor extends ClassicEditor {
     TableToolbar,
     TextTransformation,
     Undo,
+    Mention,
   ];
 
   public static override defaultConfig: EditorConfig = {
@@ -96,6 +98,8 @@ class Editor extends ClassicEditor {
         'mediaEmbed',
         'undo',
         'redo',
+        '|',
+        'mention',
       ],
     },
     language: 'ko',
