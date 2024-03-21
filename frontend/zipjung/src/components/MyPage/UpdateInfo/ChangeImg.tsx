@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-import {useState, useEffect, useRef} from 'react';
+// import {useState} from 'react';
+import {useEffect, useRef} from 'react';
 import Image from 'next/image';
 // import axios from 'axios';
 import styled from 'styled-components';
@@ -68,10 +69,10 @@ const Hidden = styled.div`
 const ChangeImg = ({pUserImg}: {pUserImg: string}) => {
   const {ZustandImageUrl, setZustandImageUrl} = useUserInfoStore();
   const imgRef = useRef<HTMLInputElement>(null);
-  const [presentImgUrl, setPresentImgUrl] = useState<string>(pUserImg);
-
+  // const [presentImgUrl, setPresentImgUrl] = useState<string>(pUserImg);
+  console.log(pUserImg);
   useEffect(() => {
-    setPresentImgUrl(ZustandImageUrl);
+    // setPresentImgUrl(ZustandImageUrl);
   }, [ZustandImageUrl]);
 
   const saveImgFile = () => {
@@ -79,10 +80,11 @@ const ChangeImg = ({pUserImg}: {pUserImg: string}) => {
     if (imgRef.current && imgRef.current.files && imgRef.current.files[0]) {
       const file = imgRef.current.files[0];
       const reader = new FileReader();
+      const imageUrl = URL.createObjectURL(file);
+      setZustandImageUrl(imageUrl);
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         if (typeof reader.result === 'string') {
-          setZustandImageUrl(reader.result);
           // TODO: 서버에도 저장
           // axios
           //   .post(`${process.env.NEXT_PUBLIC_BASE_URL}/profile`, {
@@ -106,7 +108,7 @@ const ChangeImg = ({pUserImg}: {pUserImg: string}) => {
         <Hidden></Hidden>
         <ProfileImageContainer>
           <ProfileImg
-            src={presentImgUrl}
+            src={ZustandImageUrl}
             alt="프로필 사진"
             width={200}
             height={200}
