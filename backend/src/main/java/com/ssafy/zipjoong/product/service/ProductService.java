@@ -18,9 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,28 +35,14 @@ public class ProductService {
                 .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
 
         // 제품 종류 체크 후 반환
-//        if(product instanceof Keyboard)
-//            return keyboardEntityToResponse((Keyboard) product);
-//        else if(product instanceof Monitor)
-//            return monitorEntityToResponse((Monitor) product);
-//        else if(product instanceof Mouse)
-//            return mouseEntityToResponse((Mouse) product);
+        if(product instanceof Keyboard)
+            return keyboardEntityToResponse((Keyboard) product);
+        else if(product instanceof Monitor)
+            return monitorEntityToResponse((Monitor) product);
+        else if(product instanceof Mouse)
+            return mouseEntityToResponse((Mouse) product);
 
         return productEntityToResponse(product);
-    }
-
-    public KeyboardResponse getKeyboard(int keyboardId){
-        Keyboard keyboard = keyboardRepository.findById(keyboardId)
-                .orElseThrow(() -> new ProductException(ProductErrorCode.KEYBOARD_NOT_FOUND));
-        return keyboardEntityToResponse(keyboard);
-    }
-
-    public List<Product> getAllProduct(){
-        return productRepository.findAll();
-    }
-
-    public List<Keyboard> getAllKeyboard(){
-        return keyboardRepository.findAll();
     }
 
     /* 키보드 페이징 조회 */
@@ -79,21 +63,6 @@ public class ProductService {
                 .orElseThrow(() -> new ProductException(ProductErrorCode.MOUSE_NOT_FOUND));
     }
 
-    public Keyboard registKeyboard(Keyboard keyboard){
-        System.out.println("keyboard : " + keyboard.toString());
-        keyboard = keyboardRepository.save(keyboard);
-//        System.out.println("keyboard : " + keyboard.toString());
-        return keyboard;
-    }
-    @Transactional
-    public void saveMonitor(Monitor monitor){
-        monitorRepository.save(monitor);
-    }
-    @Transactional
-    public void saveMouse(Mouse mouse){
-        mouseRepository.save(mouse);
-    }
-
     /* 제품 entity -> 제품 response(dto) */
     public ProductResponse productEntityToResponse(Product product){
         return ProductResponse.builder()
@@ -109,6 +78,7 @@ public class ProductService {
     /* 키보드 entity -> 키보드 response(dto) */
     public KeyboardResponse keyboardEntityToResponse(Keyboard keyboard){
         return KeyboardResponse.builder()
+                .category("KEYBOARD")
                 .id(keyboard.getProductId())
                 .name(keyboard.getProductName())
                 .price(keyboard.getProductPrice())
@@ -130,6 +100,7 @@ public class ProductService {
     /* 모니터 entity -> 모니터 response(dto) */
     public MonitorResponse monitorEntityToResponse(Monitor monitor){
         return MonitorResponse.builder()
+                .category("MONITOR")
                 .id(monitor.getProductId())
                 .name(monitor.getProductName())
                 .price(monitor.getProductPrice())
@@ -148,6 +119,7 @@ public class ProductService {
     /* 마우스 entity -> 마우스 response(dto) */
     public MouseResponse mouseEntityToResponse(Mouse mouse){
         return MouseResponse.builder()
+                .category("MOUSE")
                 .id(mouse.getProductId())
                 .name(mouse.getProductName())
                 .price(mouse.getProductPrice())
@@ -156,7 +128,7 @@ public class ProductService {
                 .url(mouse.getProductUrl())
                 .connect(mouse.getMouseConnect())
                 .connectInterface(mouse.getMouseInterface())
-                .type(mouse.getMouseType())
+                .mouseType(mouse.getMouseType())
                 .dpi(mouse.getMouseDpi())
                 .color(mouse.getMouseColor())
                 .weight(mouse.getMouseWeight())
