@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 import {useState, useEffect, useRef} from 'react';
 import Image from 'next/image';
+// import axios from 'axios';
 import styled from 'styled-components';
 import useUserInfoStore from '@/stores/userInfo';
 
@@ -18,7 +20,7 @@ const Name = styled.div`
 const ProfileImageContainer = styled.div`
   width: 200px;
   height: 200px;
-  border-radius: 200px;
+  border-radius: 50%;
   background-color: white;
   border: var(--main-color-dark) 2px solid;
   display: flex;
@@ -26,15 +28,15 @@ const ProfileImageContainer = styled.div`
 
 const ChangeButton = styled.button`
   border-radius: 10px;
-  width: 115px;
-  height: 54px;
+  width: 103px;
+  height: 48px;
   display: flex;
   background-color: var(--button-main-color);
 `;
 
 const ProfileImg = styled(Image)`
   object-fit: cover;
-  border-radius: 200px;
+  border-radius: 50%;
 `;
 
 const ChangeLabel = styled.label`
@@ -48,10 +50,10 @@ const ChangeLabel = styled.label`
 `;
 
 const SecondContainer = styled.div`
-  width: 100%;
+  width: 600px;
   display: flex;
   align-items: flex-end;
-  justify-content: space-evenly;
+  justify-content: space-between;
 `;
 
 const Sort = styled.div`
@@ -60,8 +62,9 @@ const Sort = styled.div`
 `;
 
 const Hidden = styled.div`
-  width: 115px;
+  width: 103px;
 `;
+
 const ChangeImg = ({pUserImg}: {pUserImg: string}) => {
   const {ZustandImageUrl, setZustandImageUrl} = useUserInfoStore();
   const imgRef = useRef<HTMLInputElement>(null);
@@ -71,9 +74,6 @@ const ChangeImg = ({pUserImg}: {pUserImg: string}) => {
     setPresentImgUrl(ZustandImageUrl);
   }, [ZustandImageUrl]);
 
-  const handleClick = () => {
-    // console.log('ㄴㄹ');
-  };
   const saveImgFile = () => {
     // console.log('File');
     if (imgRef.current && imgRef.current.files && imgRef.current.files[0]) {
@@ -83,6 +83,17 @@ const ChangeImg = ({pUserImg}: {pUserImg: string}) => {
       reader.onloadend = () => {
         if (typeof reader.result === 'string') {
           setZustandImageUrl(reader.result);
+          // TODO: 서버에도 저장
+          // axios
+          //   .post(`${process.env.NEXT_PUBLIC_BASE_URL}/profile`, {
+          //     userImg: reader.result,
+          //   })
+          //   .then(response => {
+          //     console.log(response);
+          //   })
+          //   .catch(Error => {
+          //     console.error(Error);
+          //   });
         }
       };
     }
@@ -109,7 +120,7 @@ const ChangeImg = ({pUserImg}: {pUserImg: string}) => {
           ref={imgRef}
           hidden
         />
-        <ChangeButton onClick={handleClick}>
+        <ChangeButton>
           <ChangeLabel htmlFor="profileImg">
             <Sort>변경</Sort>
           </ChangeLabel>
