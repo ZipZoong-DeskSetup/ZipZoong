@@ -22,6 +22,11 @@ const DivisionLine = styled.hr`
 
 const ClickedMenu = styled.span`
   font-weight: 700;
+  cursor: pointer;
+`;
+
+const Menu = styled.span`
+  cursor: pointer;
 `;
 
 const NavBar = ({updateMenu}: {updateMenu: (idx: number) => void}) => {
@@ -43,9 +48,9 @@ const NavBar = ({updateMenu}: {updateMenu: (idx: number) => void}) => {
               {item}
             </ClickedMenu>
           ) : (
-            <span key={idx} onClick={() => handleClick(idx)}>
+            <Menu key={idx} onClick={() => handleClick(idx)}>
               {item}
-            </span>
+            </Menu>
           ),
         )}
       </Position>
