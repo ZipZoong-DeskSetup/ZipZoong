@@ -76,7 +76,12 @@ public class SecurityConfig {
 
         httpSecurity.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                 authorizationManagerRequestMatcherRegistry
-                        .requestMatchers("/","/oauth2/login", "/recommend/**", "/survey/**", "/board/**").permitAll()
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/oauth2/login").permitAll()
+                        .requestMatchers("/recommend/**").permitAll()
+                        .requestMatchers("/survey/**").permitAll()
+                        .requestMatchers("/board/**").permitAll()
+                        .requestMatchers("/connect/**").permitAll()
                         .anyRequest().permitAll());
 
         httpSecurity.addFilterBefore(jwtVerifyFilter(), UsernamePasswordAuthenticationFilter.class);
