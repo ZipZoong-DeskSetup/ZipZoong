@@ -1,0 +1,21 @@
+.headDiv{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+}
+
+.headBtn{
+    display: flex;
+    gap: 30px;
+}
+
+.tab{
+    font-size: 20px;
+}
+
+.active {
+    font-size: 20px;
+    font-weight: bold;
+  }

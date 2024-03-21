@@ -8,6 +8,8 @@ interface IUserInfoStore {
   setZustandNickname: (newNickname: string) => void;
   ZustandImageUrl: UserInfo['imageUrl'];
   setZustandImageUrl: (newImageUrl: string) => void;
+  ZustandId: UserInfo['id'];
+  setZustandId: (newId: number) => void;
 }
 
 const useUserInfoStore = create<IUserInfoStore>()(
@@ -19,6 +21,8 @@ const useUserInfoStore = create<IUserInfoStore>()(
       ZustandImageUrl: '/Images/profileImg.png',
       setZustandImageUrl: (newImageUrl: string) =>
         set({ZustandImageUrl: newImageUrl}),
+      ZustandId: 0,
+      setZustandId: (newId: number) => set({ZustandId: newId}),
     }),
     {
       name: 'UserInfo',
