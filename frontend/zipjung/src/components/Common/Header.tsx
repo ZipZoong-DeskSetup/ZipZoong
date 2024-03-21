@@ -34,7 +34,7 @@ function Header() {
     <div className={styles.Header}>
       <div className={styles.Logo}>
         <Image
-          src="/images/zipjung_logo.png"
+          src="/Images/zipjung_logo.png"
           width={70}
           height={40}
           alt="zipjung_logo"

@@ -103,7 +103,7 @@ const TextEditor: React.FC<TextEditorProps> = ({setData}) => {
     <CKEditor
       editor={Editor}
       config={editorConfiguration}
-      data="<p>내용을 입력하세요</p>"
+      data=""
       onChange={(event, editor) => {
         const data = editor.getData();
         setData(data);
