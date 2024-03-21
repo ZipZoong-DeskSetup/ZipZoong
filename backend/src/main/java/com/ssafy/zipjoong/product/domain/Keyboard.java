@@ -3,10 +3,12 @@ package com.ssafy.zipjoong.product.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
+@ToString(callSuper = true)
 @SuperBuilder
 @NoArgsConstructor
 @DiscriminatorValue("KEYBOARD")
