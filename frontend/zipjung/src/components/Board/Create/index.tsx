@@ -2,7 +2,7 @@
 
 import {useState} from 'react';
 import TitleInput from '@/components/Board/Create/TitleInput';
-import TextEditor from '@/components/Board/Create/TextEditor';
+// import TextEditor from '@/components/Board/Create/TextEditor';
 import CreateButton from '@/components/Board/Create/CreateButton';
 import useUserInfoStore from '@/stores/userInfo';
 import styles from '@/components/Board/Create/index.module.scss';
@@ -16,7 +16,7 @@ import styles from '@/components/Board/Create/index.module.scss';
 
 function Form() {
   const [title, setTitle] = useState<string>('');
-  const [data, setData] = useState<string>('');
+  // const [data, setData] = useState<string>('');
 
   const {ZustandNickname, ZustandId} = useUserInfoStore();
 
@@ -26,14 +26,14 @@ function Form() {
         <TitleInput setTitle={setTitle} />
       </div>
       <div className={styles.createContent}>
-        <TextEditor setData={setData} />
-        <div style={{display: 'flex'}}>
+        {/* <TextEditor setData={setData} /> */}
+        {/* <div style={{display: 'flex'}}>
           <div className="ck ck-editor__main" style={{width: '100%'}}></div>
-        </div>
+        </div> */}
       </div>
       <div>
         {title}
-        {data}
+        {/* {data} */}
         {ZustandNickname}
         {ZustandId}
       </div>

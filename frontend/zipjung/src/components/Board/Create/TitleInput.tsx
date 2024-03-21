@@ -1,3 +1,5 @@
+'use client';
+
 import styles from '@/components/Board/Create/TitleInput.module.scss';
 
 interface TitleInputProps {
