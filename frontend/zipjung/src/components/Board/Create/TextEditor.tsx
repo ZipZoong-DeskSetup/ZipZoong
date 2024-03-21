@@ -1,21 +1,26 @@
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import {CKEditor} from '@ckeditor/ckeditor5-react';
-
-// UploadAdapter 클래스는 이전에 제공된 코드를 그대로 사용합니다.
+import {FileLoader} from '@ckeditor/ckeditor5-upload/src/filerepository';
+import {Editor as CoreEditor} from '@ckeditor/ckeditor5-core';
 
 class MyUploadAdapter {
-  loader: any;
+  loader: FileLoader;
 
-  constructor(loader: any) {
+  constructor(loader: FileLoader) {
     this.loader = loader;
   }
 
   upload() {
     return this.loader.file.then(
       file =>
-        new Promise((resolve, reject) => {
+        new Promise<{default: string}>((resolve, reject) => {
+          if (file === null) {
+            reject(new Error('File is null'));
+            return;
+          }
+
           const reader = new FileReader();
-          reader.onload = () => resolve({default: reader.result});
+          reader.onload = () => resolve({default: reader.result as string});
           reader.onerror = error => reject(error);
           reader.readAsDataURL(file);
         }),
@@ -23,13 +28,15 @@ class MyUploadAdapter {
   }
 
   abort() {
-    // 업로드 취소 로직
+    // Upload cancel logic
   }
 }
 
-// 여기서 editor 매개변수 타입을 Editor로 변경합니다.
-function MyCustomUploadAdapterPlugin(editor: Editor) {
-  editor.plugins.get('FileRepository').createUploadAdapter = (loader: any) => {
+function UploadAdapterPlugin(editor: CoreEditor) {
+  // eslint-disable-next-line no-param-reassign
+  editor.plugins.get('FileRepository').createUploadAdapter = (
+    loader: FileLoader,
+  ) => {
     return new MyUploadAdapter(loader);
   };
 }
@@ -90,16 +97,15 @@ const TextEditor: React.FC<TextEditorProps> = ({setData}) => {
         'tableProperties',
       ],
     },
-    extraPlugins: [MyCustomUploadAdapterPlugin], // 여기서는 수정 없음
+    extraPlugins: [UploadAdapterPlugin],
   };
   return (
     <CKEditor
       editor={Editor}
       config={editorConfiguration}
-      data="<p> 이곳에 내용을 작성해 주세요!</p>"
+      data="<p>내용을 입력하세요</p>"
       onChange={(event, editor) => {
         const data = editor.getData();
-        console.log(data);
         setData(data);
       }}
     />
