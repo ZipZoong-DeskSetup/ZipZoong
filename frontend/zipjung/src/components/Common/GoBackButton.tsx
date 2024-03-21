@@ -3,7 +3,11 @@
 import {useRouter} from 'next/navigation';
 import styles from '@/components/Common/GoBackButton.module.scss';
 
-function GoBackButton() {
+interface GoBackButtonProps {
+  text: string;
+}
+
+function GoBackButton({text}: GoBackButtonProps) {
   const router = useRouter();
 
   const goBack = () => {
@@ -12,7 +16,7 @@ function GoBackButton() {
 
   return (
     <button onClick={goBack} className={styles.goBackBtn}>
-      이전
+      {text}
     </button>
   );
 }

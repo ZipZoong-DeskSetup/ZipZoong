@@ -1,9 +1,19 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
-import {CKEditor} from '@ckeditor/ckeditor5-react';
+// import {CKEditor} from '@ckeditor/ckeditor5-react';
 import {FileLoader} from '@ckeditor/ckeditor5-upload/src/filerepository';
 import {Editor as CoreEditor} from '@ckeditor/ckeditor5-core';
+
+// CKEditor 컴포넌트를 동적으로 불러오기 위해 dynamic import 사용
+const CKEditor = dynamic(
+  () => import('@ckeditor/ckeditor5-react').then(module => module.CKEditor),
+  {
+    ssr: false, // 서버 사이드 렌더링 비활성화
+    loading: () => <p>Loading editor...</p>, // 로딩 중 표시할 컴포넌트
+  },
+);
 
 class MyUploadAdapter {
   loader: FileLoader;
@@ -70,6 +80,8 @@ const TextEditor: React.FC<TextEditorProps> = ({setData}) => {
         'mediaEmbed',
         'undo',
         'redo',
+        '|',
+        'mention'
       ],
     },
     language: 'ko',
@@ -101,7 +113,7 @@ const TextEditor: React.FC<TextEditorProps> = ({setData}) => {
     },
     extraPlugins: [UploadAdapterPlugin],
   };
-  return (
+  return setData ? (
     <CKEditor
       editor={Editor}
       config={editorConfiguration}
@@ -111,6 +123,8 @@ const TextEditor: React.FC<TextEditorProps> = ({setData}) => {
         setData(data);
       }}
     />
+  ) : (
+    <></>
   );
 };
 
