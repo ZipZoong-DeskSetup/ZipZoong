@@ -12,4 +12,5 @@ public class ProductResponse {
     private String img;
     private String brand;
     private String url;
+    private String category;
 }
