@@ -102,7 +102,6 @@ function Form() {
   };
 
   useEffect(() => {
-    // 선택된 탭에 따라 호출할 API의 URL을 결정합니다.
     const apiUrl =
       selectedTab === 'all' ? '/api/boards' : `/api/boards/${ZustandId}`;
 
