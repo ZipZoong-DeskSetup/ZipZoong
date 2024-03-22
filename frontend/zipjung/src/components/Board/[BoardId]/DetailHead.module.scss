@@ -41,7 +41,18 @@
 .boardInfo{
     display: flex;
     align-items: center;
+    gap: 30px;
+}
+
+.boardInfoDiv{
+    display: flex;
+    align-items: center;
     gap: 10px;
+}
+
+.CommentImg{
+    width: 23px;
+    height: 23px;
 }
 
 .HitImg{

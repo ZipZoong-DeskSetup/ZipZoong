@@ -1,4 +1,4 @@
-.GoUpdateButton{
+.UpdateButton{
     font-size: 15px;
     font-weight: bold;
     width: 80px;
@@ -7,6 +7,6 @@
     background-color: var(--button-main-color);
 }
 
-.GoUpdateButton:hover{
+.UpdateButton:hover{
     background-color: var(--button-main-hover-color);
 }
