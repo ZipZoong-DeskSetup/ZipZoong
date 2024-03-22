@@ -1,6 +1,6 @@
 package com.ssafy.zipjoong.like.domain;
 
-import com.ssafy.zipjoong.recommand.model.Combination;
+import com.ssafy.zipjoong.recommand.domain.Combination;
 import com.ssafy.zipjoong.user.domain.User;
 import com.ssafy.zipjoong.util.domain.EntityDate;
 import jakarta.persistence.*;

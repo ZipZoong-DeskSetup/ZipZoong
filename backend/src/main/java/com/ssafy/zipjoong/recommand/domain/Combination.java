@@ -1,4 +1,4 @@
-package com.ssafy.zipjoong.recommand;
+package com.ssafy.zipjoong.recommand.domain;
 
 import com.ssafy.zipjoong.user.domain.User;
 import com.ssafy.zipjoong.util.domain.EntityDate;

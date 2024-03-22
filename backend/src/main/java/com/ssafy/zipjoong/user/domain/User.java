@@ -3,7 +3,7 @@ package com.ssafy.zipjoong.user.domain;
 import com.ssafy.zipjoong.board.domain.Board;
 import com.ssafy.zipjoong.like.domain.CombinationLike;
 import com.ssafy.zipjoong.like.domain.ProductLike;
-import com.ssafy.zipjoong.recommand.model.Combination;
+import com.ssafy.zipjoong.recommand.domain.Combination;
 import com.ssafy.zipjoong.util.domain.EntityDate;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

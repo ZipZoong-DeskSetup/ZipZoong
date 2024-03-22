@@ -1,8 +1,5 @@
 package com.ssafy.zipjoong.recommand.domain;
 
-import com.ssafy.zipjoong.recommand.Combination;
-import com.ssafy.zipjoong.recommand.CombinationProduct;
-import com.ssafy.zipjoong.recommand.CombinationProductId;
 import com.ssafy.zipjoong.recommand.repository.CombinationProductRepository;
 import com.ssafy.zipjoong.recommand.repository.CombinationRepository;
 import lombok.extern.slf4j.Slf4j;
