@@ -1,12 +1,9 @@
-package com.ssafy.zipjoong.recommand.model;
+package com.ssafy.zipjoong.recommand.domain;
 
 import com.ssafy.zipjoong.user.domain.User;
 import com.ssafy.zipjoong.util.domain.EntityDate;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -23,6 +20,7 @@ public class Combination extends EntityDate {
     private Long combinationId;
 
     // 조합 가격
+    @Setter
     @Column(name="combination_price")
     private Integer combinationPrice;
 
@@ -34,5 +32,4 @@ public class Combination extends EntityDate {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
 }

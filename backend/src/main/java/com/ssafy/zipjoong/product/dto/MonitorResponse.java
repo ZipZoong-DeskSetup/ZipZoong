@@ -1,5 +1,6 @@
 package com.ssafy.zipjoong.product.dto;
 
+import com.ssafy.zipjoong.product.domain.Monitor;
 import com.ssafy.zipjoong.product.domain.MonitorPanelFormType;
 import com.ssafy.zipjoong.product.domain.MonitorPanelType;
 import lombok.Data;
@@ -18,4 +19,23 @@ public class MonitorResponse extends ProductResponse{
     private Integer refreshRate;
     private MonitorPanelType panelType;
     private MonitorPanelFormType panelFormType;
+
+    /* 모니터 entity -> 모니터 response(dto) */
+    public static MonitorResponse toDto(Monitor monitor){
+        return MonitorResponse.builder()
+                .category("MONITOR")
+                .id(monitor.getProductId())
+                .name(monitor.getProductName())
+                .price(monitor.getProductPrice())
+                .brand(monitor.getProductBrand())
+                .img(monitor.getProductImg())
+                .url(monitor.getProductUrl())
+                .size(monitor.getMonitorSize())
+                .resolution(monitor.getMonitorResolution())
+                .aspectRatio(monitor.getMonitorAspectRatio())
+                .refreshRate(monitor.getMonitorRefreshRate())
+                .panelType(monitor.getMonitorPanelType())
+                .panelFormType(monitor.getMonitorPanelForm())
+                .build();
+    }
 }
