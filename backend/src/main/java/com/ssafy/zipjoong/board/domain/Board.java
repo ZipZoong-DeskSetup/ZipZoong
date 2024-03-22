@@ -1,5 +1,6 @@
 package com.ssafy.zipjoong.board.domain;
 
+import com.ssafy.zipjoong.file.service.domain.File;
 import com.ssafy.zipjoong.user.domain.User;
 import com.ssafy.zipjoong.util.domain.EntityDate;
 import jakarta.persistence.*;
@@ -54,4 +55,8 @@ public class Board extends EntityDate {
     // 제품 목록
     @OneToMany(mappedBy = "board")
     private List<BoardProduct> products;
+
+    // 파일 목록
+    @OneToMany(mappedBy = "board")
+    private List<File> files;
 }
