@@ -1,4 +1,4 @@
-package com.ssafy.zipjoong.recommand;
+package com.ssafy.zipjoong.recommand.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
