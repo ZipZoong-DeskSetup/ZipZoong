@@ -6,6 +6,7 @@ import useBoardStore from '@/stores/board';
 import DetailHead from '@/components/Board/[BoardId]/DetailHead';
 import styles from '@/components/Board/[BoardId]/index.module.scss';
 import DeleteButton from '@/components/Board/[BoardId]/DeleteButton';
+import GoUpdateButton from '@/components/Board/[BoardId]/GoModifyButton';
 
 interface Board {
   boardId: number;
@@ -50,13 +51,21 @@ function Form() {
   if (!boardDetail) return <div>Loading...</div>;
 
   return (
-    <div>
-      <DeleteButton key={boardDetail.boardId} boardId={boardDetail.boardId}/>
-      <DetailHead key={boardDetail.boardId} boardDetail={boardDetail} />
-
+    <div className={styles.BoardDetailDiv}>
+      <div className={styles.ButtonDiv}>
+        <GoUpdateButton
+          key={boardDetail.boardId}
+          boardId={boardDetail.boardId}
+        />
+        <DeleteButton key={boardDetail.boardId} boardId={boardDetail.boardId} />
+      </div>
+      <div className={styles.HeadDiv}>
+        <DetailHead key={boardDetail.boardId} boardDetail={boardDetail} />
+      </div>
       <div className={styles.boardContentDiv}>
         <div className={styles.boardContent}>{boardDetail.boardContent}</div>
       </div>
+      <div></div>
     </div>
   );
 }

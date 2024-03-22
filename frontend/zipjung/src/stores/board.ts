@@ -4,6 +4,8 @@ import {persist} from 'zustand/middleware';
 interface IBoardState {
   ZustandboardId: number | null;
   setZustandBoardId: (id: number) => void;
+  ZustandboardModifyId: number | null;
+  setZustandboardModifyId: (id: number) => void;
 }
 
 const useBoardStore = create<IBoardState>()(
@@ -11,6 +13,8 @@ const useBoardStore = create<IBoardState>()(
     set => ({
       ZustandboardId: null,
       setZustandBoardId: (id: number) => set({ZustandboardId: id}),
+      ZustandboardModifyId: null,
+      setZustandboardModifyId: (id: number) => set({ZustandboardModifyId: id}),
     }),
     {
       name: 'board-store',

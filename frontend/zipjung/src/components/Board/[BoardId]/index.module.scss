@@ -1,9 +1,31 @@
+.BoardDetailDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ButtonDiv{
+    width: 70%;
+    display: flex;
+    justify-content: right;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.HeadDiv{
+    width: 70%;
+}
+
 .boardContentDiv{
+    width: 70%;
     display: flex;
     justify-content: center;
+    padding-bottom: 30px;
+    border-bottom: 2px solid var(--main-color-dark);
 }
 
 .boardContent{
-    width: 70%;
+    width: 100%;
     border: 1px solid black;
 }
