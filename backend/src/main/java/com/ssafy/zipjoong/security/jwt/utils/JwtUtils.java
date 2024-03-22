@@ -107,5 +107,10 @@ public class JwtUtils {
         return remainMs / (1000 * 60);
     }
 
+    // 토큰을 통해 userId를 반환하는 메서드
+    public static String getUserId(String token) {
+        Map<String, Object> claims = validateToken(token);
+        return (String) claims.get("userId");
+    }
 
 }
