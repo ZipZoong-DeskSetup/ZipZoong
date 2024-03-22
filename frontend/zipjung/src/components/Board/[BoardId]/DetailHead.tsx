@@ -1,4 +1,5 @@
 import {IoEyeOutline} from 'react-icons/io5';
+import {TfiCommentAlt} from 'react-icons/tfi';
 import Image from 'next/image';
 import styles from '@/components/Board/[BoardId]/DetailHead.module.scss';
 
@@ -15,9 +16,10 @@ interface Board {
 
 interface DetailHeadProps {
   boardDetail: Board;
+  commentCnt: number | null;
 }
 
-function DetailHead({boardDetail}: DetailHeadProps) {
+function DetailHead({boardDetail, commentCnt}: DetailHeadProps) {
   return (
     <div className={styles.BoardHeadContain}>
       <div className={styles.BoardDetailHead}>
@@ -38,10 +40,14 @@ function DetailHead({boardDetail}: DetailHeadProps) {
           </div>
         </div>
         <div className={styles.boardInfo}>
-          <div>
-            <IoEyeOutline className={styles.HitImg} />
+          <div className={styles.boardInfoDiv}>
+            <TfiCommentAlt className={styles.CommentImg} />
+            <div className={styles.boardHit}>{commentCnt}</div>
           </div>
-          <div className={styles.boardHit}>{boardDetail.boardHit}</div>
+          <div className={styles.boardInfoDiv}>
+            <IoEyeOutline className={styles.HitImg} />
+            <div className={styles.boardHit}>{boardDetail.boardHit}</div>
+          </div>
         </div>
       </div>
     </div>

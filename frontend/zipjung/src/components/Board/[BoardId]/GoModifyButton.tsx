@@ -6,7 +6,7 @@ interface ModifyButtonProps {
   boardId: number;
 }
 
-function GoUpdateButton({boardId}: ModifyButtonProps) {
+function GoModifyButton({boardId}: ModifyButtonProps) {
   const router = useRouter();
   const {setZustandboardModifyId} = useBoardStore();
 
@@ -24,4 +24,4 @@ function GoUpdateButton({boardId}: ModifyButtonProps) {
   );
 }
 
-export default GoUpdateButton;
+export default GoModifyButton;
