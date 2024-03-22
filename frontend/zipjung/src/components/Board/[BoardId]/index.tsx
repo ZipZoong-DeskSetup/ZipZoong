@@ -190,7 +190,7 @@ function Form() {
       <div className={styles.boardContentDiv}>
         <div className={styles.boardContent}>{boardDetail.boardContent}</div>
       </div>
-      <div>
+      <div className={styles.boardCommentInputDiv}>
         <CommentInput />
       </div>
       <div className={styles.boardCommentDiv}>
