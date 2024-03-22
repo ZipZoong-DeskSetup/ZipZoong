@@ -36,106 +36,30 @@ public class ProductService {
 
         // 제품 종류 체크 후 반환
         if(product instanceof Keyboard)
-            return keyboardEntityToResponse((Keyboard) product);
+            return KeyboardResponse.toDto((Keyboard) product);
         else if(product instanceof Monitor)
-            return monitorEntityToResponse((Monitor) product);
+            return MonitorResponse.toDto((Monitor) product);
         else if(product instanceof Mouse)
-            return mouseEntityToResponse((Mouse) product);
+            return MouseResponse.toDto((Mouse) product);
 
-        return productEntityToResponse(product);
+        return ProductResponse.toDto(product);
     }
 
     /* 키보드 페이징 조회 */
     public Page<KeyboardResponse> getKeyboardWithPage(Pageable pageable){
-        return Optional.of(keyboardRepository.findAll(pageable).map(this::keyboardEntityToResponse))
+        return Optional.of(keyboardRepository.findAll(pageable).map(KeyboardResponse::toDto))
                 .orElseThrow(() -> new ProductException(ProductErrorCode.KEYBOARD_NOT_FOUND));
     }
 
     /* 모니터 페이징 조회 */
     public Page<MonitorResponse> getMonitorWithPage(Pageable pageable){
-        return Optional.of(monitorRepository.findAll(pageable).map(this::monitorEntityToResponse))
+        return Optional.of(monitorRepository.findAll(pageable).map(MonitorResponse::toDto))
                 .orElseThrow(() -> new ProductException(ProductErrorCode.MONITOR_NOT_FOUND));
     }
 
     /* 마우스 페이징 조회 */
     public Page<MouseResponse> getMouseWithPage(Pageable pageable){
-        return Optional.of(mouseRepository.findAll(pageable).map(this::mouseEntityToResponse))
+        return Optional.of(mouseRepository.findAll(pageable).map(MouseResponse::toDto))
                 .orElseThrow(() -> new ProductException(ProductErrorCode.MOUSE_NOT_FOUND));
-    }
-
-    /* 제품 entity -> 제품 response(dto) */
-    public ProductResponse productEntityToResponse(Product product){
-        return ProductResponse.builder()
-                .id(product.getProductId())
-                .name(product.getProductName())
-                .price(product.getProductPrice())
-                .brand(product.getProductBrand())
-                .img(product.getProductImg())
-                .url(product.getProductUrl())
-                .build();
-    }
-
-    /* 키보드 entity -> 키보드 response(dto) */
-    public KeyboardResponse keyboardEntityToResponse(Keyboard keyboard){
-        return KeyboardResponse.builder()
-                .category("KEYBOARD")
-                .id(keyboard.getProductId())
-                .name(keyboard.getProductName())
-                .price(keyboard.getProductPrice())
-                .brand(keyboard.getProductBrand())
-                .img(keyboard.getProductImg())
-                .url(keyboard.getProductUrl())
-                .connect(keyboard.getKeyboardConnect())
-                .connectInterface(keyboard.getKeyboardInterface())
-                .keySwitch(keyboard.getKeyboardSwitch())
-                .led(keyboard.getKeyboardLed())
-                .num(keyboard.getKeyboardNum())
-                .force(keyboard.getKeyboardForce())
-                .color(keyboard.getKeyboardColor())
-                .form(keyboard.getKeyboardForm())
-                .contact(keyboard.getKeyboardContact())
-                .build();
-    }
-
-    /* 모니터 entity -> 모니터 response(dto) */
-    public MonitorResponse monitorEntityToResponse(Monitor monitor){
-        return MonitorResponse.builder()
-                .category("MONITOR")
-                .id(monitor.getProductId())
-                .name(monitor.getProductName())
-                .price(monitor.getProductPrice())
-                .brand(monitor.getProductBrand())
-                .img(monitor.getProductImg())
-                .url(monitor.getProductUrl())
-                .size(monitor.getMonitorSize())
-                .resolution(monitor.getMonitorResolution())
-                .aspectRatio(monitor.getMonitorAspectRatio())
-                .refreshRate(monitor.getMonitorRefreshRate())
-                .panelType(monitor.getMonitorPanelType())
-                .panelFormType(monitor.getMonitorPanelForm())
-                .build();
-    }
-
-    /* 마우스 entity -> 마우스 response(dto) */
-    public MouseResponse mouseEntityToResponse(Mouse mouse){
-        return MouseResponse.builder()
-                .category("MOUSE")
-                .id(mouse.getProductId())
-                .name(mouse.getProductName())
-                .price(mouse.getProductPrice())
-                .brand(mouse.getProductBrand())
-                .img(mouse.getProductImg())
-                .url(mouse.getProductUrl())
-                .connect(mouse.getMouseConnect())
-                .connectInterface(mouse.getMouseInterface())
-                .mouseType(mouse.getMouseType())
-                .dpi(mouse.getMouseDpi())
-                .color(mouse.getMouseColor())
-                .weight(mouse.getMouseWeight())
-                .width(mouse.getMouseWidth())
-                .length(mouse.getMouseLength())
-                .height(mouse.getMouseHeight())
-                .isSound(mouse.getMouseIsSound())
-                .build();
     }
 }

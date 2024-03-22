@@ -2,6 +2,7 @@ package com.ssafy.zipjoong.product.dto;
 
 import com.ssafy.zipjoong.product.domain.ConnectionType;
 import com.ssafy.zipjoong.product.domain.InterfaceType;
+import com.ssafy.zipjoong.product.domain.Mouse;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -22,4 +23,27 @@ public class MouseResponse extends ProductResponse{
     private Float length;
     private Float height;
     private Boolean isSound;
+
+    /* 마우스 entity -> 마우스 response(dto) */
+    public static MouseResponse toDto(Mouse mouse){
+        return MouseResponse.builder()
+                .category("MOUSE")
+                .id(mouse.getProductId())
+                .name(mouse.getProductName())
+                .price(mouse.getProductPrice())
+                .brand(mouse.getProductBrand())
+                .img(mouse.getProductImg())
+                .url(mouse.getProductUrl())
+                .connect(mouse.getMouseConnect())
+                .connectInterface(mouse.getMouseInterface())
+                .mouseType(mouse.getMouseType())
+                .dpi(mouse.getMouseDpi())
+                .color(mouse.getMouseColor())
+                .weight(mouse.getMouseWeight())
+                .width(mouse.getMouseWidth())
+                .length(mouse.getMouseLength())
+                .height(mouse.getMouseHeight())
+                .isSound(mouse.getMouseIsSound())
+                .build();
+    }
 }
