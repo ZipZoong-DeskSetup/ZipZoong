@@ -1,4 +1,4 @@
-package com.ssafy.zipjoong.file.service.domain;
+package com.ssafy.zipjoong.file.domain;
 
 import com.ssafy.zipjoong.board.domain.Board;
 import com.ssafy.zipjoong.util.domain.EntityDate;
