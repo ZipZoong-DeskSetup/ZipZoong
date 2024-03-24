@@ -24,10 +24,6 @@ public class File extends EntityDate {
     @Column(name = "file_path", length = 128)
     private String filePath;
 
-    // 파일타입
-    @Column(name = "file_type", length = 10)
-    private String fileType;
-
     // 게시글
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id", nullable = false)
