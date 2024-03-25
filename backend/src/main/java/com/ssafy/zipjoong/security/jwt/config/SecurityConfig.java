@@ -82,6 +82,12 @@ public class SecurityConfig {
                         .requestMatchers("/survey/**").permitAll()
                         .requestMatchers("/board/**").permitAll()
                         .requestMatchers("/connect/**").permitAll()
+                        .requestMatchers("/product/**").permitAll()
+                        .requestMatchers("/v3/api-docs").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/api-docs/**").permitAll()
+                        .requestMatchers("/combination").permitAll()
+                        .requestMatchers("/combination/**").permitAll()
                         .anyRequest().permitAll());
 
         httpSecurity.addFilterBefore(jwtVerifyFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -54,57 +54,61 @@ public class CombinationService {
 
     /* 조합 등록 -> 추후 유저정보 담아야함*/
     @Transactional
-    public CombinationResponse saveCombination(List<SaveCombinationProductRequest> requests){
-        Combination combination = combinationRepository.save(Combination.builder().build());
+    public CombinationResponse saveCombination(List<SaveCombinationProductRequest> requests, String userId){
+        User user = userRepository.findById(userId).orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
+        Combination combination = combinationRepository.save(Combination.builder().user(user).combinationProducts(new ArrayList<>()).build());
         int totalPrice = 0;
+
         for(SaveCombinationProductRequest request : requests){
+            Product product = productRepository.findById(request.getProductId())
+                    .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
 
             CombinationProductId combinationProductId = CombinationProductId.builder()
-                    .combinationId(combination.getCombinationId()).
-                    productId(request.getProductId())
+                    .combinationId(combination.getCombinationId())
+                    .productId(request.getProductId())
                     .build();
-
-            if(!productRepository.existsById(request.getProductId()))
-                throw new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND);
 
             if(combinationProductRepository.existsById(combinationProductId))
                 throw new CombinationException(CombinationErrorCode.COMBINATION_CONFLICT);
 
             CombinationProduct combinationProduct = combinationProductRepository.save(CombinationProduct.builder()
+                    .product(product)
+                    .combination(combination)
                     .combinationProductId(combinationProductId)
                     .combinationProductNum(request.getNum())
                     .build());
 
             totalPrice += combinationProduct.getProduct().getProductPrice();
+            combination.addCombinationProduct(combinationProduct);
         }
 
         combination.setCombinationPrice(totalPrice);
-        combinationRepository.save(combination);
-
-        return CombinationResponse.builder()
-                .combinationId(combination.getCombinationId())
-                .products(getProducts(combination, true)) // 상품 정보 디테일까지 가져오기
-                .totalPrice(combination.getCombinationPrice())
-                .build();
+        return combinationToCombinationResponse(combination, true); // 상품 정보 디테일까지 가져오기
     }
 
     /* 조합내 상품 추가 */
     @Transactional
     public CombinationResponse addCombinationProduct(CombinationProductRequest addId){
         CombinationProductId combinationProductId = CombinationProductId.builder().combinationId(addId.getCombinationId()).productId(addId.getProductId()).build();
-        if(!combinationProductRepository.existsById(combinationProductId))
-            throw new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND);
+        if(combinationProductRepository.existsById(combinationProductId))
+            throw new CombinationException(CombinationErrorCode.COMBINATION_CONFLICT);
 
-        combinationProductRepository.save(CombinationProduct.builder().combinationProductId(combinationProductId).build());
-
-        Combination combination = combinationRepository.findById(combinationProductId.getCombinationId())
+        Combination combination = combinationRepository.findById(addId.getCombinationId())
                 .orElseThrow(() -> new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND));
 
-        return CombinationResponse.builder()
-                .combinationId(combination.getCombinationId())
-                .products(getProducts(combination, true)) // 상품 정보 디테일까지 가져오기
-                .totalPrice(combination.getCombinationPrice())
-                .build();
+        Product product = productRepository.findById(addId.getProductId())
+                .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
+
+        CombinationProduct combinationProduct = combinationProductRepository.save(CombinationProduct.builder()
+                .combination(combination)
+                .product(product)
+                .combinationProductId(combinationProductId)
+                .build());
+
+        combination.addCombinationProduct(combinationProduct);
+        combinationRepository.save(combination);
+
+        return combinationToCombinationResponse(combination, true); // 상품 정보 디테일까지 가져오기
     }
 
 
@@ -113,11 +117,7 @@ public class CombinationService {
         Combination combination = combinationRepository.findById(combinationId)
                 .orElseThrow(() -> new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND));
 
-        return CombinationResponse.builder()
-                .combinationId(combination.getCombinationId())
-                .products(getProducts(combination, true)) // 상품 정보 디테일까지 가져오기
-                .totalPrice(combination.getCombinationPrice())
-                .build();
+        return combinationToCombinationResponse(combination, true); // 상품 정보 디테일까지 가져오기
     }
 
     /* 해당 유저의 조합 목록 조회 */
@@ -127,11 +127,7 @@ public class CombinationService {
         combinationRepository.findByUser(user)
                 .orElseThrow(() -> new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND))
                 .forEach(combination -> {
-                    combinationResponseList.add(CombinationResponse.builder()
-                                    .combinationId(combination.getCombinationId())
-                                    .totalPrice(combination.getCombinationPrice())
-                                    .products(getProducts(combination, false)) // 상품 정보 디테일 없이 가져오기
-                            .build());
+                    combinationResponseList.add(combinationToCombinationResponse(combination, false)); // 상품 정보 디테일 없이 가져오기
                 });
         return combinationResponseList;
     }
@@ -172,9 +168,9 @@ public class CombinationService {
 
         // 추천 상품
         List<ProductResponse> productResponses = new ArrayList<>();
-        productResponses.add(ProductResponse.toDto(keyboardPage.getContent().get(0)));
-        productResponses.add(ProductResponse.toDto(monitorPage.getContent().get(0)));
-        productResponses.add(ProductResponse.toDto(mousePage.getContent().get(0)));
+        productResponses.add(KeyboardResponse.toDto(keyboardPage.getContent().get(0)));
+        productResponses.add(MonitorResponse.toDto(monitorPage.getContent().get(0)));
+        productResponses.add(MouseResponse.toDto(mousePage.getContent().get(0)));
 
         // 총 가격
         int totalPrice = keyboardPage.getContent().get(0).getProductPrice()
@@ -203,8 +199,14 @@ public class CombinationService {
 
     /* 조합 삭제 */
     public void removeCombination(long combinationId){
-        if(!combinationRepository.existsById(combinationId))
-            throw new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND);
+
+        Combination combination = combinationRepository.findById(combinationId)
+                .orElseThrow(() -> new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND));
+
+        combination.getCombinationProducts().forEach(combinationProduct -> {
+            combinationProductRepository.deleteById(combinationProduct.getCombinationProductId());
+        });
+
         combinationRepository.deleteById(combinationId);
     }
 
@@ -212,16 +214,19 @@ public class CombinationService {
     public void removeCombinationProduct(long combinationId ,int productId){
         CombinationProductId combinationProductId = CombinationProductId.builder().combinationId(combinationId).productId(productId).build();
 
-        if(!combinationProductRepository.existsById(combinationProductId))
+        if(!combinationRepository.existsById(combinationId))
             throw new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND);
+
+        if(!combinationProductRepository.existsById(combinationProductId))
+            throw new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND);
 
         combinationProductRepository.deleteById(combinationProductId);
     }
 
-    /* 상품 정보 가져오기 (isDeep true -> 마우스, 키보드, 모니터 세부 정보까지 false -> 제품 공통 정보까지만)*/
-    public List<ProductResponse> getProducts(Combination combination, boolean isDeep){
+    /* Combination entity -> CombinationResponse*/
+    public CombinationResponse combinationToCombinationResponse(Combination combination, boolean isDeep){
         List<ProductResponse> products = new ArrayList<>();
-        combination.getCombinationProducts().forEach( combinationProduct -> {
+        combination.getCombinationProducts().forEach(combinationProduct -> {
             Product product = combinationProduct.getProduct();
             if (isDeep && product instanceof Keyboard)
                 products.add(KeyboardResponse.toDto((Keyboard) product));
@@ -232,7 +237,14 @@ public class CombinationService {
             else
                 products.add(ProductResponse.toDto(product));
         });
-        return products;
+
+        return CombinationResponse.builder()
+                .combinationId(combination.getCombinationId())
+                .products(products)
+                .totalPrice(combination.getCombinationPrice())
+                .build();
     }
+
+
 
 }
