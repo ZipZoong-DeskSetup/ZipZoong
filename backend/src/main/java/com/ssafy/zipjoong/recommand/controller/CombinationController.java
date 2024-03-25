@@ -5,6 +5,8 @@ import com.ssafy.zipjoong.recommand.dto.SaveCombinationProductRequest;
 import com.ssafy.zipjoong.recommand.service.CombinationService;
 import com.ssafy.zipjoong.security.jwt.utils.JwtUtils;
 import com.ssafy.zipjoong.util.dto.ResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,50 +19,61 @@ import java.util.List;
 @RestController
 @RequestMapping("/combination")
 @RequiredArgsConstructor
+@Tag(name = "조합, 추천 API", description = "키보드, 모니터, 마우스 의 조합 및 추천 정보를 제공 하는 API")
 public class CombinationController {
 
     private final CombinationService combinationService;
 
     /* 조합 등록 */
     @PostMapping("")
-    public ResponseEntity<ResponseDto> saveCombination(@RequestBody List<SaveCombinationProductRequest> requestList){
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 등록하였습니다.", combinationService.saveCombination(requestList)));
+    @Operation(summary = "관심 조합 목록에 추가", description = "추천 받은 조합을 저장 하거나 조합 생성시 저장 /n리스트로 제품의 id(productId)값과 해당 제품의 갯수(num)를 넘겨주세요 /n유저의 토큰값을 이용하기 때문에 로그인 이후 토큰값을 넘겨주어야함 수현이한테 swagger에 로그인 구현해달라고하세요..")
+    public ResponseEntity<ResponseDto> saveCombination(@RequestHeader("Authorization") String authorizationToken, @RequestBody List<SaveCombinationProductRequest> requestList){
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 등록하였습니다.", combinationService.saveCombination(requestList, findUserId(authorizationToken))));
     }
+
+    /* 조합에 제품 추가*/
     @PostMapping("/product")
+    @Operation(summary = "조합에 제품 추가", description = "기존의 조합에 제품을 추가")
     public ResponseEntity<ResponseDto> saveCombinationProduct(@RequestBody CombinationProductRequest productRequest){
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 등록하였습니다.", combinationService.addCombinationProduct(productRequest)));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합에 제품을 추가 하였습니다.", combinationService.addCombinationProduct(productRequest)));
     }
 
     /* 조합 조회 */
     @GetMapping("/{combinationId}")
+    @Operation(summary = "조합 조회", description = "조합의 세부 내용 조회")
     public ResponseEntity<ResponseDto> getCombination(@PathVariable long combinationId){
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 조회하였습니다.", combinationService.getCombination(combinationId)));
     }
 
     /* 해당 유저의 조합 목록 조회 */
     @GetMapping("")
+    @Operation(summary = "관심 조합 목록 조회", description = "자신이 저장한 조합 목록 조회 /n유저의 토큰값을 이용하기 때문에 로그인 이후 토큰값을 넘겨주어야함 수현이한테 swagger에 로그인 구현해달라고하세요..")
     public ResponseEntity<ResponseDto> getUserCombinations(@RequestHeader("Authorization") String authorizationToken){
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 유저의 조합을 조회하였습니다.", combinationService.getUserCombinations(findUserId(authorizationToken))));
     }
 
     /* 추천 조합 조회 프로토타입 */
     @GetMapping("/recommend")
+    @Operation(summary = "추천 받기 프로토 타입", description = "임시로 추천을 받기 위해 만든 api")
     public ResponseEntity<ResponseDto> getRecommendCombinations(){
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 추천받았습니다.", combinationService.getRecommendCombinations()));
     }
 
     /* 추천 조합 상세 조회 프로토타입 */
     @GetMapping("/recommend/info")
+    @Operation(summary = "추천 받은 조합 세부 내용 조회 프로토 타입", description = "임시로 추천을 받은 제품 세부 내용 조회를 위해 만든 api (추후에 세부 내용 조회시 각 제품 id값을 파라미터값으로 넣어주어야할지도?)")
     public ResponseEntity<ResponseDto> getRecommendCombinationInfos(){
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합의 상세 정보를 조회하였습니다.", combinationService.getRecommendCombinationInfos()));
     }
 
     @DeleteMapping("/{combinationId}")
+    @Operation(summary = "관심 조합 목록에서 삭제", description = "개인이 저장한 조합 제거 api")
     public ResponseEntity<ResponseDto> removeCombination(@PathVariable long combinationId){
         combinationService.removeCombination(combinationId);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 제거하였습니다."));
     }
     @DeleteMapping("/{combinationId}/product/{productId}")
+    @Operation(summary = "조합내의 제품 제거", description = "조합을 수정 시 개별적으로 조합에서 제품을 제거하는 api")
     public ResponseEntity<ResponseDto> removeCombinationProduct(@PathVariable long combinationId, @PathVariable int productId){
         combinationService.removeCombinationProduct(combinationId, productId);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합의 제품을 제거하였습니다."));

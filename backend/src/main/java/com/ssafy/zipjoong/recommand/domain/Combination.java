@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "combination")
+@ToString
 public class Combination extends EntityDate {
     @Id
     @Column(name="combination_id")
@@ -32,4 +33,8 @@ public class Combination extends EntityDate {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public void addCombinationProduct(CombinationProduct combinationProduct){
+        this.combinationProducts.add(combinationProduct);
+    }
 }
