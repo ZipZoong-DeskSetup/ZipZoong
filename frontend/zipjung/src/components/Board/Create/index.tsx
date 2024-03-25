@@ -39,8 +39,8 @@ function Form() {
         {ZustandId}
       </div>
       <div>
-        <GoBackButton text="취소"/>
-        <CreateButton />
+        <GoBackButton text="취소" />
+        <CreateButton onClick={onClick} />
       </div>
     </div>
   );

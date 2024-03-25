@@ -9,8 +9,8 @@ import DetailHead from '@/components/Board/[BoardId]/DetailHead';
 import styles from '@/components/Board/[BoardId]/index.module.scss';
 import DeleteButton from '@/components/Board/[BoardId]/DeleteButton';
 import GoUpdateButton from '@/components/Board/[BoardId]/GoModifyButton';
-import CommentInput from '@/components/Board/[BoardId]/CommentInput';
-import CommentList from '@/components/Board/[BoardId]/CommentList';
+import CommentInput from '@/components/Board/[BoardId]/Comment/CommentInput';
+import CommentList from '@/components/Board/[BoardId]/Comment/CommentList';
 
 interface Board {
   boardId: number;
