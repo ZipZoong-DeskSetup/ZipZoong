@@ -108,7 +108,8 @@ public class JwtUtils {
     }
 
     // 토큰을 통해 userId를 반환하는 메서드
-    public static String getUserId(String token) {
+    public static String getUserId(String authorizationToken) {
+        String token = JwtUtils.getTokenFromHeader(authorizationToken);
         Map<String, Object> claims = validateToken(token);
         return (String) claims.get("userId");
     }
