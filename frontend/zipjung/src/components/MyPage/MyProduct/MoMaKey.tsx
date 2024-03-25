@@ -19,11 +19,19 @@ const ProductButton = styled.div`
   justify-content: center;
   border-radius: 5px;
   cursor: pointer;
-  //TODO: active 지정
-  &:focus {
-    background-color: var(--main-color-dark);
-    color: var(--custom-background-color);
-  }
+`;
+const FocusProductButton = styled.div`
+  background-color: var(--main-color-dark);
+  color: var(--custom-background-color);
+  font-size: 18px;
+  font-weight: bold;
+  width: 80px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  cursor: pointer;
 `;
 const MoMaKey = ({productSelect}: {productSelect: (idx: number) => void}) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,11 +44,17 @@ const MoMaKey = ({productSelect}: {productSelect: (idx: number) => void}) => {
 
   return (
     <FirstContainer>
-      {productSort.map((item, idx) => (
-        <ProductButton tabIndex={0} key={idx} onClick={() => handleClick(idx)}>
-          {item}
-        </ProductButton>
-      ))}
+      {productSort.map((item, idx) =>
+        idx === selectedProduct ? (
+          <FocusProductButton key={idx} onClick={() => handleClick(idx)}>
+            {item}
+          </FocusProductButton>
+        ) : (
+          <ProductButton key={idx} onClick={() => handleClick(idx)}>
+            {item}
+          </ProductButton>
+        ),
+      )}
     </FirstContainer>
   );
 };
