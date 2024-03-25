@@ -23,7 +23,7 @@ public class CombinationProduct extends EntityDate {
     @JoinColumn(name = "combination_id")
     private Combination combination;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @MapsId("productId")
     @JoinColumn(name = "product_id")
     private Product product;
