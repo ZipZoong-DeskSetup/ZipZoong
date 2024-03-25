@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication
 @OpenAPIDefinition(
         servers = {
-                @Server(url="https://zipzoong.store", description="Default Server url")
+                @Server(url="https://back.zipzoong.store", description="Default Server url")
         }
 )
 public class ZipJoongApplication {
