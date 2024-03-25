@@ -91,4 +91,12 @@ interface MyPageCombiList {
   };
 }
 
-export type {MyPageUserInfo, NicknameCheck, MyPageCombination, MyPageCombiList};
+export type {
+  MyPageUserInfo,
+  NicknameCheck,
+  MyPageCombination,
+  MyPageCombiList,
+  MonitorDetail,
+  MouseDetail,
+  KeyboardDetail,
+};
