@@ -2,7 +2,7 @@
 import {useState} from 'react';
 import axios from 'axios';
 import CreateButton from '@/components/Board/Create/CreateButton';
-import styles from '@/components/Board/[BoardId]/CommentInput.module.scss';
+import styles from '@/components/Board/[BoardId]/Comment/CommentInput.module.scss';
 
 function CommentInput() {
   const [comment, setComment] = useState<string>('');

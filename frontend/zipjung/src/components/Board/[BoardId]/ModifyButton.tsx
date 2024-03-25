@@ -1,9 +1,15 @@
 import styles from '@/components/Board/[BoardId]/ModifyButton.module.scss';
 
-function ModifyButton() {
+interface ModifyButtonProps {
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+function ModifyButton({onClick}: ModifyButtonProps) {
   return (
     <div>
-      <button className={styles.UpdateButton}>수정</button>
+      <button className={styles.UpdateButton} onClick={onClick}>
+        수정
+      </button>
     </div>
   );
 }
