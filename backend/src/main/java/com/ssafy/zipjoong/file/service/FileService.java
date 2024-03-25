@@ -1,5 +1,6 @@
 package com.ssafy.zipjoong.file.service;
 
+import com.ssafy.zipjoong.board.domain.Board;
 import com.ssafy.zipjoong.file.dto.FileRequest;
 import com.ssafy.zipjoong.file.dto.FileResponse;
 
@@ -10,8 +11,8 @@ public interface FileService {
     void saveFile(FileRequest fileRequest);
 
     // 파일 삭제
-    void deleteFile(int boardId);
+    void deleteFile(Board board);
 
     // 게시글의 파일 목록 조회
-    List<FileResponse> getAllByBoard(int boardId);
+    List<FileResponse> getAllByBoard(Board board);
 }

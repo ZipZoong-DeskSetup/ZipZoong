@@ -34,14 +34,14 @@ public class FileServiceImpl implements FileService{
     /* 파일 삭제 */
     @Transactional
     @Override
-    public void deleteFile(int boardId) {
-        fileRepository.deleteByBoardId(boardId);
+    public void deleteFile(Board board) {
+        fileRepository.deleteByBoard(board);
     }
 
     /* 게시글의 파일 목록 조회 */
     @Override
-    public List<FileResponse> getAllByBoard(int boardId) {
-        List<File> files = fileRepository.findByBoardId(boardId);
+    public List<FileResponse> getAllByBoard(Board board) {
+        List<File> files = fileRepository.findAllByBoard(board);
         return files.stream()
                 .map(FileResponse::toDto)
                 .collect(Collectors.toList());
