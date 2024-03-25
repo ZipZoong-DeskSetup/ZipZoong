@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -57,10 +58,30 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     }
 
     @Override
-    /* S3에 저장된 파일 삭제 */
+    /* S3에서 파일 삭제 */
     public void deleteFile(String filePath) {
         try {
             amazonS3.deleteObject(bucket, filePath);
+        } catch (AmazonServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 삭제 중 오류가 발생하였습니다.");
+        }
+    }
+
+    @Override
+    /* S3에서 다수의 파일 삭제 */
+    public void deleteFiles(List<String> filePaths) {
+        try {
+            // 삭제할 파일들의 키 목록 생성
+            List<DeleteObjectsRequest.KeyVersion> keys = filePaths.stream()
+                    .map(DeleteObjectsRequest.KeyVersion::new)
+                    .collect(Collectors.toList());
+
+            // 삭제 요청 객체 생성
+            DeleteObjectsRequest deleteObjectsRequest = new DeleteObjectsRequest(bucket)
+                    .withKeys(keys);
+
+            // 파일 삭제
+            amazonS3.deleteObjects(deleteObjectsRequest);
         } catch (AmazonServiceException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 삭제 중 오류가 발생하였습니다.");
         }

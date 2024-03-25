@@ -11,6 +11,10 @@ public interface AwsS3Service {
     // 다중 파일 업로드
     List<String> uploadFiles(List<MultipartFile> multipartFiles, String fileOwnerId, String fileType);
 
-    // S3에 저장된 파일 삭제
+    // S3에서 파일 삭제
     void deleteFile(String filePath);
+
+    // S3에서 다수의 파일 삭제
+    void deleteFiles(List<String> filePaths);
+
 }
