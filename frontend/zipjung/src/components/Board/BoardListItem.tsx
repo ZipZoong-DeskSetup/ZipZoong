@@ -1,7 +1,11 @@
+/* eslint-disable no-console */
+import axios from 'axios';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 import styles from '@/components/Board/BoardListItem.module.scss';
 import useBoardStore from '@/stores/board';
+import useUserInfoStore from '@/stores/userInfo';
+
 
 interface Board {
   boardId: number;
@@ -23,9 +27,24 @@ function BoardListItem({boardList}: BoardListItemProps) {
   const router = useRouter();
   const {setZustandBoardId} = useBoardStore();
 
-  const handleClick = () => {
+  const moveToDetail = async () => {
+    try {
+      await axios.post('/api/some-endpoint', {
+        boardId: boardList.boardId,
+      });
+
+      console.log('POST 요청 성공');
+    } catch (error) {
+      console.error('POST 요청 실패:', error);
+    }
     setZustandBoardId(boardList.boardId);
     router.push(`/board/${boardList.boardId}`);
+  };
+
+  const handleClick = () => {
+    moveToDetail().catch(err => {
+      console.log(err);
+    });
   };
 
   return (
