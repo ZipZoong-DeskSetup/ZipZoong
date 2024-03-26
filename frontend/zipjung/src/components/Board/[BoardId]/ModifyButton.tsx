@@ -8,7 +8,7 @@ function ModifyButton({onClick}: ModifyButtonProps) {
   return (
     <div>
       <button className={styles.UpdateButton} onClick={onClick}>
-        수정
+        변경
       </button>
     </div>
   );

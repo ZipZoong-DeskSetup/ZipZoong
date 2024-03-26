@@ -4,6 +4,7 @@
 
 import {useEffect, useState} from 'react';
 import axios from 'axios';
+import useUserInfoStore from '@/stores/userInfo';
 import useBoardStore from '@/stores/board';
 import DetailHead from '@/components/Board/[BoardId]/DetailHead';
 import styles from '@/components/Board/[BoardId]/index.module.scss';
@@ -35,7 +36,9 @@ interface CommentsResponse {
   comments: Comment[];
 }
 function Form() {
+  const {ZustandId} = useUserInfoStore();
   const {ZustandboardId} = useBoardStore();
+  // TODO: 주석풀고 더미데이터 지우기
   // const [boardDetail, setBoardDetail] = useState<Board | null>(null);
   // const [comments, setComments] = useState<Comment[]>([]);
   const [commentCnt, setCommentCnt] = useState<number | null>(null);
@@ -169,17 +172,19 @@ function Form() {
 
   return (
     <div className={styles.BoardDetailDiv}>
-      <div className={styles.ButtonDiv}>
-        <GoUpdateButton
-          key={boardDetail.boardId}
-          boardId={boardDetail.boardId}
-        />
-        <DeleteButton
-          key={boardDetail.boardId}
-          contentId={boardDetail.boardId}
-          contentUrl="api/board"
-        />
-      </div>
+      {ZustandId === boardDetail.boardCreatorId ? (
+        <div className={styles.ButtonDiv}>
+          <GoUpdateButton
+            key={boardDetail.boardId}
+            boardId={boardDetail.boardId}
+          />
+          <DeleteButton
+            key={boardDetail.boardId}
+            contentId={boardDetail.boardId}
+            contentUrl="api/board"
+          />
+        </div>
+      ) : null}
       <div className={styles.HeadDiv}>
         <DetailHead
           key={boardDetail.boardId}

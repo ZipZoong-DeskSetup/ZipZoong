@@ -1,7 +1,6 @@
 import Image from 'next/image';
-import GoCommentModifyButton from '@/components/Board/[BoardId]/Comment/GoCommentModifyButton';
-import CommentModifyInput from '@/components/Board/[BoardId]/Comment/CommentModifyInput';
 import DeleteButton from '@/components/Board/[BoardId]/DeleteButton';
+import useUserInfoStore from '@/stores/userInfo';
 import styles from '@/components/Board/[BoardId]/Comment/CommentListItem.module.scss';
 
 interface Comment {
@@ -19,6 +18,8 @@ interface CommentProps {
 }
 
 function CommentListItem({comment, toggleModify}: CommentProps) {
+  const {ZustandId} = useUserInfoStore();
+
   return (
     <div className={styles.CommentListContain}>
       <div className={styles.CommentListdiv}>
@@ -36,18 +37,18 @@ function CommentListItem({comment, toggleModify}: CommentProps) {
         </div>
         <div>{comment.commentContent}</div>
       </div>
-      <div className={styles.commentButtons}>
-        {/* <GoCommentModifyButton onClick={}/> */}
-        <button className={styles.GoUpdateButton} onClick={toggleModify}>
-        수정
-      </button>
-        <CommentModifyInput comment={comment}/>
-        <DeleteButton
-          key={comment.commentId}
-          contentId={comment.commentId}
-          contentUrl="/api/comment"
-        />
-      </div>
+      {comment.commentCreatorId === ZustandId ? (
+        <div className={styles.commentButtons}>
+          <button className={styles.GoUpdateButton} onClick={toggleModify}>
+            수정
+          </button>
+          <DeleteButton
+            key={comment.commentId}
+            contentId={comment.commentId}
+            contentUrl="/api/comment"
+          />
+        </div>
+      ) : null}
     </div>
   );
 }

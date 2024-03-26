@@ -3,11 +3,34 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    padding: 10px;
+    padding: 20px;
+    gap: 20px;
+    border-bottom: 2px solid var(--main-color-dark);
 }
 
 .commentInput{
     width: 90%;
     min-height: 100px;
     border-radius: 10px;
+}
+
+.commentButtons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.cancelButton{
+    font-size: 15px;
+    font-weight: bold;
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: var(--button-main-color);
+}
+
+.cancelButton:hover{
+    background-color: var(--button-main-hover-color);
 }
