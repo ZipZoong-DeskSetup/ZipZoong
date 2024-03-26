@@ -4,8 +4,6 @@ import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 import styles from '@/components/Board/BoardListItem.module.scss';
 import useBoardStore from '@/stores/board';
-import useUserInfoStore from '@/stores/userInfo';
-
 
 interface Board {
   boardId: number;
