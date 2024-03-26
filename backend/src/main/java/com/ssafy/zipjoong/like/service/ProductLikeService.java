@@ -2,8 +2,9 @@ package com.ssafy.zipjoong.like.service;
 
 import com.ssafy.zipjoong.like.domain.ProductLike;
 import com.ssafy.zipjoong.like.dto.LikeProductsResponse;
-import com.ssafy.zipjoong.like.exception.LikeErrorCode;
+import com.ssafy.zipjoong.like.exception.ErrorCode;
 import com.ssafy.zipjoong.like.exception.ProductLikeException;
+import com.ssafy.zipjoong.like.exception.ProductTypeException;
 import com.ssafy.zipjoong.like.repository.ProductLikeRepository;
 import com.ssafy.zipjoong.product.domain.Keyboard;
 import com.ssafy.zipjoong.product.domain.Monitor;
@@ -15,14 +16,12 @@ import com.ssafy.zipjoong.product.dto.MouseResponse;
 import com.ssafy.zipjoong.product.exception.ProductErrorCode;
 import com.ssafy.zipjoong.product.exception.ProductException;
 import com.ssafy.zipjoong.product.repository.ProductRepository;
-import com.ssafy.zipjoong.recommand.dto.CombinationResponse;
-import com.ssafy.zipjoong.recommand.exception.CombinationErrorCode;
-import com.ssafy.zipjoong.recommand.exception.CombinationException;
 import com.ssafy.zipjoong.user.domain.User;
 import com.ssafy.zipjoong.user.exception.UserErrorCode;
 import com.ssafy.zipjoong.user.exception.UserException;
 import com.ssafy.zipjoong.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,7 +42,7 @@ public class ProductLikeService {
     @Transactional
     public ProductLike likeProduct(String userId, Integer productId) {
         if (productLikeRepository.existsByUserUserIdAndProductProductId(userId,productId))
-            throw new ProductLikeException(LikeErrorCode.PRODUCT_CONFLICT);
+            throw new ProductLikeException(ErrorCode.PRODUCT_CONFLICT);
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
@@ -63,7 +62,7 @@ public class ProductLikeService {
     @Transactional
     public Optional<ProductLike> unlikeProduct(String userId, Integer productId) {
         if (!productLikeRepository.existsByUserUserIdAndProductProductId(userId,productId))
-            throw new ProductLikeException(LikeErrorCode.PRODUCT_NOT_FOUND);
+            throw new ProductLikeException(ErrorCode.PRODUCT_NOT_FOUND);
         return productLikeRepository.deleteByUserUserIdAndProductProductId(userId,productId);
     }
 
@@ -74,17 +73,21 @@ public class ProductLikeService {
         List<KeyboardResponse> keyboardResponsesList = new ArrayList<>();
         List<MouseResponse> mouseResponsesList = new ArrayList<>();
         productLikeRepository.findByUserUserId(userId)
-                .orElseThrow(() -> new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND))
                 .forEach(productLike -> {
-                    Product product=productLike.getProduct();
-                    if (product.getProductType().equals("KEYBORD")) {
-                        keyboardResponsesList.add(KeyboardResponse.toDto((Keyboard)product));
-                    } else if (product.getProductType().equals("MONITOR")) {
-                        monitorResponseList.add(MonitorResponse.toDto((Monitor)product));
-                    } else if (product.getProductType().equals("MOUSE")) {
-                        mouseResponsesList.add(MouseResponse.toDto((Mouse)product));
-                    } else {
-                        // throw new
+                    System.out.println("test");
+                    Product product = productLike.getProduct();
+                    switch (product.getProductType()) {
+                        case "KEYBOARD":
+                            keyboardResponsesList.add(KeyboardResponse.toDto((Keyboard) Hibernate.unproxy(product)));
+                            break;
+                        case "MONITOR":
+                            monitorResponseList.add(MonitorResponse.toDto((Monitor) Hibernate.unproxy(product)));
+                            break;
+                        case "MOUSE":
+                            mouseResponsesList.add(MouseResponse.toDto((Mouse) Hibernate.unproxy(product)));
+                            break;
+                        default:
+                            throw new ProductTypeException(ErrorCode.PRODUCT_TYPE_NOT_FOUND, product.getProductType());
                     }
                 });
 

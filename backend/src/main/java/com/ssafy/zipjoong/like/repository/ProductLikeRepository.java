@@ -21,5 +21,5 @@ public interface ProductLikeRepository extends JpaRepository<ProductLike, Produc
     Optional<ProductLike> deleteByUserUserIdAndProductProductId(String userId, Integer productId);
 
     // 좋아요 제품 조회
-    Optional<List<ProductLike>> findByUserUserId(String userId);
+    List<ProductLike> findByUserUserId(String userId);
 }

@@ -1,7 +1,7 @@
 package com.ssafy.zipjoong.like.service;
 
 import com.ssafy.zipjoong.like.domain.CombinationLike;
-import com.ssafy.zipjoong.like.exception.LikeErrorCode;
+import com.ssafy.zipjoong.like.exception.ErrorCode;
 import com.ssafy.zipjoong.like.exception.CombinationLikeException;
 import com.ssafy.zipjoong.like.repository.CombinationLikeRepository;
 import com.ssafy.zipjoong.recommand.domain.Combination;
@@ -32,7 +32,7 @@ public class CombinationLikeService {
     @Transactional
     public CombinationLike likeCombination(String userId, Long combinationId) {
         if (combinationLikeRepository.existsByUserUserIdAndCombinationCombinationId(userId, combinationId))
-            throw new CombinationLikeException(LikeErrorCode.COMBINATION_CONFLICT);
+            throw new CombinationLikeException(ErrorCode.COMBINATION_CONFLICT);
 
         Combination combination = combinationRepository.findById(combinationId)
                 .orElseThrow(() -> new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND));
@@ -43,7 +43,7 @@ public class CombinationLikeService {
 
         // 조합 제품 중복 비교
         if (checkIfCombinationMatchesProductList(combinationId,givenProductIds))
-            throw new CombinationLikeException(LikeErrorCode.COMBINATION_CONFLICT);
+            throw new CombinationLikeException(ErrorCode.COMBINATION_CONFLICT);
 
         CombinationLike combinationLike = combinationLikeRepository.save(CombinationLike.builder()
                 .combination(combination)
@@ -59,7 +59,7 @@ public class CombinationLikeService {
         // 조합 ID에 해당하는 제품 ID 목록 조회
         List<Long> combinationProductIds = combinationLikeRepository.findProductIdsByCombinationId(combinationId)
                 // TODO: 이후 PRODUCT EXCEPTION 설정시 수정되어야 함
-                .orElseThrow(() -> new CombinationLikeException(LikeErrorCode.COMBINATION_NOT_FOUND));
+                .orElseThrow(() -> new CombinationLikeException(ErrorCode.COMBINATION_NOT_FOUND));
 
         // 주어진 제품 목록과 조합의 제품 목록 비교
         return new HashSet<>(givenProductIds).equals(new HashSet<>(combinationProductIds)) &&
@@ -70,7 +70,7 @@ public class CombinationLikeService {
     @Transactional
     public Optional<CombinationLike> unlikeCombination(String userId, Long combinationId) {
         if (!combinationLikeRepository.existsByUserUserIdAndCombinationCombinationId(userId, combinationId))
-            throw new CombinationLikeException(LikeErrorCode.COMBINATION_NOT_FOUND);
+            throw new CombinationLikeException(ErrorCode.COMBINATION_NOT_FOUND);
         return combinationLikeRepository.deleteByUserUserIdAndCombinationCombinationId(userId, combinationId);
     }
 }

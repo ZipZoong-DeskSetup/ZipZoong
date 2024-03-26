@@ -1,9 +1,6 @@
 package com.ssafy.zipjoong.like.controller;
 
-
-import com.ssafy.zipjoong.like.service.CombinationLikeService;
 import com.ssafy.zipjoong.like.service.ProductLikeService;
-import com.ssafy.zipjoong.product.dto.ProductResponse;
 import com.ssafy.zipjoong.security.jwt.utils.JwtUtils;
 import com.ssafy.zipjoong.util.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,7 +37,7 @@ public class ProductLikeController {
     @GetMapping("")
     @Operation(summary = "관심 제품 조회", description = "관심 제품을 조회하는 API")
     public ResponseEntity<ResponseDto> getLikeProduct(@RequestHeader("Authorization") String authorizationToken) {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 관심 제품을 조회하였습니다.",productLikeService.getLikeProducts(authorizationToken)));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 관심 제품을 조회하였습니다.",productLikeService.getLikeProducts(findUserId(authorizationToken))));
     }
 
 
