@@ -6,5 +6,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CombinationLikeException extends RuntimeException{
-    LikeErrorCode combinationLikeErrorCode;
+    ErrorCode combinationLikeErrorCode;
 }

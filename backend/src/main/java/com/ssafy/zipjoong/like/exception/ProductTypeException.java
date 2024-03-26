@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ProductLikeException extends RuntimeException{
-    ErrorCode productLikeErrorCode;
+public class ProductTypeException extends RuntimeException {
+    ErrorCode productTypeErrorCode;
+    String type;
 }
