@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use client';
 
 import axios from 'axios';
@@ -95,6 +96,7 @@ function Form() {
 
   const [selectedTab, setSelectedTab] = useState<TabName>('all');
   const [boardList, setBoardList] = useState<Board[]>([]);
+  const [searchText, setSearchText] = useState<string>('');
   const {ZustandId} = useUserInfoStore();
 
   const handleTabChange = (tabName: TabName) => {
@@ -110,22 +112,45 @@ function Form() {
         const response = await axios.get<Board[]>(apiUrl);
         setBoardList(response.data);
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error('Error fetching board list:', error);
       }
     };
 
     fetchBoardList().catch(error =>
-      // eslint-disable-next-line no-console
       console.error('fetchBoardList failed:', error),
     );
   }, [selectedTab, ZustandId]);
+
+  const searchBoard = async (): Promise<void> => {
+    // 검색 요청 로직
+    try {
+      const response = await axios.get<Board[]>(
+        `/api/board/search/${searchText}`,
+      );
+      // 여기서 response를 사용하여 BoardList를 업데이트
+      setBoardList(response.data);
+    } catch (error) {
+      console.error('Search failed:', error);
+    }
+  };
+
+  const handleSearch = () => {
+    searchBoard().catch(err => {
+      console.log(err);
+    });
+  };
 
   return (
     <div className={styles.BoardDiv}>
       <div className={styles.BoardTitle}>DESK SETUP 자유 게시판</div>
       <div className={styles.BoardHead}>
-        <BoardHead selectedTab={selectedTab} onTabChange={handleTabChange} />
+        <BoardHead
+          selectedTab={selectedTab}
+          onTabChange={handleTabChange}
+          searchText={searchText}
+          setSearchText={setSearchText}
+          onSearch={handleSearch}
+        />
       </div>
       <div className={styles.BoardContent}>
         <div className={styles.BoardContentItem}>
