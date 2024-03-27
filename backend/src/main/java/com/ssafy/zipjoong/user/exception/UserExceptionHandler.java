@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class UserExceptionHandler {
     @ExceptionHandler(UserException.class)
     protected ResponseEntity<ResponseDto> handleProductException(UserException e) {
-        return ResponseEntity.status(e.combinationErrorCode.getHttpStatus()).body(new ResponseDto(e.combinationErrorCode.getMessage()));
+        return ResponseEntity.status(e.userErrorCode.getHttpStatus()).body(new ResponseDto(e.userErrorCode.getMessage()));
     }
 }

@@ -6,5 +6,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class UserException extends RuntimeException{
-    UserErrorCode combinationErrorCode;
+    UserErrorCode userErrorCode;
 }
