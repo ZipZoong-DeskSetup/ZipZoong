@@ -1,5 +1,7 @@
 package com.ssafy.zipjoong.like.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ssafy.zipjoong.recommand.domain.Combination;
 import com.ssafy.zipjoong.user.domain.User;
 import com.ssafy.zipjoong.util.domain.EntityDate;
@@ -22,11 +24,13 @@ public class CombinationLike extends EntityDate {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")
+    @JsonBackReference
     @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("combinationId")
+    @JsonBackReference
     @JoinColumn(name = "combination_id")
     private Combination combination;
 

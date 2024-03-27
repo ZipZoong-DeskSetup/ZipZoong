@@ -1,6 +1,7 @@
 package com.ssafy.zipjoong.like.service;
 
 import com.ssafy.zipjoong.like.domain.CombinationLike;
+import com.ssafy.zipjoong.like.domain.CombinationLikeId;
 import com.ssafy.zipjoong.like.exception.ErrorCode;
 import com.ssafy.zipjoong.like.exception.CombinationLikeException;
 import com.ssafy.zipjoong.like.repository.CombinationLikeRepository;
@@ -42,12 +43,16 @@ public class CombinationLikeService {
                 .orElseThrow(() -> new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND));
 
         // 조합 제품 중복 비교
-        if (checkIfCombinationMatchesProductList(combinationId,givenProductIds))
+        if (!checkIfCombinationMatchesProductList(combinationId,givenProductIds))
             throw new CombinationLikeException(ErrorCode.COMBINATION_CONFLICT);
 
+        CombinationLikeId combinationLikeId = new CombinationLikeId(userId, combinationId);
+
         CombinationLike combinationLike = combinationLikeRepository.save(CombinationLike.builder()
+                .combinationLikeId(combinationLikeId)
                 .combination(combination)
                 .user(user)
+                .combinationLikeIsDeleted(false)
                 .build());
 
             combinationLikeRepository.save(combinationLike);
