@@ -1,5 +1,6 @@
 package com.ssafy.zipjoong.board.domain;
 
+import com.ssafy.zipjoong.comment.domain.Comment;
 import com.ssafy.zipjoong.file.domain.File;
 import com.ssafy.zipjoong.user.domain.User;
 import com.ssafy.zipjoong.util.domain.EntityDate;
@@ -34,10 +35,6 @@ public class Board extends EntityDate {
     // 조회수
     @Column(name="board_hit")
     private Integer boardHit;
-
-    // 임시저장 여부
-    @Column(name="board_is_draft")
-    private Boolean boardIsDraft;
 
     // 삭제 여부
     @Column(name="board_is_deleted")
