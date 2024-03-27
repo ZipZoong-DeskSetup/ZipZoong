@@ -34,6 +34,7 @@ public class JwtVerifyFilter extends OncePerRequestFilter {
             "/api-docs/**",
             "/combination",
             "/combination/**",
+            "/user/nickname/check/**",
     };
 
     private static void checkAuthorizationHeader(String header) {

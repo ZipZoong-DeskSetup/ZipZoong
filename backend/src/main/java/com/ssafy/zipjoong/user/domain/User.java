@@ -58,4 +58,16 @@ public class User extends EntityDate {
     @OneToMany(mappedBy = "user")
     private List<CombinationLike> combinationLikes;
 
+    public void updateUserNickname(String userNickname) {
+        if (userNickname != null && !userNickname.isEmpty()) {
+            this.userNickname = userNickname;
+        }
+    }
+
+    public void updateUserImg(String userImg) {
+        if (userImg != null && !userImg.isEmpty()) {
+            this.userImg = userImg;
+        }
+    }
+
 }

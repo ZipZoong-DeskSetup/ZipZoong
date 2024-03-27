@@ -88,6 +88,7 @@ public class SecurityConfig {
                         .requestMatchers("/api-docs/**").permitAll()
                         .requestMatchers("/combination").permitAll()
                         .requestMatchers("/combination/**").permitAll()
+                        .requestMatchers("/user/nickname/check").permitAll()
                         .anyRequest().permitAll());
 
         httpSecurity.addFilterBefore(jwtVerifyFilter(), UsernamePasswordAuthenticationFilter.class);
