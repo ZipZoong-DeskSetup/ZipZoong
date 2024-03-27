@@ -66,4 +66,8 @@ public class Board extends EntityDate {
             this.boardContent = request.getBoardContent();
         }
     }
+
+    public void delete() {
+        this.boardIsDeleted = true;
+    }
 }
