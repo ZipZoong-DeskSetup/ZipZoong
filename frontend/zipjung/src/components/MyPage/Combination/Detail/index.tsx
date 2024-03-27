@@ -52,7 +52,7 @@ const Form = () => {
   useEffect(() => {
     axios
       .get<ILikedCombinationList>(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/combination/1`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/combination/${zustandLikedCombinationNumber}`,
       )
       .then(response => {
         setLikedList(response.data);
