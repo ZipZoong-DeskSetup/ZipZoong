@@ -1,7 +1,6 @@
 package com.ssafy.zipjoong.user.controller;
 
 import com.ssafy.zipjoong.security.jwt.utils.JwtUtils;
-import com.ssafy.zipjoong.user.dto.UserImgUpdateRequest;
 import com.ssafy.zipjoong.user.dto.UserNicknameUpdateRequest;
 import com.ssafy.zipjoong.user.service.UserService;
 import com.ssafy.zipjoong.util.dto.ResponseDto;
@@ -10,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.Map;
@@ -53,10 +53,9 @@ public class UserController {
     // 프로필 사진 변경
     @PostMapping("/profile")
     public ResponseEntity<ResponseDto> updateProfile(@RequestHeader("Authorization") String authorizationToken,
-                                                     @RequestBody UserImgUpdateRequest updateRequest) {
-        System.out.println(updateRequest);
+                                                     @RequestPart MultipartFile userImg) {
         String userId = JwtUtils.getUserId(authorizationToken);
-        userService.updateUserImg(userId, updateRequest);
+        userService.updateUserImg(userId, userImg);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 프로필 사진을 변경하였습니다."));
     }
 
