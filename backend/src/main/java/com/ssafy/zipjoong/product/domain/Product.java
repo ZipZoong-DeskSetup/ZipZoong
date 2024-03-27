@@ -41,4 +41,8 @@ public abstract class Product {
     // 제품 주소
     @Column(name="product_url")
     private String productUrl;
+
+    public String getProductType() {
+        return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+    }
 }

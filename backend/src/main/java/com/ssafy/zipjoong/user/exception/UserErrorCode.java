@@ -12,8 +12,7 @@ public enum UserErrorCode {
     /* 403 FORBIDDEN: 권한이 없어 요청이 거부되었음 */
     USER_FORBIDDEN(HttpStatus.FORBIDDEN, "요청한 작업을 수행할 권한이 없는 유저 입니다."),
     /* 404 NOT_FOUND : Resource를 찾을 수 없음 */
-    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 유저가 존재하지 않습니다.")
-    ;
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 유저를 찾을 수 없습니다.");
     private final HttpStatus httpStatus;
     private final String message;
 }
