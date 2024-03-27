@@ -8,6 +8,10 @@ interface IMypageProductStore {
   zustandLikedProduct: MyList;
   setZustandLikedProduct: (newProduct: number) => void;
   deleteZustandLikedProduct: (targetProduct: number) => void;
+  zustandLikedCombiOrdinaryNumber: number;
+  setZustandLikedCombiOrdinaryNumber: (newOrdinaryNumber: number) => void;
+  zustandLikedCombinationNumber: number;
+  setZustandLikedCombinationNumber: (newNumber: number) => void;
   zustandLikedCombination: MyList;
   setZustandLikedCombination: (newCombination: number) => void;
   deleteZustandLikedCombination: (targetCombination: number) => void;
@@ -31,6 +35,12 @@ const useMypageProductStore = create<IMypageProductStore>()(
             product => product !== targetProduct,
           ),
         })),
+      zustandLikedCombiOrdinaryNumber: 0,
+      setZustandLikedCombiOrdinaryNumber: (newOrdinaryNumber: number) =>
+        set({zustandLikedCombiOrdinaryNumber: newOrdinaryNumber}),
+      zustandLikedCombinationNumber: 0,
+      setZustandLikedCombinationNumber: (newNumber: number) =>
+        set({zustandLikedCombinationNumber: newNumber}),
       zustandLikedCombination: [],
       setZustandLikedCombination: (newCombination: number) =>
         set(state => ({
