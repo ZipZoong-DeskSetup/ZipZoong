@@ -9,7 +9,9 @@ function CommentInput() {
 
   const postComment = async () => {
     try {
-      await axios.post<string>('/api/comment', {comment});
+      await axios.post<string>(`${process.env.NEXT_PUBLIC_BASE_URL}/comment`, {
+        comment,
+      });
       window.location.reload();
     } catch (error) {
       console.error('등록 실패:', error);

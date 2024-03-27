@@ -45,7 +45,7 @@ function CommentListItem({comment, toggleModify}: CommentProps) {
           <DeleteButton
             key={comment.commentId}
             contentId={comment.commentId}
-            contentUrl="/api/comment"
+            contentUrl="comment"
           />
         </div>
       ) : null}

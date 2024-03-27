@@ -13,7 +13,9 @@ function DeleteButton({contentId, contentUrl}: DeleteButtonProps) {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`${contentUrl}/${contentId}`);
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/${contentUrl}/${contentId}`,
+      );
       // eslint-disable-next-line no-alert
       alert('게시글이 성공적으로 삭제되었습니다.');
       // 삭제 후 로직 (예: 목록 페이지로 리다이렉트)

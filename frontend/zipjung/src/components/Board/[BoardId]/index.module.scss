@@ -10,7 +10,21 @@
     display: flex;
     justify-content: right;
     gap: 20px;
+}
+
+.creatorButton{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-top: 30px;
+    width: 70%;
+}
+
+.buttons{
+    display: flex;
+    width: 70%;
+    margin-top: 30px;
+    justify-content: left;
 }
 
 .HeadDiv{
@@ -37,5 +51,10 @@
 }
 
 .boardCommentDiv{
+    width: 70%;
+}
+
+.boardListDiv{
+    margin: 20px 0;
     width: 70%;
 }

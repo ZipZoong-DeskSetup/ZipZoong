@@ -2,6 +2,7 @@
 import {useState} from 'react';
 import CommentModifyInput from '@/components/Board/[BoardId]/Comment/CommentModifyInput';
 import CommentListItem from '@/components/Board/[BoardId]/Comment/CommentListItem';
+import styles from '@/components/Board/[BoardId]/Comment/CommentList.module.scss';
 
 interface Comment {
   commentId: number;
@@ -60,7 +61,9 @@ function CommentList({comments}: CommentsResponse) {
           ),
         )}
         {visibleCount < comments.length && (
-          <button onClick={showMoreComments}>더보기</button>
+          <button onClick={showMoreComments} className={styles.plusButton}>
+            +더보기
+          </button>
         )}
       </div>
     </div>
