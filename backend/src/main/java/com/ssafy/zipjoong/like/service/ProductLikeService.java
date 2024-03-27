@@ -49,7 +49,7 @@ public class ProductLikeService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
         User user = userRepository.findById(userId)
-                        .orElseThrow(() -> new UserException(UserErrorCode.COMBINATION_NOT_FOUND));
+                        .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
 
         ProductLikeId productLikeId = new ProductLikeId(userId, productId);
 

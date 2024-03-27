@@ -38,7 +38,7 @@ public class CombinationLikeService {
         Combination combination = combinationRepository.findById(combinationId)
                 .orElseThrow(() -> new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND));
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserException(UserErrorCode.COMBINATION_NOT_FOUND));
+                .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
         List<Long> givenProductIds = combinationLikeRepository.findProductIdsByCombinationId(combinationId)
                 .orElseThrow(() -> new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND));
 
