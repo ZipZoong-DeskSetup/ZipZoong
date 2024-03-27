@@ -24,7 +24,7 @@ interface NicknameCheck {
 interface MonitorDetail {
   productId: number;
   productName: string;
-  productType: 'MONITOR' | 'KEYBOARD' | 'MOUSE';
+  productType: 'MONITOR';
   details: {
     brand: string;
     size: number;
@@ -37,7 +37,7 @@ interface MonitorDetail {
 interface KeyboardDetail {
   productId: number;
   productName: string;
-  productType: 'MONITOR' | 'KEYBOARD' | 'MOUSE';
+  productType: 'KEYBOARD';
   details: {
     brand: string;
     switch: string;
@@ -50,7 +50,7 @@ interface KeyboardDetail {
 interface MouseDetail {
   productId: number;
   productName: string;
-  productType: 'MONITOR' | 'KEYBOARD' | 'MOUSE';
+  productType: 'MOUSE';
   details: {
     brand: string;
     connect: string;
@@ -91,6 +91,62 @@ interface MyPageCombiList {
   };
 }
 
+// FIXME: 데이터 구조보고 타입 수정 필요
+interface CombiMonitorDetail {
+  id: number;
+  name: string;
+  price: number;
+  img: string;
+  brand: string;
+  url: string;
+  category: 'MONITOR';
+  size: number;
+  resolution: string;
+  aspectRatio: string;
+  refreshRate: string;
+  panelType: string;
+  panelFormType: string;
+}
+
+interface CombiMouseDetail {
+  id: number;
+  name: '마우스이름6';
+  price: number;
+  img: string;
+  brand: string;
+  url: string;
+  category: 'MOUSE';
+  connect: string;
+  connectInterface: string;
+  mouseType: string;
+  dpi: string;
+  color: string;
+  weight: string;
+  width: string;
+  length: string;
+  height: string;
+  isSound: string;
+}
+
+interface CombiKeyboardDetail {
+  id: number;
+  name: '키보드이름6';
+  price: number;
+  img: string;
+  brand: string;
+  url: string;
+  category: 'KEYBOARD';
+  connect: string;
+  connectInterface: string;
+  keySwitch: string;
+  led: string;
+  num: string;
+  force: string;
+  color: string;
+  form: string;
+  contact: string;
+}
+
 export type {
   MyPageUserInfo,
   NicknameCheck,
@@ -99,4 +155,7 @@ export type {
   MonitorDetail,
   MouseDetail,
   KeyboardDetail,
+  CombiKeyboardDetail,
+  CombiMouseDetail,
+  CombiMonitorDetail,
 };
