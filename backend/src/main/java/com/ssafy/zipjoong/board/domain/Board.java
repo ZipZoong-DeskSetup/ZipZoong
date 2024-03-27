@@ -1,5 +1,6 @@
 package com.ssafy.zipjoong.board.domain;
 
+import com.ssafy.zipjoong.board.dto.BoardUpdateRequest;
 import com.ssafy.zipjoong.comment.domain.Comment;
 import com.ssafy.zipjoong.file.domain.File;
 import com.ssafy.zipjoong.user.domain.User;
@@ -56,4 +57,13 @@ public class Board extends EntityDate {
     // 파일 목록
     @OneToMany(mappedBy = "board")
     private List<File> files;
+
+    public void update(BoardUpdateRequest request) {
+        if (request.getBoardTitle() != null && !request.getBoardTitle().isEmpty()) {
+            this.boardTitle = request.getBoardTitle();
+        }
+        if (request.getBoardContent() != null && !request.getBoardContent().isEmpty()) {
+            this.boardContent = request.getBoardContent();
+        }
+    }
 }
