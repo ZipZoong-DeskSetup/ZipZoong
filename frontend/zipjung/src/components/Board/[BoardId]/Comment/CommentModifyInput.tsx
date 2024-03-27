@@ -28,9 +28,12 @@ function CommentModifyInput({comment, cancelEditing}: CommentProps) {
 
   const updateComment = async () => {
     try {
-      const response = await axios.put(`/api/comments/${comment.commentId}`, {
-        commentContent: newCommentContent,
-      });
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/comments/${comment.commentId}`,
+        {
+          commentContent: newCommentContent,
+        },
+      );
       console.log('Update success:', response.data);
       window.location.reload();
     } catch (error) {

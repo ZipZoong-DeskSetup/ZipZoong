@@ -12,6 +12,8 @@ import DeleteButton from '@/components/Board/[BoardId]/DeleteButton';
 import GoUpdateButton from '@/components/Board/[BoardId]/GoModifyButton';
 import CommentInput from '@/components/Board/[BoardId]/Comment/CommentInput';
 import CommentList from '@/components/Board/[BoardId]/Comment/CommentList';
+import GoBackButton from '@/components/Common/GoBackButton';
+import BoardSmallList from './BoardSmallList';
 
 interface Board {
   boardId: number;
@@ -37,7 +39,7 @@ interface CommentsResponse {
 }
 function Form() {
   const {ZustandId} = useUserInfoStore();
-  const {ZustandboardId} = useBoardStore();
+  const {ZustandboardId, ZustandsurroundingBoards} = useBoardStore();
   // TODO: 주석풀고 더미데이터 지우기
   // const [boardDetail, setBoardDetail] = useState<Board | null>(null);
   // const [comments, setComments] = useState<Comment[]>([]);
@@ -135,7 +137,7 @@ function Form() {
       if (ZustandboardId) {
         try {
           const response = await axios.get<Board>(
-            `/api/boards/${ZustandboardId}`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/boards/${ZustandboardId}`,
           );
           setBoardDetail(response.data);
         } catch (error) {
@@ -149,7 +151,7 @@ function Form() {
       if (ZustandboardId) {
         try {
           const response = await axios.get<CommentsResponse>(
-            `/api/comments/${ZustandboardId}`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/comments/${ZustandboardId}`,
           );
           setComments(response.data.comments);
           setCommentCnt(response.data.comments.length);
@@ -173,18 +175,25 @@ function Form() {
   return (
     <div className={styles.BoardDetailDiv}>
       {ZustandId === boardDetail.boardCreatorId ? (
-        <div className={styles.ButtonDiv}>
-          <GoUpdateButton
-            key={boardDetail.boardId}
-            boardId={boardDetail.boardId}
-          />
-          <DeleteButton
-            key={boardDetail.boardId}
-            contentId={boardDetail.boardId}
-            contentUrl="api/board"
-          />
+        <div className={styles.creatorButton}>
+          <GoBackButton text="뒤로" />
+          <div className={styles.ButtonDiv}>
+            <GoUpdateButton
+              key={boardDetail.boardId}
+              boardId={boardDetail.boardId}
+            />
+            <DeleteButton
+              key={boardDetail.boardId}
+              contentId={boardDetail.boardId}
+              contentUrl="board"
+            />
+          </div>
         </div>
-      ) : null}
+      ) : (
+        <div className={styles.buttons}>
+          <GoBackButton text="뒤로" />
+        </div>
+      )}
       <div className={styles.HeadDiv}>
         <DetailHead
           key={boardDetail.boardId}
@@ -200,6 +209,11 @@ function Form() {
       </div>
       <div className={styles.boardCommentDiv}>
         <CommentList key={boardDetail.boardId} comments={comments} />
+      </div>
+      <div className={styles.boardListDiv}>
+        {ZustandsurroundingBoards.map((board, index) => (
+          <BoardSmallList key={index} board={board} />
+        ))}
       </div>
     </div>
   );
