@@ -11,8 +11,8 @@ import RecommendDetailButton from '@/components/Common/Recommend/GoRecommendDeta
 import RecommendLikeButton from '@/components/Common/Recommend/RecommendLikeButton';
 import ShareButton from '@/components/Common/Recommend/ShareButton';
 // import useUserInfoStore from '@/stores/userInfo';
-
-import useRecommendStore from '@/stores/recommend';
+import useMypageProductStore from '@/stores/mypageProduct';
+// import useRecommendStore from '@/stores/recommend';
 import styles from '@/components/Recommend/index.module.scss';
 
 // import {
@@ -49,6 +49,7 @@ interface ICombinationResponse {
 // TODO: 서버연결 api랑 타입 체크, 노션 살아나면 하기, 보내는 링크 바꾸기
 // TODO: 선택한 것 없을 시 선택한 것 없음 문구와 함께 추천받으러 가기 띄우기
 const CombinationForm = () => {
+  const {setZustandLikedCombinationNumber} = useMypageProductStore();
   // const {ZustandToken} = useUserInfoStore();
   /**
    * 서버 연결해서 조합 리스트와 제품 리스트 받기
@@ -289,25 +290,20 @@ const CombinationForm = () => {
 
   // TODO: 북마크 파악하기(주스탠드 저장)
 
-  const {ZustandRecommendList, setZustandRecommendDetail} = useRecommendStore();
+  // const {ZustandRecommendList, setZustandRecommendDetail} = useRecommendStore();
   const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
 
   const router = useRouter();
 
   const handleDetailClick = (id: number) => {
-    // 클라이언트 사이드에서만 실행
-    // 선택된 id에 해당하는 item을 찾음
-    // TODO: 주석 변경하기
-    const detail = ZustandRecommendList.find(item => item.id === id);
+    // TODO: 조합번호 넣기
     // const detail = List.find(item => item.id === id);
 
     // 찾은 item을 ZustandRecommendDetail에 저장
-    if (detail) {
-      setZustandRecommendDetail(detail);
-      // 상세 페이지로 이동
+    if (id) {
+      setZustandLikedCombinationNumber(id);
     }
-    // FIXME: 현재 이동 안 하고 있음
-    router.push('/detail');
+    router.push('mypage/likeZip');
   };
 
   const toggleDropdown = (id: number) => {
