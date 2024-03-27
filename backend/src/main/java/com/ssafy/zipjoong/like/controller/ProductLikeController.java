@@ -20,7 +20,7 @@ public class ProductLikeController {
 
 
     /* 관심 제품 좋아요 */
-    @PostMapping("/{productiId}")
+    @PostMapping("/{productId}")
     @Operation(summary = "관심 제품 좋아요 추가", description = "관심 제품을 추가하는 API")
     public ResponseEntity<ResponseDto> saveLikeCombination(@RequestHeader("Authorization") String authorizationToken, @PathVariable Integer productId) {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 관심 제품을 추가하였습니다.",productLikeService.likeProduct(findUserId(authorizationToken), productId)));

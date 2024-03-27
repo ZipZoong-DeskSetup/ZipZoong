@@ -1,5 +1,6 @@
 package com.ssafy.zipjoong.like.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.zipjoong.product.domain.Product;
 import com.ssafy.zipjoong.user.domain.User;
 import com.ssafy.zipjoong.util.domain.EntityDate;
@@ -21,6 +22,7 @@ public class ProductLike extends EntityDate {
 
     // 좋아요한 유저
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @MapsId("userId")
     @JoinColumn(name = "user_id")
     private User user;

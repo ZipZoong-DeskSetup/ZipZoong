@@ -1,6 +1,8 @@
 package com.ssafy.zipjoong.like.service;
 
+import com.ssafy.zipjoong.like.domain.CombinationLikeId;
 import com.ssafy.zipjoong.like.domain.ProductLike;
+import com.ssafy.zipjoong.like.domain.ProductLikeId;
 import com.ssafy.zipjoong.like.dto.LikeProductsResponse;
 import com.ssafy.zipjoong.like.exception.ErrorCode;
 import com.ssafy.zipjoong.like.exception.ProductLikeException;
@@ -32,7 +34,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class ProductLikeService {
     private final ProductLikeRepository productLikeRepository;
     private final ProductRepository productRepository;
@@ -41,7 +43,7 @@ public class ProductLikeService {
     // 제품 좋아요 추가
     @Transactional
     public ProductLike likeProduct(String userId, Integer productId) {
-        if (productLikeRepository.existsByUserUserIdAndProductProductId(userId,productId))
+        if (productLikeRepository.existsByUserUserIdAndProductLikeIdProductId(userId,productId))
             throw new ProductLikeException(ErrorCode.PRODUCT_CONFLICT);
 
         Product product = productRepository.findById(productId)
@@ -49,21 +51,22 @@ public class ProductLikeService {
         User user = userRepository.findById(userId)
                         .orElseThrow(() -> new UserException(UserErrorCode.COMBINATION_NOT_FOUND));
 
-        ProductLike productLike = productLikeRepository.save(ProductLike.builder()
+        ProductLikeId productLikeId = new ProductLikeId(userId, productId);
+
+        return productLikeRepository.save(ProductLike.builder()
+                .productLikeId(productLikeId)
                 .product(product)
                 .user(user)
+                .productLikeIsDeleted(false)
                 .build());
-
-        productLikeRepository.save(productLike);
-        return productLike;
     }
 
     // 제품 좋아요 취소
     @Transactional
     public Optional<ProductLike> unlikeProduct(String userId, Integer productId) {
-        if (!productLikeRepository.existsByUserUserIdAndProductProductId(userId,productId))
+        if (!productLikeRepository.existsByUserUserIdAndProductLikeIdProductId(userId,productId))
             throw new ProductLikeException(ErrorCode.PRODUCT_NOT_FOUND);
-        return productLikeRepository.deleteByUserUserIdAndProductProductId(userId,productId);
+        return productLikeRepository.deleteByUserUserIdAndProductLikeIdProductId(userId,productId);
     }
 
 

@@ -15,10 +15,10 @@ import java.util.Optional;
 public interface ProductLikeRepository extends JpaRepository<ProductLike, ProductLikeId> {
 
     // 제품 좋아요 여부 확인
-    boolean existsByUserUserIdAndProductProductId(String userId, Integer productId);
+    boolean existsByUserUserIdAndProductLikeIdProductId(String userId, Integer productId);
 
     // 제품 좋아요 삭제
-    Optional<ProductLike> deleteByUserUserIdAndProductProductId(String userId, Integer productId);
+    Optional<ProductLike> deleteByUserUserIdAndProductLikeIdProductId(String userId, Integer productId);
 
     // 좋아요 제품 조회
     List<ProductLike> findByUserUserId(String userId);
