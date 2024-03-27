@@ -1,5 +1,7 @@
 package com.ssafy.zipjoong.recommand.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ssafy.zipjoong.user.domain.User;
 import com.ssafy.zipjoong.util.domain.EntityDate;
 import jakarta.persistence.*;
@@ -27,6 +29,7 @@ public class Combination extends EntityDate {
 
     // 조합 목록
     @OneToMany(mappedBy = "combination")
+    @JsonManagedReference
     private List<CombinationProduct> combinationProducts;
 
     // 조합 생성자

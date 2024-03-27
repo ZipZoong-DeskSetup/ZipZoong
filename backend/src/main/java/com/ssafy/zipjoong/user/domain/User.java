@@ -1,5 +1,6 @@
 package com.ssafy.zipjoong.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ssafy.zipjoong.board.domain.Board;
 import com.ssafy.zipjoong.like.domain.CombinationLike;
 import com.ssafy.zipjoong.like.domain.ProductLike;
@@ -53,6 +54,7 @@ public class User extends EntityDate {
     @OneToMany(mappedBy = "user")
     private List<ProductLike> productLikes;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private List<CombinationLike> combinationLikes;
 
