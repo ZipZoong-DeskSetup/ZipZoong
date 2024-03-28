@@ -1,7 +1,11 @@
+import Form from '@/components/Board/Modify';
+
 export default function Page() {
   return (
     <>
-      <h2>나는 게시글 수정</h2>
+      <h2>
+        <Form />
+      </h2>
     </>
   );
 }

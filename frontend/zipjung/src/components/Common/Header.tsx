@@ -43,9 +43,9 @@ function Header() {
       </div>
 
       <div className={styles.Navbar}>
-        <a href="./survey">추천</a>
+        <a href="/survey">추천</a>
 
-        <a href="./board">게시판</a>
+        <a href="/board">게시판</a>
 
         {isLogin ? (
           <div className={styles.Logoutdiv}>

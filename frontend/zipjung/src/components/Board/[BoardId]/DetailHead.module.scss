@@ -1,0 +1,65 @@
+.BoardHeadContain{
+    width: 100%;
+    margin: 30px 0;
+}
+
+.BoardDetailHead{
+    display: flex;
+    justify-content: space-between;
+}
+
+.TitleDiv{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.Title{
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.createInfo{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profieImg{
+    border-radius: 100%;
+}
+
+.CreatorNickname{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.CreateAt{
+    font-size: 15px;
+}
+
+.boardInfo{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.boardInfoDiv{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.CommentImg{
+    width: 23px;
+    height: 23px;
+}
+
+.HitImg{
+    width: 30px;
+    height: 30px;
+}
+
+.boardHit{
+    font-size: 15px;
+}
