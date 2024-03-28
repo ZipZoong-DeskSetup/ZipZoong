@@ -49,7 +49,8 @@ interface ICombinationResponse {
 // TODO: 서버연결 api랑 타입 체크, 노션 살아나면 하기, 보내는 링크 바꾸기
 // TODO: 선택한 것 없을 시 선택한 것 없음 문구와 함께 추천받으러 가기 띄우기
 const CombinationForm = () => {
-  const {setZustandLikedCombinationNumber} = useMypageProductStore();
+  const {setZustandLikedCombinationNumber, setZustandLikedCombiOrdinaryNumber} =
+    useMypageProductStore();
   // const {ZustandToken} = useUserInfoStore();
   /**
    * 서버 연결해서 조합 리스트와 제품 리스트 받기
@@ -295,11 +296,12 @@ const CombinationForm = () => {
 
   const router = useRouter();
 
-  const handleDetailClick = (id: number) => {
+  const handleDetailClick = (index: number, id: number) => {
     // TODO: 조합번호 넣기
     // const detail = List.find(item => item.id === id);
 
     // 찾은 item을 ZustandRecommendDetail에 저장
+    setZustandLikedCombiOrdinaryNumber(index + 1);
     if (id) {
       setZustandLikedCombinationNumber(id);
     }
@@ -358,7 +360,9 @@ const CombinationForm = () => {
               <div>{findIndex(combination)}</div>
               <div className={styles.BtnPrice}>
                 <RecommendDetailButton
-                  onClick={() => handleDetailClick(combination.combinationId)}
+                  onClick={() =>
+                    handleDetailClick(index, combination.combinationId)
+                  }
                 />
                 <div className={styles.totalPrice}>
                   {combination.totalPrice}
