@@ -10,6 +10,8 @@ import java.util.List;
 @Builder
 public class CombinationResponse {
     private long combinationId;
-    private List<ProductResponse> products;
+    private List<ProductResponse> monitors;
+    private ProductResponse keyboard;
+    private ProductResponse mouse;
     private int totalPrice;
 }
