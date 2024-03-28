@@ -12,6 +12,7 @@ import GoBackButton from '@/components/Common/GoBackButton';
 import ShareButton from '@/components/Common/Recommend/ShareButton';
 import RecommendLikeButton from '@/components/Common/Recommend/RecommendLikeButton';
 import ImgCarousel from '@/components/MyPage/Combination/Detail/ImgCarousel';
+import ProductDetail from '@/components/MyPage/Combination/Detail/ProductDetail';
 import styles from '@/components/Recommend/Detail/index.module.scss';
 
 // TODO: 조합 상세조회(products에서 모니터 묶기/ detail로 묶기)
@@ -19,13 +20,17 @@ interface ILikedCombinationList {
   messages: string;
   data: {
     combinationId: number;
-    products: {
-      monitor: CombiMonitorDetail[];
-      keyboard: CombiKeyboardDetail;
-      mouse: CombiMouseDetail;
-    };
+    monitors: CombiMonitorDetail[];
+    keyboard: CombiKeyboardDetail;
+    mouse: CombiMouseDetail;
     totalPrice: number;
   };
+}
+
+interface ICombinationList {
+  monitors: CombiMonitorDetail[];
+  keyboard: CombiKeyboardDetail;
+  mouse: CombiMouseDetail;
 }
 
 interface ICarouselItem {
@@ -52,7 +57,7 @@ const Form = () => {
   useEffect(() => {
     axios
       .get<ILikedCombinationList>(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/combination/${zustandLikedCombinationNumber}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/combination/{zustandLikedCombinationNumber}`,
       )
       .then(response => {
         setLikedList(response.data);
@@ -64,33 +69,33 @@ const Form = () => {
   }, [zustandLikedCombinationNumber]);
 
   let propsCarousel: ICarousel | undefined;
-  if (
-    likedList &&
-    likedList.data &&
-    likedList.data.products &&
-    likedList.data.products.monitor
-  ) {
+  let propsCombinationList: ICombinationList | undefined;
+  if (likedList && likedList.data && likedList.data.monitors) {
     propsCarousel = {
       totalPrice: likedList.data.totalPrice || 0, // totalPrice가 없을 경우를 대비하여 기본값 0을 설정합니다.
-      monitor: likedList.data.products.monitor.map(item => ({
+      monitor: likedList.data.monitors.map(item => ({
         img: item.img,
         model: item.name,
         price: item.price,
       })),
       mouse: {
-        img: likedList.data.products.mouse.img,
-        model: likedList.data.products.mouse.name,
-        price: likedList.data.products.mouse.price,
+        img: likedList.data.mouse.img,
+        model: likedList.data.mouse.name,
+        price: likedList.data.mouse.price,
       },
       keyboard: {
-        img: likedList.data.products.keyboard.img,
-        model: likedList.data.products.keyboard.name,
-        price: likedList.data.products.keyboard.price,
+        img: likedList.data.keyboard.img,
+        model: likedList.data.keyboard.name,
+        price: likedList.data.keyboard.price,
       },
     };
-  } else {
-    // 처리할 내용 추가
+    propsCombinationList = {
+      monitors: likedList.data.monitors,
+      mouse: likedList.data.mouse,
+      keyboard: likedList.data.keyboard,
+    };
   }
+
   return (
     <div className={styles.detailContains}>
       <div className={styles.detailContain}>
@@ -98,8 +103,8 @@ const Form = () => {
           <GoBackButton />
         </div>
         {likedList?.data &&
-        likedList.data.products?.monitor &&
-        likedList.data.products.monitor.length > 0 ? (
+        likedList.data.monitors &&
+        likedList.data.monitors.length > 0 ? (
           <div className={styles.detailDiv}>
             <div className={styles.detailHead}>
               <div className={styles.detailId}>
@@ -119,6 +124,9 @@ const Form = () => {
                   key={zustandLikedCombinationNumber}
                   carouselData={propsCarousel}
                 />
+              )}
+              {propsCombinationList !== undefined && (
+                <ProductDetail propsCombinationList={propsCombinationList} />
               )}
             </div>
           </div>
