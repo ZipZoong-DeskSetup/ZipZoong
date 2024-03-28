@@ -11,9 +11,11 @@ import com.ssafy.zipjoong.board.exception.BoardException;
 import com.ssafy.zipjoong.board.repository.BoardCombinationRepository;
 import com.ssafy.zipjoong.board.repository.BoardRepository;
 import com.ssafy.zipjoong.recommand.domain.Combination;
+import com.ssafy.zipjoong.recommand.dto.CombinationResponse;
 import com.ssafy.zipjoong.recommand.exception.CombinationErrorCode;
 import com.ssafy.zipjoong.recommand.exception.CombinationException;
 import com.ssafy.zipjoong.recommand.repository.CombinationRepository;
+import com.ssafy.zipjoong.recommand.service.CombinationService;
 import com.ssafy.zipjoong.user.domain.User;
 import com.ssafy.zipjoong.user.exception.UserErrorCode;
 import com.ssafy.zipjoong.user.exception.UserException;
@@ -22,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,6 +37,7 @@ public class BoardServiceImpl implements BoardService {
     private final UserRepository userRepository;
     private final CombinationRepository combinationRepository;
     private final BoardCombinationRepository boardCombinationRepository;
+    private final CombinationService combinationService;
 
     /* 게시글 작성 */
     @Transactional
@@ -104,7 +108,16 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardDetailResponse getBoard(int boardId) {
         Board board = findBoard(boardId);
-        return BoardDetailResponse.toDto(board);
+
+        // 해당 게시글의 각 조합의 상세 정보 조회
+        List<CombinationResponse> combinationResponses = new ArrayList<>();
+        for (BoardCombination boardCombination : board.getCombinations()) {
+            Combination combination = boardCombination.getCombination();
+            CombinationResponse combinationResponse = combinationService.getCombination(combination.getCombinationId());
+            combinationResponses.add(combinationResponse);
+        }
+
+        return BoardDetailResponse.toDto(board, combinationResponses);
     }
 
     /* 게시글 검색 */
