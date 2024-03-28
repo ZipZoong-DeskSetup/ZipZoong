@@ -17,7 +17,9 @@ function RecommendLikeButton({itemId}: {itemId: number | undefined}) {
   // TODO: 주석 풀기
   useEffect(() => {
     axios
-      .get<Hardware[]>('/favorite/combination')
+      .get<Hardware[]>(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/favorite/combination`,
+      )
       .then(response => {
         const favorites = response.data;
         const found = favorites.find(favorite => favorite.id === itemId);
@@ -34,7 +36,9 @@ function RecommendLikeButton({itemId}: {itemId: number | undefined}) {
       // 좋아요를 취소하는 경우
       // TODO: 주석 풀기
       axios
-        .delete(`/favorite/combination/${combinationId}`)
+        .delete(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/favorite/combination/${combinationId}`,
+        )
         .then(() => {
           setIsLiked(false);
         })
@@ -45,7 +49,10 @@ function RecommendLikeButton({itemId}: {itemId: number | undefined}) {
       // 좋아요를 하는 경우
       // TODO: 주석 풀기
       axios
-        .post<PostResponse>('/favorite/combination', {itemId})
+        .post<PostResponse>(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/favorite/combination`,
+          {itemId},
+        )
         .then(response => {
           setIsLiked(true);
           setCombinationId(response.data.id);

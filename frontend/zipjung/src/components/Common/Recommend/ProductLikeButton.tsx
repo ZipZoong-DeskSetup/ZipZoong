@@ -17,7 +17,7 @@ function ProductLikeButton({itemId}: {itemId: number}) {
   // TODO: 주석풀기
   useEffect(() => {
     axios
-      .get<Hardware[]>('/favorite/product')
+      .get<Hardware[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/favorite/product`)
       .then(response => {
         // itemId와 일치하는 항목을 찾습니다.
         const found = response.data.find(hardware => hardware.id === itemId);
@@ -34,7 +34,9 @@ function ProductLikeButton({itemId}: {itemId: number}) {
       // 좋아요를 취소하는 경우
       // TODO: 주석풀기
       axios
-        .delete(`/favorite/product/${productId}`)
+        .delete(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/favorite/product/${productId}`,
+        )
         .then(() => {
           setIsLiked(false);
         })

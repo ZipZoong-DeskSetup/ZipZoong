@@ -1,10 +1,18 @@
 'use client';
 
-function CreateButton() {
+import styles from '@/components/Board/Create/CreateButton.module.scss';
+
+interface CreateButtonProps {
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+function CreateButton({onClick}: CreateButtonProps) {
   return (
-    <div>
-      <button>등록</button>
-    </div>
+    <>
+      <button className={styles.creatBtn} onClick={onClick}>
+        등록
+      </button>
+    </>
   );
 }
 
