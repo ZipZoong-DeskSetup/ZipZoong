@@ -8,16 +8,12 @@ import com.ssafy.zipjoong.board.dto.BoardResponse;
 import com.ssafy.zipjoong.board.dto.BoardUpdateRequest;
 import com.ssafy.zipjoong.board.exception.BoardErrorCode;
 import com.ssafy.zipjoong.board.exception.BoardException;
-import com.ssafy.zipjoong.board.repository.BoardProductRepository;
+import com.ssafy.zipjoong.board.repository.BoardCombinationRepository;
 import com.ssafy.zipjoong.board.repository.BoardRepository;
-import com.ssafy.zipjoong.file.domain.File;
-import com.ssafy.zipjoong.file.dto.FileRequest;
-import com.ssafy.zipjoong.file.repository.FileRepository;
-import com.ssafy.zipjoong.file.service.AwsS3ServiceImpl;
-import com.ssafy.zipjoong.product.domain.Product;
-import com.ssafy.zipjoong.product.exception.ProductErrorCode;
-import com.ssafy.zipjoong.product.exception.ProductException;
-import com.ssafy.zipjoong.product.repository.ProductRepository;
+import com.ssafy.zipjoong.recommand.domain.Combination;
+import com.ssafy.zipjoong.recommand.exception.CombinationErrorCode;
+import com.ssafy.zipjoong.recommand.exception.CombinationException;
+import com.ssafy.zipjoong.recommand.repository.CombinationRepository;
 import com.ssafy.zipjoong.user.domain.User;
 import com.ssafy.zipjoong.user.exception.UserErrorCode;
 import com.ssafy.zipjoong.user.exception.UserException;
@@ -36,10 +32,8 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
-    private final FileRepository fileRepository;
-    private final AwsS3ServiceImpl awsS3Service;
-    private final ProductRepository productRepository;
-    private final BoardProductRepository boardProductRepository;
+    private final CombinationRepository combinationRepository;
+    private final BoardCombinationRepository boardCombinationRepository;
 
     /* 게시글 작성 */
     @Transactional
@@ -52,28 +46,15 @@ public class BoardServiceImpl implements BoardService {
         Board board = boardCreateRequest.toEntity(user);
         board = boardRepository.save(board);
 
-        // 게시글의 각 제품에 대한 BoardProduct 엔티티를 생성하고 저장
-        for (Integer productId : boardCreateRequest.getProductIdList()) {
-            Product product = productRepository.findById(productId).orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
-            BoardCombination boardProduct = BoardCombination.builder()
+        // 게시글의 각 조합에 대한 BoardCombination 엔티티를 생성하고 저장
+        for (Long combinationId : boardCreateRequest.getCombinationIdList()) {
+            Combination combination = combinationRepository.findById(combinationId)
+                    .orElseThrow(() -> new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND));
+            BoardCombination boardCombination = BoardCombination.builder()
                     .board(board)
-//                    .product(product)
+                    .combination(combination)
                     .build();
-            boardProductRepository.save(boardProduct);
-        }
-
-        // S3에 첨부 파일 업로드
-        List<String> fileUrlList = awsS3Service.uploadFiles(boardCreateRequest.getFileList(), String.valueOf(board.getBoardId()),"post" );
-
-        // 첨부 파일들로 File 엔티티를 생성하고 저장
-        for (String fileUrl : fileUrlList) {
-            FileRequest fileRequest = FileRequest.builder()
-                    .filePath(fileUrl)
-                    .boardId(board.getBoardId())
-                    .build();
-
-            File file = fileRequest.toEntity(board);
-            fileRepository.save(file);
+            boardCombinationRepository.save(boardCombination);
         }
     }
 

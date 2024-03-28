@@ -13,7 +13,7 @@ public class BoardCreateRequest {
     private String boardTitle;
     private String boardContent;
     private String boardCreatorId;
-    private List<Integer> productIdList = new ArrayList<>();
+    private List<Long> combinationIdList = new ArrayList<>();
 
     public Board toEntity(User user) {
         Board board = Board.builder()
