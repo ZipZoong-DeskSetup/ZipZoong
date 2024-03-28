@@ -1,0 +1,20 @@
+.listDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--button-main-disabled-color);
+}
+
+.titleDiv{
+    display: flex;
+    gap: 30px;
+}
+
+.createDiv{
+    display: flex;
+    gap: 20px;
+}
+
+
