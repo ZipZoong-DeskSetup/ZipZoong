@@ -142,16 +142,17 @@ public class CombinationService {
         Page<Mouse> mousePage = mouseRepository.findAll(pageable);
 
         for(int i = 0; i < 5; i++){
-            List<ProductResponse> productResponses = new ArrayList<>();
-            productResponses.add(ProductResponse.toDto(keyboardPage.getContent().get(i)));
-            productResponses.add(ProductResponse.toDto(monitorPage.getContent().get(i)));
-            productResponses.add(ProductResponse.toDto(mousePage.getContent().get(i)));
+            List<ProductResponse> monitorResponses = new ArrayList<>();
+            monitorResponses.add(MonitorResponse.toDto(monitorPage.getContent().get(i)));
+            monitorResponses.add(MonitorResponse.toDto(monitorPage.getContent().get(i)));
             int totalPrice = keyboardPage.getContent().get(i).getProductPrice()
                     + monitorPage.getContent().get(i).getProductPrice()
                     + mousePage.getContent().get(i).getProductPrice();
 
             combinationResponseList.add(CombinationResponse.builder()
-                    .products(productResponses)
+                    .keyboard(KeyboardResponse.toDto(keyboardPage.getContent().get(i)))
+                    .mouse(MouseResponse.toDto(mousePage.getContent().get(i)))
+                    .monitors(monitorResponses)
                     .totalPrice(totalPrice)
                     .build());
         }
@@ -168,9 +169,11 @@ public class CombinationService {
 
         // 추천 상품
         List<ProductResponse> productResponses = new ArrayList<>();
-        productResponses.add(KeyboardResponse.toDto(keyboardPage.getContent().get(0)));
         productResponses.add(MonitorResponse.toDto(monitorPage.getContent().get(0)));
-        productResponses.add(MouseResponse.toDto(mousePage.getContent().get(0)));
+        productResponses.add(MonitorResponse.toDto(monitorPage.getContent().get(0)));
+
+        ProductResponse keyboardResponse = KeyboardResponse.toDto(keyboardPage.getContent().get(0));
+        ProductResponse mouseResponse = MouseResponse.toDto(mousePage.getContent().get(0));
 
         // 총 가격
         int totalPrice = keyboardPage.getContent().get(0).getProductPrice()
@@ -191,7 +194,9 @@ public class CombinationService {
 
         return RecommendRespone.builder()
                 .combinationId(0)
-                .products(productResponses)
+                .monitors(productResponses)
+                .keyboard(keyboardResponse)
+                .mouse(mouseResponse)
                 .similarProduct(similarProduct)
                 .totalPrice(totalPrice)
                 .build();
@@ -225,24 +230,30 @@ public class CombinationService {
 
     /* Combination entity -> CombinationResponse*/
     public CombinationResponse combinationToCombinationResponse(Combination combination, boolean isDeep){
-        List<ProductResponse> products = new ArrayList<>();
-        combination.getCombinationProducts().forEach(combinationProduct -> {
-            Product product = combinationProduct.getProduct();
-            if (isDeep && product instanceof Keyboard)
-                products.add(KeyboardResponse.toDto((Keyboard) product));
-            else if (isDeep && product instanceof Monitor)
-                products.add(MonitorResponse.toDto((Monitor) product));
-            else if (isDeep && product instanceof Mouse)
-                products.add(MouseResponse.toDto((Mouse) product));
-            else
-                products.add(ProductResponse.toDto(product));
-        });
+        List<ProductResponse> monitorResponse = new ArrayList<>();
 
-        return CombinationResponse.builder()
+        CombinationResponse  combinationResponse = CombinationResponse.builder()
                 .combinationId(combination.getCombinationId())
-                .products(products)
                 .totalPrice(combination.getCombinationPrice())
                 .build();
+
+        combination.getCombinationProducts().forEach(combinationProduct -> {
+            Product product = combinationProduct.getProduct();
+            if (product instanceof Keyboard){
+                if(isDeep)combinationResponse.setKeyboard(KeyboardResponse.toDto((Keyboard) product));
+                else combinationResponse.setKeyboard(ProductResponse.toDto(product));
+            }
+
+            else if (product instanceof Monitor){
+                if(isDeep) monitorResponse.add(MonitorResponse.toDto((Monitor) product));
+                else monitorResponse.add(ProductResponse.toDto(product));
+            }
+            else if (product instanceof Mouse)
+                if(isDeep)combinationResponse.setMouse(MouseResponse.toDto((Mouse) product));
+                else combinationResponse.setMouse(ProductResponse.toDto(product));
+        });
+        combinationResponse.setMonitors(monitorResponse);
+        return combinationResponse;
     }
 
 

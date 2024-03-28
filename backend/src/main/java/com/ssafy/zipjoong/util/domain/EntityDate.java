@@ -21,7 +21,7 @@ public abstract class EntityDate {
 
     // 수정일
     @LastModifiedDate
-    @Column(name="update_at", nullable = false, updatable = false)
+    @Column(name="update_at", nullable = false)
     private LocalDateTime updateAt;
 
 }
