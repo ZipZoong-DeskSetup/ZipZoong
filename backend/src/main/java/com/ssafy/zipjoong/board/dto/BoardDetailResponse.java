@@ -1,7 +1,7 @@
 package com.ssafy.zipjoong.board.dto;
 
 import com.ssafy.zipjoong.board.domain.Board;
-import com.ssafy.zipjoong.board.domain.BoardProduct;
+import com.ssafy.zipjoong.board.domain.BoardCombination;
 import com.ssafy.zipjoong.file.domain.File;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +20,7 @@ public class BoardDetailResponse {
     private String boardCreatorId;
     private String boardCreatorImg;
     private LocalDateTime boardCreatedAt;
-    private List<BoardProduct> boardProducts;
+    private List<BoardCombination> boardCombinations;
     private List<File> boardFiles;
 
     public static BoardDetailResponse toDto(Board board) {
@@ -33,7 +33,7 @@ public class BoardDetailResponse {
                 .boardCreatorId(board.getUser().getUserId())
                 .boardCreatorImg(board.getUser().getUserImg())
                 .boardCreatedAt(board.getCreateAt())
-                .boardProducts(board.getProducts())
+                .boardCombinations(board.getCombinations())
                 .boardFiles(board.getFiles())
                 .build();
     }

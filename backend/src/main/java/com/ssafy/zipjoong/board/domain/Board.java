@@ -50,9 +50,9 @@ public class Board extends EntityDate {
     @OneToMany(mappedBy = "board")
     private List<Comment> comments;
 
-    // 제품 목록
+    // 조합 목록
     @OneToMany(mappedBy = "board")
-    private List<BoardProduct> products;
+    private List<BoardCombination> combinations;
 
     // 파일 목록
     @OneToMany(mappedBy = "board")

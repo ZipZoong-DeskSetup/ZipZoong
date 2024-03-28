@@ -1,11 +1,11 @@
 package com.ssafy.zipjoong.board.repository;
 
-import com.ssafy.zipjoong.board.domain.BoardProduct;
-import com.ssafy.zipjoong.board.domain.BoardProductId;
+import com.ssafy.zipjoong.board.domain.BoardCombination;
+import com.ssafy.zipjoong.board.domain.BoardCombinationId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BoardProductRepository extends JpaRepository<BoardProduct, BoardProductId> {
+public interface BoardProductRepository extends JpaRepository<BoardCombination, BoardCombinationId> {
 
 }

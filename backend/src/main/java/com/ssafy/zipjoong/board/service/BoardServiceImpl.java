@@ -1,7 +1,7 @@
 package com.ssafy.zipjoong.board.service;
 
 import com.ssafy.zipjoong.board.domain.Board;
-import com.ssafy.zipjoong.board.domain.BoardProduct;
+import com.ssafy.zipjoong.board.domain.BoardCombination;
 import com.ssafy.zipjoong.board.dto.BoardCreateRequest;
 import com.ssafy.zipjoong.board.dto.BoardDetailResponse;
 import com.ssafy.zipjoong.board.dto.BoardResponse;
@@ -55,9 +55,9 @@ public class BoardServiceImpl implements BoardService {
         // 게시글의 각 제품에 대한 BoardProduct 엔티티를 생성하고 저장
         for (Integer productId : boardCreateRequest.getProductIdList()) {
             Product product = productRepository.findById(productId).orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
-            BoardProduct boardProduct = BoardProduct.builder()
+            BoardCombination boardProduct = BoardCombination.builder()
                     .board(board)
-                    .product(product)
+//                    .product(product)
                     .build();
             boardProductRepository.save(boardProduct);
         }
