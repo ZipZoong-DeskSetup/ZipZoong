@@ -57,7 +57,6 @@ public class BoardServiceImpl implements BoardService {
             Product product = productRepository.findById(productId).orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
             BoardCombination boardProduct = BoardCombination.builder()
                     .board(board)
-//                    .product(product)
                     .build();
             boardProductRepository.save(boardProduct);
         }
