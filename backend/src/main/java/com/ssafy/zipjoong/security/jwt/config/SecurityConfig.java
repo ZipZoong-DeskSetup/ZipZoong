@@ -7,6 +7,7 @@ import com.ssafy.zipjoong.security.oauth2.service.OAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -80,7 +81,6 @@ public class SecurityConfig {
                         .requestMatchers("/oauth2/login").permitAll()
                         .requestMatchers("/recommend/**").permitAll()
                         .requestMatchers("/survey/**").permitAll()
-                        .requestMatchers("/board/**").permitAll()
                         .requestMatchers("/connect/**").permitAll()
                         .requestMatchers("/product/**").permitAll()
                         .requestMatchers("/v3/api-docs").permitAll()
@@ -89,7 +89,11 @@ public class SecurityConfig {
                         .requestMatchers("/combination").permitAll()
                         .requestMatchers("/combination/**").permitAll()
                         .requestMatchers("/user/nickname/check").permitAll()
-                        .anyRequest().permitAll());
+                        .requestMatchers("/board").permitAll() // 전체 게시글 목록 조회
+                        .requestMatchers("/board/detail/*").permitAll() // 게시글 상세 조회
+                        .requestMatchers("/board/search/*").permitAll() // 게시글 검색
+                        .requestMatchers("/board/hit/*").permitAll() // 조회수 증가
+                        .anyRequest().authenticated());
 
         httpSecurity.addFilterBefore(jwtVerifyFilter(), UsernamePasswordAuthenticationFilter.class);
 
