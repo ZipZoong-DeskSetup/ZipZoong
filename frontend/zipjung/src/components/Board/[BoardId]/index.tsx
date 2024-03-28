@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
-
 'use client';
+
+/* eslint-disable no-console */
 
 import {useEffect, useState} from 'react';
 import axios from 'axios';
@@ -41,98 +41,97 @@ function Form() {
   const {ZustandId} = useUserInfoStore();
   const {ZustandboardId, ZustandsurroundingBoards} = useBoardStore();
   // TODO: 주석풀고 더미데이터 지우기
-  // const [boardDetail, setBoardDetail] = useState<Board | null>(null);
-  // const [comments, setComments] = useState<Comment[]>([]);
+  const [boardDetail, setBoardDetail] = useState<Board | null>(null);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [commentCnt, setCommentCnt] = useState<number | null>(null);
 
-  const boardDetail = {
-    boardId: 1,
-    boardTitle: '제목',
-    boardContent: '내용',
-    boardHit: 10,
-    boardCreator: '김싸피',
-    boardCreatorId: 2,
-    boardCreatorImg: '/Images/profileImg.png',
-    boardCreatedAt: '20240321',
-  };
+  // const boardDetail = {
+  //   boardId: 1,
+  //   boardTitle: '제목',
+  //   boardContent: '내용',
+  //   boardHit: 10,
+  //   boardCreator: '김싸피',
+  //   boardCreatorId: 2,
+  //   boardCreatorImg: '/Images/profileImg.png',
+  //   boardCreatedAt: '20240321',
+  // };
 
-  const comments = [
-    {
-      commentId: 1,
-      commentContent: '댓글 내용',
-      commentCreator: '김싸피',
-      commentCreatorId: 1,
-      commentCreatorImg: '/Images/profileImg.png',
-      commentCreatedAt: 'yyyyMMddHHmmss',
-    },
-    {
-      commentId: 2,
-      commentContent: '댓글 내용',
-      commentCreator: '박싸피',
-      commentCreatorId: 2,
-      commentCreatorImg: '/Images/profileImg.png',
-      commentCreatedAt: 'yyyyMMddHHmmss',
-    },
-    {
-      commentId: 3,
-      commentContent: '댓글 내용',
-      commentCreator: '이싸피',
-      commentCreatorId: 3,
-      commentCreatorImg: '/Images/profileImg.png',
-      commentCreatedAt: 'yyyyMMddHHmmss',
-    },
-    {
-      commentId: 4,
-      commentContent: '댓글 내용',
-      commentCreator: '김싸피',
-      commentCreatorId: 1,
-      commentCreatorImg: '/Images/profileImg.png',
-      commentCreatedAt: 'yyyyMMddHHmmss',
-    },
-    {
-      commentId: 5,
-      commentContent: '댓글 내용',
-      commentCreator: '박싸피',
-      commentCreatorId: 2,
-      commentCreatorImg: '/Images/profileImg.png',
-      commentCreatedAt: 'yyyyMMddHHmmss',
-    },
-    {
-      commentId: 6,
-      commentContent: '댓글 내용',
-      commentCreator: '이싸피',
-      commentCreatorId: 3,
-      commentCreatorImg: '/Images/profileImg.png',
-      commentCreatedAt: 'yyyyMMddHHmmss',
-    },
-    {
-      commentId: 7,
-      commentContent: '댓글 내용',
-      commentCreator: '김싸피',
-      commentCreatorId: 1,
-      commentCreatorImg: '/Images/profileImg.png',
-      commentCreatedAt: 'yyyyMMddHHmmss',
-    },
-    {
-      commentId: 8,
-      commentContent: '댓글 내용',
-      commentCreator: '박싸피',
-      commentCreatorId: 2,
-      commentCreatorImg: '/Images/profileImg.png',
-      commentCreatedAt: 'yyyyMMddHHmmss',
-    },
-    {
-      commentId: 9,
-      commentContent: '댓글 내용',
-      commentCreator: '이싸피',
-      commentCreatorId: 3,
-      commentCreatorImg: '/Images/profileImg.png',
-      commentCreatedAt: 'yyyyMMddHHmmss',
-    },
-  ];
+  // const comments = [
+  //   {
+  //     commentId: 1,
+  //     commentContent: '댓글 내용',
+  //     commentCreator: '김싸피',
+  //     commentCreatorId: 1,
+  //     commentCreatorImg: '/Images/profileImg.png',
+  //     commentCreatedAt: 'yyyyMMddHHmmss',
+  //   },
+  //   {
+  //     commentId: 2,
+  //     commentContent: '댓글 내용',
+  //     commentCreator: '박싸피',
+  //     commentCreatorId: 2,
+  //     commentCreatorImg: '/Images/profileImg.png',
+  //     commentCreatedAt: 'yyyyMMddHHmmss',
+  //   },
+  //   {
+  //     commentId: 3,
+  //     commentContent: '댓글 내용',
+  //     commentCreator: '이싸피',
+  //     commentCreatorId: 3,
+  //     commentCreatorImg: '/Images/profileImg.png',
+  //     commentCreatedAt: 'yyyyMMddHHmmss',
+  //   },
+  //   {
+  //     commentId: 4,
+  //     commentContent: '댓글 내용',
+  //     commentCreator: '김싸피',
+  //     commentCreatorId: 1,
+  //     commentCreatorImg: '/Images/profileImg.png',
+  //     commentCreatedAt: 'yyyyMMddHHmmss',
+  //   },
+  //   {
+  //     commentId: 5,
+  //     commentContent: '댓글 내용',
+  //     commentCreator: '박싸피',
+  //     commentCreatorId: 2,
+  //     commentCreatorImg: '/Images/profileImg.png',
+  //     commentCreatedAt: 'yyyyMMddHHmmss',
+  //   },
+  //   {
+  //     commentId: 6,
+  //     commentContent: '댓글 내용',
+  //     commentCreator: '이싸피',
+  //     commentCreatorId: 3,
+  //     commentCreatorImg: '/Images/profileImg.png',
+  //     commentCreatedAt: 'yyyyMMddHHmmss',
+  //   },
+  //   {
+  //     commentId: 7,
+  //     commentContent: '댓글 내용',
+  //     commentCreator: '김싸피',
+  //     commentCreatorId: 1,
+  //     commentCreatorImg: '/Images/profileImg.png',
+  //     commentCreatedAt: 'yyyyMMddHHmmss',
+  //   },
+  //   {
+  //     commentId: 8,
+  //     commentContent: '댓글 내용',
+  //     commentCreator: '박싸피',
+  //     commentCreatorId: 2,
+  //     commentCreatorImg: '/Images/profileImg.png',
+  //     commentCreatedAt: 'yyyyMMddHHmmss',
+  //   },
+  //   {
+  //     commentId: 9,
+  //     commentContent: '댓글 내용',
+  //     commentCreator: '이싸피',
+  //     commentCreatorId: 3,
+  //     commentCreatorImg: '/Images/profileImg.png',
+  //     commentCreatedAt: 'yyyyMMddHHmmss',
+  //   },
+  // ];
 
   useEffect(() => {
-    // 게시글 상세 정보 가져오기
     const fetchBoardDetail = async () => {
       if (ZustandboardId) {
         try {
@@ -146,7 +145,6 @@ function Form() {
       }
     };
 
-    // 댓글 데이터 가져오기
     const fetchComments = async () => {
       if (ZustandboardId) {
         try {
@@ -154,27 +152,28 @@ function Form() {
             `${process.env.NEXT_PUBLIC_BASE_URL}/comments/${ZustandboardId}`,
           );
           setComments(response.data.comments);
+          // 댓글 배열이 업데이트될 때마다 commentCnt 상태 업데이트
           setCommentCnt(response.data.comments.length);
         } catch (error) {
           console.error('댓글을 불러오는 중 오류가 발생했습니다.', error);
         }
       }
-      setCommentCnt(comments.length);
     };
 
     fetchBoardDetail().catch(err => {
-      console.log(err);
+      console.error(err);
     });
     fetchComments().catch(err => {
-      console.log(err);
+      console.error(err);
     });
+    // comments.length를 의존성 배열에서 제거
   }, [ZustandboardId]);
 
   if (!boardDetail) return <div>Loading...</div>;
 
   return (
     <div className={styles.BoardDetailDiv}>
-      {ZustandId === boardDetail.boardCreatorId ? (
+      {ZustandId !== boardDetail.boardCreatorId ? (
         <div className={styles.creatorButton}>
           <GoBackButton text="뒤로" />
           <div className={styles.ButtonDiv}>

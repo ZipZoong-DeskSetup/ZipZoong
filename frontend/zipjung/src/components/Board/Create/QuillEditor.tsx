@@ -1,8 +1,7 @@
 import dynamic from 'next/dynamic';
 import {useMemo, useState} from 'react';
-
-import 'react-quill/dist/quill.snow.css'; // 테마 스타일
-import './QuilEditor.scss';
+import 'react-quill/dist/quill.snow.css';
+import './QuillEditor.module.scss';
 
 type TInputEditor = {
   onChange: (value: string) => void;
@@ -11,16 +10,30 @@ type TInputEditor = {
 const ReactQuill = dynamic(() => import('react-quill'), {ssr: false});
 
 const QuillEditor = ({onChange}: TInputEditor) => {
-  // const QuilRef = useRef<ReactQuill>();
   const [contents, setContents] = useState('');
 
   const modules = useMemo(
     () => ({
       toolbar: {
         container: [
-          ['code-block', 'blockquote', 'bold', 'italic', 'underline', 'strike'],
-          [{size: ['small', false, 'large', 'huge']}, {color: []}],
+          [{header: [1, 2, false]}],
+          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+          [{list: 'ordered'}, {list: 'bullet'}, {indent: '-1'}, {indent: '+1'}],
+          ['link', 'image'],
+          [
+            {size: ['small', false, 'large', 'huge']},
+            {align: []},
+            {color: []},
+            {background: []},
+          ],
+          ['clean'],
         ],
+      },
+
+      history: {
+        delay: 500,
+        maxStack: 100,
+        userOnly: true,
       },
     }),
     [],
@@ -34,17 +47,11 @@ const QuillEditor = ({onChange}: TInputEditor) => {
     <div className={'content'}>
       <ReactQuill
         className={'editor'}
-        // ref={element => {
-        //   if (element !== null) {
-        //     QuilRef.current = element;
-        //   }
-        // }}
         value={contents}
-        // onChange={setContents}
         onChange={handleContentChange}
         modules={modules}
         theme="snow"
-        placeholder="질문을 입력해주세요"
+        placeholder="내용을 작성하세요"
       />
     </div>
   );
