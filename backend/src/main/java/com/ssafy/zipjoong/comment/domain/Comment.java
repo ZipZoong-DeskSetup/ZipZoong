@@ -41,7 +41,6 @@ public class Comment extends EntityDate {
     private Board board;
 
     public void update(CommentUpdateRequest request) {
-        System.out.println(request.getCommentContent());
         if (request.getCommentContent() != null && !request.getCommentContent().isEmpty()) {
             this.commentContent = request.getCommentContent();
         }
