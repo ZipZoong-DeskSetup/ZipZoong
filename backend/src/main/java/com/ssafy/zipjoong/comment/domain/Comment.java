@@ -1,5 +1,7 @@
-package com.ssafy.zipjoong.board.domain;
+package com.ssafy.zipjoong.comment.domain;
 
+import com.ssafy.zipjoong.board.domain.Board;
+import com.ssafy.zipjoong.comment.dto.CommentUpdateRequest;
 import com.ssafy.zipjoong.user.domain.User;
 import com.ssafy.zipjoong.util.domain.EntityDate;
 import jakarta.persistence.*;
@@ -37,5 +39,15 @@ public class Comment extends EntityDate {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id", nullable = false)
     private Board board;
+
+    public void update(CommentUpdateRequest request) {
+        if (request.getCommentContent() != null && !request.getCommentContent().isEmpty()) {
+            this.commentContent = request.getCommentContent();
+        }
+    }
+
+    public void delete() {
+        this.commentIsDeleted = true;
+    }
 
 }
