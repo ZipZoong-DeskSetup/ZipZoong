@@ -1,9 +1,7 @@
 /* eslint-disable no-console */
-import axios from 'axios';
+
 import Image from 'next/image';
-import {useRouter} from 'next/navigation';
 import styles from '@/components/Board/BoardListItem.module.scss';
-import useBoardStore from '@/stores/board';
 
 interface Board {
   boardId: number;
