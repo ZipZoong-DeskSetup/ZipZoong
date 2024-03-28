@@ -25,6 +25,7 @@ function Form() {
     setFormContent(content);
   };
 
+  // `goCreate` 함수의 비동기 처리를 위해 async 키워드 사용
   const goCreate = async () => {
     try {
       console.log(formContent);
@@ -48,7 +49,7 @@ function Form() {
 
   const handleCreate = () => {
     goCreate().catch(err => {
-      console.error(err);
+      console.error(err); // 로그 출력 시 console.error를 사용하는 것이 적절
     });
   };
 
