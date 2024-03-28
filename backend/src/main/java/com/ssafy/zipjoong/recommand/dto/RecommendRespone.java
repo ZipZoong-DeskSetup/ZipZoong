@@ -11,7 +11,9 @@ import java.util.Map;
 @Builder
 public class RecommendRespone {
     private long combinationId;
-    private List<ProductResponse> products;
+    private List<ProductResponse> monitors;
+    private ProductResponse keyboard;
+    private ProductResponse mouse;
     private Map<String, List<ProductResponse>> similarProduct;
     private int totalPrice;
 }
