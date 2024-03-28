@@ -103,14 +103,14 @@ interface CombiMonitorDetail {
   size: number;
   resolution: string;
   aspectRatio: string;
-  refreshRate: string;
+  refreshRate: number;
   panelType: string;
   panelFormType: string;
 }
 
 interface CombiMouseDetail {
   id: number;
-  name: '마우스이름6';
+  name: string;
   price: number;
   img: string;
   brand: string;
@@ -119,29 +119,29 @@ interface CombiMouseDetail {
   connect: string;
   connectInterface: string;
   mouseType: string;
-  dpi: string;
+  dpi: number;
   color: string;
-  weight: string;
-  width: string;
-  length: string;
-  height: string;
-  isSound: string;
+  weight: number;
+  width: number;
+  length: number;
+  height: number;
+  isSound: boolean;
 }
 
 interface CombiKeyboardDetail {
   id: number;
-  name: '키보드이름6';
+  name: string;
   price: number;
   img: string;
   brand: string;
   url: string;
   category: 'KEYBOARD';
   connect: string;
-  connectInterface: string;
+  connectInterface: string | null;
   keySwitch: string;
-  led: string;
-  num: string;
-  force: string;
+  led: string | null;
+  num: number;
+  force: number;
   color: string;
   form: string;
   contact: string;
