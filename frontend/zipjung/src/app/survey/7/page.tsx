@@ -1,9 +1,8 @@
-import Form from '@/components/Survey';
+import Form from '@/components/Survey/Form/index7';
 
 export default function Page() {
   return (
     <>
-      <div>설문조사</div>
       <Form />
     </>
   );
