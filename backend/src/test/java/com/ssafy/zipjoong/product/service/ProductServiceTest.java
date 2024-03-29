@@ -119,11 +119,8 @@ class ProductServiceTest {
 
         // when
         ProductResponse productResponseKeyboard = productService.getProduct(mockKeyboardId);
-        log.info("productResponse : {}", productResponseKeyboard);
         ProductResponse productResponseMonitor = productService.getProduct(mockMonitorId);
-        log.info("productResponse : {}", productResponseMonitor);
         ProductResponse productResponseMouse = productService.getProduct(mockMouseId);
-        log.info("productResponse : {}", productResponseMouse);
 
         // then
         assertNotNull(productResponseKeyboard);

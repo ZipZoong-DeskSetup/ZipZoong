@@ -30,11 +30,9 @@ class MouseTest {
                 .mouseConnect(ConnectionType.BOTH)
                 .mouseInterface(InterfaceType.BOTH)
                 .build();
-        log.info("mockMouse : {}", mockMouse);
 
         // when
         Mouse saveMouse = mouseRepository.save(mockMouse);
-        log.info("saveMouse : {}", saveMouse);
 
         // then
         Assertions.assertThat(mockMouse).isEqualTo(saveMouse); // 저장전 mouse와 저장후 mouse가 같은지
