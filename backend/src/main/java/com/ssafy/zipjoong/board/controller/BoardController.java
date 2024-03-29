@@ -69,7 +69,7 @@ public class BoardController {
     }
 
     // 게시글 상세 조회
-    @GetMapping("/{boardId}")
+    @GetMapping("/detail/{boardId}")
     @Operation(summary = "게시글 상세 조회", description = "게시글 ID를 이용하여 해당 게시글 상세 조회")
     public ResponseEntity<ResponseDto> getBoard(@PathVariable(name = "boardId") int boardId) {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 게시글을 조회하였습니다.", boardService.getBoard(boardId)));
