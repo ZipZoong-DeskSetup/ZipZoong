@@ -83,6 +83,8 @@ public class SecurityConfig {
                         .requestMatchers("/survey/**").permitAll()
                         .requestMatchers("/connect/**").permitAll()
                         .requestMatchers("/product/**").permitAll()
+                        .requestMatchers("/swagger-resources/**").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/v3/api-docs").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/api-docs/**").permitAll()
@@ -93,7 +95,7 @@ public class SecurityConfig {
                         .requestMatchers("/board/detail/*").permitAll() // 게시글 상세 조회
                         .requestMatchers("/board/search/*").permitAll() // 게시글 검색
                         .requestMatchers("/board/hit/*").permitAll() // 조회수 증가
-                        .anyRequest().authenticated());
+                        .anyRequest().permitAll());
 
         httpSecurity.addFilterBefore(jwtVerifyFilter(), UsernamePasswordAuthenticationFilter.class);
 
