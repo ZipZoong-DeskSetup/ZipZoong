@@ -5,7 +5,7 @@
 import {useState} from 'react';
 import axios from 'axios';
 import TitleInput from '@/components/Board/Create/TitleInput';
-import ChooseRecommendButton from '@/components/Board/ChooseRecommendButton';
+// import ChooseRecommendButton from '@/components/Board/ChooseRecommendButton';
 import QuillEditor from '@/components/Board/Create/QuillEditor';
 import GoBackButton from '@/components/Common/GoBackButton';
 import CreateButton from '@/components/Board/Create/CreateButton';
@@ -15,7 +15,7 @@ import styles from '@/components/Board/Create/index.module.scss';
 function Form() {
   const [formTitle, setFormTitle] = useState<string>('');
   const [formContent, setFormContent] = useState<string>('');
-  const [showModal, setShowModal] = useState<boolean>(false);
+  // const [showModal, setShowModal] = useState<boolean>(false);
 
   const {ZustandNickname, ZustandId} = useUserInfoStore();
 
@@ -30,14 +30,14 @@ function Form() {
   };
 
   // 모달
-  const handleOpenModal = () => {
-    axios.get()
-    setShowModal(true);
-  };
+  // const handleOpenModal = () => {
+  //   axios.get()
+  //   setShowModal(true);
+  // };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+  // const handleCloseModal = () => {
+  //   setShowModal(false);
+  // };
 
   const goCreate = async () => {
     try {
@@ -72,11 +72,11 @@ function Form() {
         <TitleInput onChange={handleChangeTitle} />
       </div>
       <div>
-        {!showModal ? (
+        {/* {!showModal ? (
           <ChooseRecommendButton onClick={handleOpenModal} />
         ) : (
           '리스트'
-        )}
+        )} */}
       </div>
       <div className={styles.createContent}>
         <QuillEditor onChange={handleChangeContent} />
