@@ -9,7 +9,6 @@ import CombinationList from '@/components/MyPage/Combination/CombinationList';
 // import RecommendPrice from '@/components/Common/Recommend/RecommendPrice';
 import RecommendDetailButton from '@/components/Common/Recommend/GoRecommendDetailButton';
 import RecommendLikeButton from '@/components/Common/Recommend/RecommendLikeButton';
-import ShareButton from '@/components/Common/Recommend/ShareButton';
 // import useUserInfoStore from '@/stores/userInfo';
 import useMypageProductStore from '@/stores/mypageProduct';
 // import useRecommendStore from '@/stores/recommend';
@@ -348,7 +347,6 @@ const CombinationForm = () => {
             <div className={styles.recommendHead}>
               <div className={styles.recommendId}>추천{index + 1}</div>
               <div className={styles.shareLike}>
-                <ShareButton />
                 <RecommendLikeButton
                   key={combination.combinationId}
                   itemId={combination.combinationId}
