@@ -9,7 +9,6 @@ import {
 } from '@/types/MyPage';
 import useMypageProductStore from '@/stores/mypageProduct';
 import GoBackButton from '@/components/Common/GoBackButton';
-import ShareButton from '@/components/Common/Recommend/ShareButton';
 import RecommendLikeButton from '@/components/Common/Recommend/RecommendLikeButton';
 import ImgCarousel from '@/components/MyPage/Combination/Detail/ImgCarousel';
 import ProductDetail from '@/components/MyPage/Combination/Detail/ProductDetail';
@@ -111,7 +110,6 @@ const Form = () => {
                 추천 {zustandLikedCombiOrdinaryNumber}
               </div>
               <div className={styles.buttons}>
-                <ShareButton />
                 <RecommendLikeButton
                   key={likedList.data.combinationId}
                   itemId={likedList.data.combinationId}
