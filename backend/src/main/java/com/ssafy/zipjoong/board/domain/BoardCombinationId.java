@@ -15,9 +15,9 @@ import java.io.Serializable;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardProductId implements Serializable {
-    @Column(name="product_id")
-    private Integer productId;
+public class BoardCombinationId implements Serializable {
+    @Column(name="combination_id")
+    private Long combinationId;
     @Column(name="board_id")
     private Integer boardId;
 }

@@ -1,6 +1,7 @@
 package com.ssafy.zipjoong.board.domain;
 
 import com.ssafy.zipjoong.product.domain.Product;
+import com.ssafy.zipjoong.recommand.domain.Combination;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,15 +13,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "board_product")
-public class BoardProduct {
+@Table(name = "board_combination")
+public class BoardCombination {
     @EmbeddedId
-    private BoardProductId boardProductId;
+    private BoardCombinationId boardCombinationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("productId")
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @MapsId("combinationId")
+    @JoinColumn(name = "combination_id")
+    private Combination combination;
 
     // 게시글
     @ManyToOne(fetch = FetchType.LAZY)
