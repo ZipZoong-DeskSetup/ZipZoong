@@ -9,7 +9,6 @@ import RecommendList from '@/components/Common/Recommend/RecommendList';
 import RecommendPrice from '@/components/Common/Recommend/RecommendPrice';
 import RecommendDetailButton from '@/components/Common/Recommend/GoRecommendDetailButton';
 import RecommendLikeButton from '@/components/Common/Recommend/RecommendLikeButton';
-import ShareButton from '@/components/Common/Recommend/ShareButton';
 
 import useRecommendStore from '@/stores/recommend';
 import styles from '@/components/Recommend/index.module.scss';
@@ -166,7 +165,6 @@ function Form() {
             <div className={styles.recommendHead}>
               <div className={styles.recommendId}>추천 {item.id}</div>
               <div className={styles.shareLike}>
-                <ShareButton />
                 <RecommendLikeButton key={item.id} itemId={item.id} />
               </div>
             </div>
