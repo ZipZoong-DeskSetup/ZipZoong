@@ -7,6 +7,7 @@ import com.ssafy.zipjoong.util.domain.EntityDate;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -38,6 +39,7 @@ public class Combination extends EntityDate {
     private User user;
 
     public void addCombinationProduct(CombinationProduct combinationProduct){
+        if(combinationProducts == null)combinationProducts = new ArrayList<>();
         this.combinationProducts.add(combinationProduct);
     }
 }
