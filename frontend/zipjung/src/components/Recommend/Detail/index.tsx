@@ -2,7 +2,6 @@
 
 import GoBackButton from '@/components/Common/GoBackButton';
 import useRecommendStore from '@/stores/recommend';
-import ShareButton from '@/components/Common/Recommend/ShareButton';
 import RecommendLikeButton from '@/components/Common/Recommend/RecommendLikeButton';
 import RecommendTotalImgList from '@/components/Recommend/Detail/RecommendTotalImgList';
 import styles from '@/components/Recommend/Detail/index.module.scss';
@@ -25,7 +24,6 @@ function Form() {
                 추천 {ZustandRecommendDetail?.id}
               </div>
               <div className={styles.buttons}>
-                <ShareButton />
                 <RecommendLikeButton
                   key={ZustandRecommendDetail?.id}
                   itemId={ZustandRecommendDetail?.id}

@@ -1,4 +1,4 @@
-import Form from '@/components/Survey/Result';
+import Form from '@/components/Survey/Form/index3';
 
 export default function Page() {
   return (
