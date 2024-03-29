@@ -30,11 +30,9 @@ class MonitorTest {
                 .monitorPanelType(MonitorPanelType.OLED)
                 .monitorPanelForm(MonitorPanelFormType.CURVED)
                 .build();
-        log.info("mockMonitor : {}", mockMonitor);
 
         // when
         Monitor saveMonitor = monitorRepository.save(mockMonitor);
-        log.info("saveMonitor : {}", saveMonitor);
 
         // then
         Assertions.assertThat(mockMonitor).isEqualTo(saveMonitor); // 저장전 monitor와 저장후 monitor가 같은지

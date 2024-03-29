@@ -21,11 +21,9 @@ class CombinationTest {
     void saveCombination(){
         // given
         Combination mockCombination = Combination.builder().combinationPrice(1000).build();
-        log.info("mockCombination : {}", mockCombination);
 
         // when
         Combination saveCombination = combinationRepository.save(mockCombination);
-        log.info("saveCombination : {}", saveCombination);
 
         // then
         Assertions.assertThat(mockCombination).isEqualTo(saveCombination);

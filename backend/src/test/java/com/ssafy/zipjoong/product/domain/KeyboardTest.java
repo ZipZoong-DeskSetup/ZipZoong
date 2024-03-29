@@ -30,11 +30,9 @@ class KeyboardTest {
                 .keyboardConnect(ConnectionType.BOTH)
                 .keyboardInterface(InterfaceType.BOTH)
                 .build();
-        log.info("mockKeyboard : {}", mockKeyboard);
 
         // when
         Keyboard saveKeyboard = keyboardRepository.save(mockKeyboard);
-        log.info("saveKeyboard : {}", saveKeyboard);
 
         // then
         Assertions.assertThat(mockKeyboard).isEqualTo(saveKeyboard); // 저장전 keyboard와 저장후 keyboard가 같은지
