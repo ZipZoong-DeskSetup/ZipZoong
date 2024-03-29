@@ -2,6 +2,7 @@ package com.ssafy.zipjoong.board.service;
 
 import com.ssafy.zipjoong.board.domain.Board;
 import com.ssafy.zipjoong.board.domain.BoardCombination;
+import com.ssafy.zipjoong.board.domain.BoardCombinationId;
 import com.ssafy.zipjoong.board.dto.BoardCreateRequest;
 import com.ssafy.zipjoong.board.dto.BoardDetailResponse;
 import com.ssafy.zipjoong.board.dto.BoardResponse;
@@ -27,6 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -46,18 +49,12 @@ public class BoardServiceImpl implements BoardService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
 
-        // 게시글 엔티티 생성 및 저장
         Board board = boardCreateRequest.toEntity(user);
         board = boardRepository.save(board);
 
         // 게시글의 각 조합에 대한 BoardCombination 엔티티를 생성하고 저장
         for (Long combinationId : boardCreateRequest.getCombinationIdList()) {
-            Combination combination = combinationRepository.findById(combinationId)
-                    .orElseThrow(() -> new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND));
-            BoardCombination boardCombination = BoardCombination.builder()
-                    .board(board)
-                    .combination(combination)
-                    .build();
+            BoardCombination boardCombination = createBoardCombination(board, combinationId);
             boardCombinationRepository.save(boardCombination);
         }
     }
@@ -72,6 +69,29 @@ public class BoardServiceImpl implements BoardService {
             throw new UserException(UserErrorCode.USER_FORBIDDEN);
         }
         board.update(boardUpdateRequest);
+
+        // 기존에 저장된 조합 확인
+        List<BoardCombination> existingCombinations = boardCombinationRepository.findByBoardCombinationIdBoardId(boardId);
+        Set<Long> existingCombinationIds = existingCombinations.stream()
+                .map(bc -> bc.getCombination().getCombinationId())
+                .collect(Collectors.toSet());
+
+        // boardUpdateRequest의 combinationIdList에 포함된 조합이 기존 조합 리스트에 없다면,
+        // 새로운 BoardCombination 엔티티를 생성하고 저장
+        for (Long newCombinationId : boardUpdateRequest.getCombinationIdList()) {
+            if (!existingCombinationIds.contains(newCombinationId)) {
+                BoardCombination newBoardCombination = createBoardCombination(board, newCombinationId);
+                boardCombinationRepository.save(newBoardCombination);
+            }
+        }
+
+        // 기존 조합 리스트에는 있지만, boardUpdateRequest의 combinationIdList에는 없는 조합이 있다면,
+        // 해당 BoardCombination를 삭제
+        existingCombinations.forEach(existingCombination -> {
+            if (!boardUpdateRequest.getCombinationIdList().contains(existingCombination.getCombination().getCombinationId())) {
+                boardCombinationRepository.delete(existingCombination);
+            }
+        });
     }
 
     /* 게시글 삭제 */
@@ -135,6 +155,20 @@ public class BoardServiceImpl implements BoardService {
     public void updateHit(int boardId) {
         Board board = findBoard(boardId);
         boardRepository.updateHit(boardId);
+    }
+
+    /* combinationId을 이용하여 BoardCombination 생성  */
+    private BoardCombination createBoardCombination(Board board, Long combinationId) {
+        Combination combination = combinationRepository.findById(combinationId)
+                .orElseThrow(() -> new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND));
+
+        BoardCombinationId boardCombinationId = new BoardCombinationId(combination.getCombinationId(), board.getBoardId());
+
+        return BoardCombination.builder()
+                .boardCombinationId(boardCombinationId)
+                .board(board)
+                .combination(combination)
+                .build();
     }
 
     private Board findBoard(int boardId) {
