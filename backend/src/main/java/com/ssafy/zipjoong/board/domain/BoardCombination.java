@@ -18,6 +18,7 @@ public class BoardCombination {
     @EmbeddedId
     private BoardCombinationId boardCombinationId;
 
+    // 조합
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("combinationId")
     @JoinColumn(name = "combination_id")

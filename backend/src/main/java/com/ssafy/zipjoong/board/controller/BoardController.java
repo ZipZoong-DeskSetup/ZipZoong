@@ -27,7 +27,7 @@ public class BoardController {
     @Operation(summary = "게시글 작성", description = "게시글 작성")
     public ResponseEntity<ResponseDto> createBoard(@RequestHeader("Authorization") String authorizationToken,
                                                    @RequestBody BoardCreateRequest boardCreateRequest) {
-        String userId = JwtUtils.getUserId(authorizationToken);
+        String userId = findUserId(authorizationToken);
         boardService.createBoard(userId, boardCreateRequest);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 게시글을 등록하였습니다."));
     }
@@ -38,7 +38,7 @@ public class BoardController {
     public ResponseEntity<ResponseDto> updateBoard(@PathVariable(name = "boardId") int boardId,
                                                    @RequestHeader("Authorization") String authorizationToken,
                                                    @RequestBody BoardUpdateRequest boardUpdateRequest) {
-        String userId = JwtUtils.getUserId(authorizationToken);
+        String userId = findUserId(authorizationToken);
         boardService.updateBoard(boardId, userId, boardUpdateRequest);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 게시글을 수정하였습니다."));
     }
@@ -48,7 +48,7 @@ public class BoardController {
     @Operation(summary = "게시글 삭제", description = "게시글 ID를 이용하여 게시글 삭제")
     public ResponseEntity<ResponseDto> deleteBoard(@PathVariable(name = "boardId") int boardId,
                                                    @RequestHeader("Authorization") String authorizationToken) {
-        String userId = JwtUtils.getUserId(authorizationToken);
+        String userId = findUserId(authorizationToken);
         boardService.deleteBoard(boardId, userId);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 게시글을 삭제하였습니다."));
     }
@@ -64,12 +64,12 @@ public class BoardController {
     @GetMapping("/byUser")
     @Operation(summary = "내가 쓴 게시글 목록 조회", description = "내가 쓴 게시글 목록 조회")
     public ResponseEntity<ResponseDto> getAllByCreator(@RequestHeader("Authorization") String authorizationToken) {
-        String userId = JwtUtils.getUserId(authorizationToken);
+        String userId = findUserId(authorizationToken);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 내가 쓴 게시글 목록을 조회하였습니다.", boardService.getAllByCreator(userId)));
     }
 
     // 게시글 상세 조회
-    @GetMapping("/{boardId}")
+    @GetMapping("/detail/{boardId}")
     @Operation(summary = "게시글 상세 조회", description = "게시글 ID를 이용하여 해당 게시글 상세 조회")
     public ResponseEntity<ResponseDto> getBoard(@PathVariable(name = "boardId") int boardId) {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 게시글을 조회하였습니다.", boardService.getBoard(boardId)));
@@ -90,4 +90,7 @@ public class BoardController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 게시글의 조회수가 증가하였습니다."));
     }
 
+    private String findUserId(String authorizationToken) {
+        return JwtUtils.getUserId(authorizationToken);
+    }
 }
