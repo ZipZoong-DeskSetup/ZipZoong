@@ -52,7 +52,7 @@ public class CombinationService {
 
     private final ProductRepository productRepository;
 
-    /* 조합 등록 -> 추후 유저정보 담아야함*/
+    /* 조합 등록 */
     @Transactional
     public CombinationResponse saveCombination(List<SaveCombinationProductRequest> requests, String userId){
         User user = userRepository.findById(userId).orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
@@ -102,10 +102,12 @@ public class CombinationService {
         CombinationProduct combinationProduct = combinationProductRepository.save(CombinationProduct.builder()
                 .combination(combination)
                 .product(product)
+                .combinationProductNum(1)
                 .combinationProductId(combinationProductId)
                 .build());
 
         combination.addCombinationProduct(combinationProduct);
+        combination.setCombinationPrice(combination.getCombinationPrice() + product.getProductPrice());
         combinationRepository.save(combination);
 
         return combinationToCombinationResponse(combination, true); // 상품 정보 디테일까지 가져오기
@@ -216,15 +218,23 @@ public class CombinationService {
     }
 
     /* 조합내 상품 삭제 */
+    @Transactional
     public void removeCombinationProduct(long combinationId ,int productId){
         CombinationProductId combinationProductId = CombinationProductId.builder().combinationId(combinationId).productId(productId).build();
 
-        if(!combinationRepository.existsById(combinationId))
-            throw new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND);
+
+        Combination combination = combinationRepository.findById(combinationId)
+                .orElseThrow(() -> new CombinationException(CombinationErrorCode.COMBINATION_NOT_FOUND));
 
         if(!combinationProductRepository.existsById(combinationProductId))
             throw new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND);
 
+        Product product = productRepository.findById(productId)
+                        .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
+
+        combination.setCombinationPrice(combination.getCombinationPrice() - product.getProductPrice());
+
+        combinationRepository.save(combination);
         combinationProductRepository.deleteById(combinationProductId);
     }
 
@@ -255,7 +265,4 @@ public class CombinationService {
         combinationResponse.setMonitors(monitorResponse);
         return combinationResponse;
     }
-
-
-
 }
