@@ -96,8 +96,7 @@ public class BoardController {
     @Operation(summary = "파일 업로드", description = "파일 업로드")
     public ResponseEntity<ResponseDto> uploadFile(@PathVariable(name = "boardId") int boardId,
                                                   @RequestPart MultipartFile file) {
-        boardService.uploadFile(boardId, file);
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 게시글의 파일을 업로드하였습니다."));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 파일을 S3에 업로드하였습니다.", boardService.uploadFile(boardId, file)));
     }
 
     private String findUserId(String authorizationToken) {
