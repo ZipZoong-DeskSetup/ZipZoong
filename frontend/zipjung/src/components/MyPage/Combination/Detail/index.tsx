@@ -100,7 +100,7 @@ const Form = () => {
     <div className={styles.detailContains}>
       <div className={styles.detailContain}>
         <div>
-          <GoBackButton />
+          <GoBackButton text="이전" />
         </div>
         {likedList?.data &&
         likedList.data.monitors &&
