@@ -27,79 +27,10 @@ interface Board {
 }
 
 function Form() {
-  // const BoardList = [
-  //   {
-  //     boardId: 1,
-  //     boardTitle: '제목1',
-  //     boardContent: '내용1',
-  //     boardHit: 2,
-  //     boardIsDraft: false,
-  //     boardCreator: '김싸피',
-  //     boardCreatorId: 1,
-  //     boardCreatorImg: '/Images/person.png',
-  //     boardCreatedAt: '20240319',
-  //   },
-  //   {
-  //     boardId: 2,
-  //     boardTitle: '제목23',
-  //     boardContent: '내용2',
-  //     boardHit: 2,
-  //     boardIsDraft: false,
-  //     boardCreator: '닉네임',
-  //     boardCreatorId: 2,
-  //     boardCreatorImg: '/Images/person.png',
-  //     boardCreatedAt: '20240320',
-  //   },
-  //   {
-  //     boardId: 3,
-  //     boardTitle: '제목233',
-  //     boardContent: '내용2',
-  //     boardHit: 2,
-  //     boardIsDraft: false,
-  //     boardCreator: '닉네임',
-  //     boardCreatorId: 2,
-  //     boardCreatorImg: '/Images/person.png',
-  //     boardCreatedAt: '20240320',
-  //   },
-  //   {
-  //     boardId: 4,
-  //     boardTitle: '제목2333',
-  //     boardContent: '내용2',
-  //     boardHit: 2,
-  //     boardIsDraft: false,
-  //     boardCreator: '닉네임',
-  //     boardCreatorId: 2,
-  //     boardCreatorImg: '/Images/person.png',
-  //     boardCreatedAt: '20240320',
-  //   },
-  //   {
-  //     boardId: 5,
-  //     boardTitle: '제목23333',
-  //     boardContent: '내용2',
-  //     boardHit: 2,
-  //     boardIsDraft: false,
-  //     boardCreator: '닉네임',
-  //     boardCreatorId: 2,
-  //     boardCreatorImg: '/Images/person.png',
-  //     boardCreatedAt: '20240320',
-  //   },
-  //   {
-  //     boardId: 6,
-  //     boardTitle: '제목2333333',
-  //     boardContent: '내용2',
-  //     boardHit: 2,
-  //     boardIsDraft: false,
-  //     boardCreator: '닉네임',
-  //     boardCreatorId: 2,
-  //     boardCreatorImg: '/Images/person.png',
-  //     boardCreatedAt: '20240320',
-  //   },
-  // ];
-
   const [selectedTab, setSelectedTab] = useState<TabName>('all');
   const [boardList, setBoardList] = useState<Board[]>([]);
   const [searchText, setSearchText] = useState<string>('');
-  const {ZustandId} = useUserInfoStore();
+  const {ZustandId, ZustandToken} = useUserInfoStore();
   const {setZustandBoardId, setZustandsurroundingBoards} = useBoardStore();
   const router = useRouter();
 
@@ -115,8 +46,22 @@ function Form() {
 
     const fetchBoardList = async () => {
       try {
-        const response = await axios.get<Board[]>(apiUrl);
-        setBoardList(response.data);
+        // 선택된 탭이 'mine'일 때만 Authorization 헤더를 포함하여 요청
+        const config =
+          selectedTab === 'mine'
+            ? {
+                headers: {
+                  Authorization: `Bearer ${ZustandToken}`,
+                },
+              }
+            : {};
+
+        const response = await axios.get<Board[]>(apiUrl, config); // config를 axios.get의 두 번째 인자로 전달
+        if (Array.isArray(response.data)) {
+          setBoardList(response.data);
+        } else {
+          console.error('Expected an array but got:', response.data);
+        }
       } catch (error) {
         console.error('Error fetching board list:', error);
       }
@@ -134,7 +79,17 @@ function Form() {
         `${process.env.NEXT_PUBLIC_BASE_URL}/board/search/${searchText}`,
       );
       // 여기서 response를 사용하여 BoardList를 업데이트
-      setBoardList(response.data);
+      if (Array.isArray(response.data)) {
+        // 배열인 경우, boardList를 업데이트
+        setBoardList(response.data);
+      } else {
+        // 배열이 아닌 경우, 콘솔에 오류 메시지 출력 및 boardList를 빈 배열로 설정
+        console.error(
+          'Search failed: Expected an array but got:',
+          response.data,
+        );
+        setBoardList([]);
+      }
     } catch (error) {
       console.error('Search failed:', error);
     }
@@ -197,13 +152,17 @@ function Form() {
               onClick={() => handleClick(board.boardId)}
             />
           ))} */}
-          {boardList.map(board => (
-            <BoardListItem
-              key={board.boardId}
-              boardList={board}
-              onClick={() => handleClick(board.boardId)}
-            />
-          ))}
+          {boardList.length > 0 ? (
+            boardList.map(board => (
+              <BoardListItem
+                key={board.boardId}
+                boardList={board}
+                onClick={() => handleClick(board.boardId)}
+              />
+            ))
+          ) : (
+            <div className={styles.noResults}>게시글이 없습니다.</div>
+          )}
         </div>
       </div>
     </div>
