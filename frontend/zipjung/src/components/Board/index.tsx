@@ -190,13 +190,6 @@ function Form() {
       </div>
       <div className={styles.BoardContent}>
         <div className={styles.BoardContentItem}>
-          {boardList.map((board, index) => (
-            <BoardListItem
-              key={index}
-              boardList={board}
-              onClick={() => handleClick(board.boardId)}
-            />
-          ))}
           {BoardList.map(board => (
             <BoardListItem
               key={board.boardId}
@@ -204,6 +197,13 @@ function Form() {
               onClick={() => handleClick(board.boardId)}
             />
           ))}
+          {/* {boardList.map(board => (
+            <BoardListItem
+              key={board.boardId}
+              boardList={board}
+              onClick={() => handleClick(board.boardId)}
+            />
+          ))} */}
         </div>
       </div>
     </div>

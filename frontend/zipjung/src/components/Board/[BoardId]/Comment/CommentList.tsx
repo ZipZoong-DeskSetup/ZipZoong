@@ -39,7 +39,7 @@ function CommentList({comments}: CommentsResponse) {
     setEditingCommentId(null);
   };
 
-  const visibleComments = comments.slice(0, visibleCount);
+  const visibleComments = comments?.slice(0, visibleCount) || [];
   return (
     <div>
       <div>
@@ -60,7 +60,7 @@ function CommentList({comments}: CommentsResponse) {
             />
           ),
         )}
-        {visibleCount < comments.length && (
+        {visibleCount < (comments?.length || 0) && (
           <button onClick={showMoreComments} className={styles.plusButton}>
             +더보기
           </button>
