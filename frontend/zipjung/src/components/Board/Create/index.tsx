@@ -233,8 +233,8 @@ function Form() {
         },
       };
 
-      console.log(postData);
-      console.log(config);
+      // console.log(postData);
+      // console.log(config);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/board`, // 요청 URL
         postData,
@@ -257,7 +257,7 @@ function Form() {
   return (
     <div className={styles.createDiv}>
       <div className={styles.createTitle}>
-        <TitleInput onChange={handleChangeTitle} />
+        <TitleInput title={formTitle} onChange={handleChangeTitle} />
       </div>
       <div className={styles.combinationDiv}>
         {combinationDetails.map(combination => (
