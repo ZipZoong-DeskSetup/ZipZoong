@@ -1,3 +1,12 @@
 .chooseButton{
-    
+    width: 150px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 20px;
+    background-color: var(--main-color);
+}
+
+.chooseButton:hover{
+    background-color: var(--main-color-dark);
 }
