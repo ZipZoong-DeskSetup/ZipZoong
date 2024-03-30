@@ -1,16 +1,22 @@
+// QuillEditor 컴포넌트 수정
 import dynamic from 'next/dynamic';
-import {useMemo, useState} from 'react';
+import {useMemo, useState, useEffect} from 'react';
 import 'react-quill/dist/quill.snow.css';
 import './QuillEditor.module.scss';
 
 type TInputEditor = {
   onChange: (value: string) => void;
+  content?: string;
 };
 
 const ReactQuill = dynamic(() => import('react-quill'), {ssr: false});
 
-const QuillEditor = ({onChange}: TInputEditor) => {
-  const [contents, setContents] = useState('');
+const QuillEditor = ({onChange, content = ''}: TInputEditor) => {
+  const [contents, setContents] = useState(content);
+
+  useEffect(() => {
+    setContents(content);
+  }, [content]);
 
   const modules = useMemo(
     () => ({
@@ -29,7 +35,6 @@ const QuillEditor = ({onChange}: TInputEditor) => {
           ['clean'],
         ],
       },
-
       history: {
         delay: 500,
         maxStack: 100,
@@ -39,10 +44,11 @@ const QuillEditor = ({onChange}: TInputEditor) => {
     [],
   );
 
-  const handleContentChange = (content: string) => {
-    setContents(content);
-    onChange(content);
+  const handleContentChange = (Newcontent: string) => {
+    setContents(Newcontent);
+    onChange(Newcontent);
   };
+
   return (
     <div className={'content'}>
       <ReactQuill
