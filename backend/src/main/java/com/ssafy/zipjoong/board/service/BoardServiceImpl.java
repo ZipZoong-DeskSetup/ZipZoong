@@ -11,6 +11,7 @@ import com.ssafy.zipjoong.board.exception.BoardErrorCode;
 import com.ssafy.zipjoong.board.exception.BoardException;
 import com.ssafy.zipjoong.board.repository.BoardCombinationRepository;
 import com.ssafy.zipjoong.board.repository.BoardRepository;
+import com.ssafy.zipjoong.file.service.AwsS3ServiceImpl;
 import com.ssafy.zipjoong.recommand.domain.Combination;
 import com.ssafy.zipjoong.recommand.dto.CombinationResponse;
 import com.ssafy.zipjoong.recommand.exception.CombinationErrorCode;
@@ -24,6 +25,7 @@ import com.ssafy.zipjoong.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,7 @@ public class BoardServiceImpl implements BoardService {
     private final CombinationRepository combinationRepository;
     private final BoardCombinationRepository boardCombinationRepository;
     private final CombinationService combinationService;
+    private final AwsS3ServiceImpl awsS3Service;
 
     /* 게시글 작성 */
     @Transactional
@@ -155,6 +158,14 @@ public class BoardServiceImpl implements BoardService {
     public void updateHit(int boardId) {
         Board board = findBoard(boardId);
         boardRepository.updateHit(boardId);
+    }
+
+    /* 파일 업로드 */
+    @Override
+    public String uploadFile(int boardId, MultipartFile file) {
+        Board board = findBoard(boardId);
+        String fileUrl = awsS3Service.uploadFileOne(file, String.valueOf(boardId), "post");
+        return fileUrl;
     }
 
     /* combinationId을 이용하여 BoardCombination 생성  */

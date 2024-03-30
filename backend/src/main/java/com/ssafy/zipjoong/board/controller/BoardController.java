@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -88,6 +89,14 @@ public class BoardController {
     public ResponseEntity<ResponseDto> updateHit(@PathVariable(name = "boardId") int boardId) {
         boardService.updateHit(boardId);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 게시글의 조회수가 증가하였습니다."));
+    }
+
+    // 파일 업로드
+    @PostMapping("/file/{boardId}")
+    @Operation(summary = "파일 업로드", description = "파일 업로드")
+    public ResponseEntity<ResponseDto> uploadFile(@PathVariable(name = "boardId") int boardId,
+                                                  @RequestPart MultipartFile file) {
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 파일을 S3에 업로드하였습니다.", boardService.uploadFile(boardId, file)));
     }
 
     private String findUserId(String authorizationToken) {

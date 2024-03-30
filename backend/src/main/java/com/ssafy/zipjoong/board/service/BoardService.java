@@ -4,6 +4,7 @@ import com.ssafy.zipjoong.board.dto.BoardCreateRequest;
 import com.ssafy.zipjoong.board.dto.BoardDetailResponse;
 import com.ssafy.zipjoong.board.dto.BoardResponse;
 import com.ssafy.zipjoong.board.dto.BoardUpdateRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -31,5 +32,8 @@ public interface BoardService {
 
     // 조회수 증가
     void updateHit(int boardId);
+
+    // 파일 업로드
+    String uploadFile(int boardId, MultipartFile file);
 
 }
