@@ -27,74 +27,74 @@ interface Board {
 }
 
 function Form() {
-  const BoardList = [
-    {
-      boardId: 1,
-      boardTitle: '제목1',
-      boardContent: '내용1',
-      boardHit: 2,
-      boardIsDraft: false,
-      boardCreator: '김싸피',
-      boardCreatorId: 1,
-      boardCreatorImg: '/Images/person.png',
-      boardCreatedAt: '20240319',
-    },
-    {
-      boardId: 2,
-      boardTitle: '제목23',
-      boardContent: '내용2',
-      boardHit: 2,
-      boardIsDraft: false,
-      boardCreator: '닉네임',
-      boardCreatorId: 2,
-      boardCreatorImg: '/Images/person.png',
-      boardCreatedAt: '20240320',
-    },
-    {
-      boardId: 3,
-      boardTitle: '제목233',
-      boardContent: '내용2',
-      boardHit: 2,
-      boardIsDraft: false,
-      boardCreator: '닉네임',
-      boardCreatorId: 2,
-      boardCreatorImg: '/Images/person.png',
-      boardCreatedAt: '20240320',
-    },
-    {
-      boardId: 4,
-      boardTitle: '제목2333',
-      boardContent: '내용2',
-      boardHit: 2,
-      boardIsDraft: false,
-      boardCreator: '닉네임',
-      boardCreatorId: 2,
-      boardCreatorImg: '/Images/person.png',
-      boardCreatedAt: '20240320',
-    },
-    {
-      boardId: 5,
-      boardTitle: '제목23333',
-      boardContent: '내용2',
-      boardHit: 2,
-      boardIsDraft: false,
-      boardCreator: '닉네임',
-      boardCreatorId: 2,
-      boardCreatorImg: '/Images/person.png',
-      boardCreatedAt: '20240320',
-    },
-    {
-      boardId: 6,
-      boardTitle: '제목2333333',
-      boardContent: '내용2',
-      boardHit: 2,
-      boardIsDraft: false,
-      boardCreator: '닉네임',
-      boardCreatorId: 2,
-      boardCreatorImg: '/Images/person.png',
-      boardCreatedAt: '20240320',
-    },
-  ];
+  // const BoardList = [
+  //   {
+  //     boardId: 1,
+  //     boardTitle: '제목1',
+  //     boardContent: '내용1',
+  //     boardHit: 2,
+  //     boardIsDraft: false,
+  //     boardCreator: '김싸피',
+  //     boardCreatorId: 1,
+  //     boardCreatorImg: '/Images/person.png',
+  //     boardCreatedAt: '20240319',
+  //   },
+  //   {
+  //     boardId: 2,
+  //     boardTitle: '제목23',
+  //     boardContent: '내용2',
+  //     boardHit: 2,
+  //     boardIsDraft: false,
+  //     boardCreator: '닉네임',
+  //     boardCreatorId: 2,
+  //     boardCreatorImg: '/Images/person.png',
+  //     boardCreatedAt: '20240320',
+  //   },
+  //   {
+  //     boardId: 3,
+  //     boardTitle: '제목233',
+  //     boardContent: '내용2',
+  //     boardHit: 2,
+  //     boardIsDraft: false,
+  //     boardCreator: '닉네임',
+  //     boardCreatorId: 2,
+  //     boardCreatorImg: '/Images/person.png',
+  //     boardCreatedAt: '20240320',
+  //   },
+  //   {
+  //     boardId: 4,
+  //     boardTitle: '제목2333',
+  //     boardContent: '내용2',
+  //     boardHit: 2,
+  //     boardIsDraft: false,
+  //     boardCreator: '닉네임',
+  //     boardCreatorId: 2,
+  //     boardCreatorImg: '/Images/person.png',
+  //     boardCreatedAt: '20240320',
+  //   },
+  //   {
+  //     boardId: 5,
+  //     boardTitle: '제목23333',
+  //     boardContent: '내용2',
+  //     boardHit: 2,
+  //     boardIsDraft: false,
+  //     boardCreator: '닉네임',
+  //     boardCreatorId: 2,
+  //     boardCreatorImg: '/Images/person.png',
+  //     boardCreatedAt: '20240320',
+  //   },
+  //   {
+  //     boardId: 6,
+  //     boardTitle: '제목2333333',
+  //     boardContent: '내용2',
+  //     boardHit: 2,
+  //     boardIsDraft: false,
+  //     boardCreator: '닉네임',
+  //     boardCreatorId: 2,
+  //     boardCreatorImg: '/Images/person.png',
+  //     boardCreatedAt: '20240320',
+  //   },
+  // ];
 
   const [selectedTab, setSelectedTab] = useState<TabName>('all');
   const [boardList, setBoardList] = useState<Board[]>([]);
@@ -159,14 +159,14 @@ function Form() {
     setZustandBoardId(boardId);
     router.push(`/board/${boardId}`);
 
-    const selectedBoardIndex = BoardList.findIndex(
+    const selectedBoardIndex = boardList.findIndex(
       board => board.boardId === boardId,
     );
     let surroundingBoards = [];
 
     const start = Math.max(selectedBoardIndex - 2, 0);
-    const end = Math.min(start + 5, BoardList.length); // 최대 5개까지만 선택
-    surroundingBoards = BoardList.slice(start, end);
+    const end = Math.min(start + 5, boardList.length); // 최대 5개까지만 선택
+    surroundingBoards = boardList.slice(start, end);
     setZustandsurroundingBoards(surroundingBoards);
   };
 
@@ -190,20 +190,20 @@ function Form() {
       </div>
       <div className={styles.BoardContent}>
         <div className={styles.BoardContentItem}>
-          {BoardList.map(board => (
-            <BoardListItem
-              key={board.boardId}
-              boardList={board}
-              onClick={() => handleClick(board.boardId)}
-            />
-          ))}
-          {/* {boardList.map(board => (
+          {/* {BoardList.map(board => (
             <BoardListItem
               key={board.boardId}
               boardList={board}
               onClick={() => handleClick(board.boardId)}
             />
           ))} */}
+          {boardList.map(board => (
+            <BoardListItem
+              key={board.boardId}
+              boardList={board}
+              onClick={() => handleClick(board.boardId)}
+            />
+          ))}
         </div>
       </div>
     </div>
