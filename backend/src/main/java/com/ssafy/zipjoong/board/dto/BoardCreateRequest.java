@@ -13,6 +13,7 @@ public class BoardCreateRequest {
     private String boardTitle;
     private String boardContent;
     private String boardCreatorId;
+    private String boardThumbnail;
     private List<Long> combinationIdList = new ArrayList<>();
 
     public Board toEntity(User user) {
@@ -20,6 +21,7 @@ public class BoardCreateRequest {
                 .boardTitle(boardTitle)
                 .boardContent(boardContent)
                 .boardHit(0)
+                .boardThumbnail(boardThumbnail)
                 .boardIsDeleted(false)
                 .user(user)
                 .build();

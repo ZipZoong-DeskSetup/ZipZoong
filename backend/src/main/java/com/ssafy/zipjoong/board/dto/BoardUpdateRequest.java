@@ -9,5 +9,6 @@ import java.util.List;
 public class BoardUpdateRequest {
     private String boardTitle;
     private String boardContent;
+    private String boardThumbnail;
     private List<Long> combinationIdList = new ArrayList<>();
 }
