@@ -5,13 +5,12 @@ import styles from '@/components/Board/BoardListItem.module.scss';
 
 interface Board {
   boardId: number;
-  boardTitle: string;
-  boardContent: string;
+  boardTitle: string | null;
+  boardContent: string | null;
   boardHit: number;
-  boardIsDraft: boolean;
-  boardCreator: string;
-  boardCreatorId: number;
-  boardCreatorImg: string;
+  boardCreator: string | null;
+  boardCreatorId: string;
+  boardCreatorImg: string | null;
   boardCreatedAt: string;
 }
 
@@ -48,7 +47,7 @@ function BoardListItem({boardList, onClick}: BoardListItemProps) {
     <div className={styles.ListItem} onClick={onClick}>
       <div className={styles.Head}>
         <Image
-          src={boardList.boardCreatorImg}
+          src={boardList.boardCreatorImg || '/Images/profileImg.png'}
           width={30}
           height={30}
           alt="유저이미지"

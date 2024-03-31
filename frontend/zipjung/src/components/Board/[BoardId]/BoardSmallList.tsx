@@ -5,14 +5,15 @@ import styles from '@/components/Board/[BoardId]/BoardSmallList.module.scss';
 interface BoardSmallListProps {
   board: {
     boardId: number;
-    boardTitle: string;
-    boardContent: string;
+    boardTitle: string | null;
+    boardContent: string | null;
     boardHit: number;
-    boardIsDraft: boolean;
-    boardCreator: string;
-    boardCreatorId: number;
-    boardCreatorImg: string;
+    boardThumbnail: string | null;
+    boardCreator: string | null;
+    boardCreatorId: string;
+    boardCreatorImg: string | null;
     boardCreatedAt: string;
+    boardCombinations: [];
   };
 }
 
