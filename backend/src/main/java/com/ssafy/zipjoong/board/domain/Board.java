@@ -37,6 +37,10 @@ public class Board extends EntityDate {
     @Column(name="board_hit")
     private Integer boardHit;
 
+    // 썸네일
+    @Column(name = "board_thumbnail", length = 255)
+    private String boardThumbnail;
+
     // 삭제 여부
     @Column(name="board_is_deleted")
     private Boolean boardIsDeleted;
