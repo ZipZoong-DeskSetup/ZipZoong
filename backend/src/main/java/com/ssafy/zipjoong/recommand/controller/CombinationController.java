@@ -1,8 +1,9 @@
 package com.ssafy.zipjoong.recommand.controller;
 
 import com.ssafy.zipjoong.recommand.dto.CombinationProductRequest;
-import com.ssafy.zipjoong.recommand.dto.SaveCombinationProductRequest;
+import com.ssafy.zipjoong.recommand.dto.ProductRequest;
 import com.ssafy.zipjoong.recommand.service.CombinationService;
+import com.ssafy.zipjoong.recommand.service.RecommendService;
 import com.ssafy.zipjoong.security.jwt.utils.JwtUtils;
 import com.ssafy.zipjoong.util.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,10 +11,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,10 +24,12 @@ public class CombinationController {
 
     private final CombinationService combinationService;
 
+    private final RecommendService recommendService;
+
     /* 조합 등록 */
     @PostMapping("")
     @Operation(summary = "관심 조합 목록에 추가", description = "추천 받은 조합을 저장 하거나 조합 생성시 저장 /n리스트로 제품의 id(productId)값과 해당 제품의 갯수(num)를 넘겨주세요 /n유저의 토큰값을 이용하기 때문에 로그인 이후 토큰값을 넘겨주어야함 수현이한테 swagger에 로그인 구현해달라고하세요..")
-    public ResponseEntity<ResponseDto> saveCombination(@RequestHeader("Authorization") String authorizationToken, @RequestBody List<SaveCombinationProductRequest> requestList){
+    public ResponseEntity<ResponseDto> saveCombination(@RequestHeader("Authorization") String authorizationToken, @RequestBody List<ProductRequest> requestList){
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 등록하였습니다.", combinationService.saveCombination(requestList, findUserId(authorizationToken))));
     }
 
@@ -54,16 +56,16 @@ public class CombinationController {
 
     /* 추천 조합 조회 프로토타입 */
     @GetMapping("/recommend")
-    @Operation(summary = "추천 받기 프로토 타입", description = "임시로 추천을 받기 위해 만든 api")
-    public ResponseEntity<ResponseDto> getRecommendCombinations(){
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 추천받았습니다.", combinationService.getRecommendCombinations()));
+    @Operation(summary = "추천 받기 프로토 타입", description = "설문 기반 추천 서비스")
+    public ResponseEntity<ResponseDto> getRecommendCombinations(@RequestHeader("Authorization") String authorizationToken){
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 추천받았습니다.", recommendService.getRecommendCombinations(findUserId(authorizationToken))));
     }
 
     /* 추천 조합 상세 조회 프로토타입 */
-    @GetMapping("/recommend/info")
-    @Operation(summary = "추천 받은 조합 세부 내용 조회 프로토 타입", description = "임시로 추천을 받은 제품 세부 내용 조회를 위해 만든 api (추후에 세부 내용 조회시 각 제품 id값을 파라미터값으로 넣어주어야할지도?)")
-    public ResponseEntity<ResponseDto> getRecommendCombinationInfos(){
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합의 상세 정보를 조회하였습니다.", combinationService.getRecommendCombinationInfos()));
+    @PostMapping("/recommend/info")
+    @Operation(summary = "추천 받은 조합 세부 내용 조회", description = "추천 조합 상세 조회 및 유사 제품 추천")
+    public ResponseEntity<ResponseDto> getRecommendCombinationInfos(@RequestBody List<ProductRequest> requestList){
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합의 상세 정보를 조회하였습니다.", recommendService.getRecommendCombinationInfo(requestList)));
     }
 
     @DeleteMapping("/{combinationId}")

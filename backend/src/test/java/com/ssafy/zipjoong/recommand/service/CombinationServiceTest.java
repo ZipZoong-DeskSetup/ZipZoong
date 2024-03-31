@@ -8,12 +8,11 @@ import com.ssafy.zipjoong.recommand.domain.CombinationProduct;
 import com.ssafy.zipjoong.recommand.domain.CombinationProductId;
 import com.ssafy.zipjoong.recommand.dto.CombinationProductRequest;
 import com.ssafy.zipjoong.recommand.dto.CombinationResponse;
-import com.ssafy.zipjoong.recommand.dto.SaveCombinationProductRequest;
+import com.ssafy.zipjoong.recommand.dto.ProductRequest;
 import com.ssafy.zipjoong.recommand.repository.CombinationProductRepository;
 import com.ssafy.zipjoong.recommand.repository.CombinationRepository;
 import com.ssafy.zipjoong.user.domain.User;
 import com.ssafy.zipjoong.user.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +30,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
-@Slf4j
 @ExtendWith(MockitoExtension.class)
 public class CombinationServiceTest {
 
@@ -54,7 +52,7 @@ public class CombinationServiceTest {
     private Product product;
     private Combination combination;
     private CombinationProduct combinationProduct;
-    private List<SaveCombinationProductRequest> requests;
+    private List<ProductRequest> requests;
 
     @BeforeEach
     void setUp() {
@@ -93,10 +91,9 @@ public class CombinationServiceTest {
 
         // 상품 저장 요청 목록
         requests = new ArrayList<>();
-        SaveCombinationProductRequest request = SaveCombinationProductRequest
+        ProductRequest request = ProductRequest
                 .builder()
                 .productId(1)
-                .num(1)
                 .build();
 
         requests.add(request);

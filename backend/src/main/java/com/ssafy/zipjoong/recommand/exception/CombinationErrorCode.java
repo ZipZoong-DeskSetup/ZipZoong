@@ -11,7 +11,9 @@ public enum CombinationErrorCode {
     COMBINATION_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 정보의 조합을 찾을 수 없습니다."),
 
     /* 409 CONFLICT : 데이터 중복 */
-    COMBINATION_CONFLICT(HttpStatus.CONFLICT, "이미 조합에 존재하는 상품입니다.")
+    COMBINATION_CONFLICT(HttpStatus.CONFLICT, "이미 조합에 존재하는 상품입니다."),
+
+    RECOMMEND_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, "추천을 위한 외부 프로세스 실행 중 에러가 발생하였습니다."),
     ;
     private final HttpStatus httpStatus;
     private final String message;
