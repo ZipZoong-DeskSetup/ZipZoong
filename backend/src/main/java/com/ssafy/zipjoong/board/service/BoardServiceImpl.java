@@ -162,10 +162,8 @@ public class BoardServiceImpl implements BoardService {
 
     /* 파일 업로드 */
     @Override
-    public String uploadFile(int boardId, MultipartFile file) {
-        Board board = findBoard(boardId);
-        String fileUrl = awsS3Service.uploadFileOne(file, String.valueOf(boardId), "post");
-        return fileUrl;
+    public String uploadFile(MultipartFile file) {
+        return awsS3Service.uploadFileOne(file, null, "post");
     }
 
     /* combinationId을 이용하여 BoardCombination 생성  */
