@@ -34,6 +34,6 @@ public interface BoardService {
     void updateHit(int boardId);
 
     // 파일 업로드
-    String uploadFile(int boardId, MultipartFile file);
+    String uploadFile(MultipartFile file);
 
 }
