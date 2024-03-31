@@ -5,13 +5,15 @@ import styles from '@/components/Board/[BoardId]/DetailHead.module.scss';
 
 interface Board {
   boardId: number;
-  boardTitle: string;
-  boardContent: string;
+  boardTitle: string | null;
+  boardContent: string | null;
   boardHit: number;
-  boardCreator: string;
-  boardCreatorId: number;
-  boardCreatorImg: string;
+  boardThumbnail: string | null;
+  boardCreator: string | null;
+  boardCreatorId: string;
+  boardCreatorImg: string | null;
   boardCreatedAt: string;
+  boardCombinations: [];
 }
 
 interface DetailHeadProps {
@@ -27,7 +29,7 @@ function DetailHead({boardDetail, commentCnt}: DetailHeadProps) {
           <div className={styles.Title}>{boardDetail.boardTitle}</div>
           <div className={styles.createInfo}>
             <Image
-              src={boardDetail.boardCreatorImg}
+              src={boardDetail.boardCreatorImg || '/Images/profileImg.png'}
               width={30}
               height={30}
               alt="프로필이미지"

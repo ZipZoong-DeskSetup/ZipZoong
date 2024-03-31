@@ -16,14 +16,20 @@ type TabName = 'all' | 'mine';
 
 interface Board {
   boardId: number;
-  boardTitle: string;
-  boardContent: string;
+  boardTitle: string | null;
+  boardContent: string | null;
   boardHit: number;
-  boardIsDraft: boolean;
-  boardCreator: string;
-  boardCreatorId: number;
-  boardCreatorImg: string;
+  boardThumbnail: string | null;
+  boardCreator: string | null;
+  boardCreatorId: string;
+  boardCreatorImg: string | null;
   boardCreatedAt: string;
+  boardCombinations: [];
+}
+
+interface ApiResponse {
+  message: string;
+  data: Board[] | null;
 }
 
 function Form() {
@@ -41,8 +47,8 @@ function Form() {
   useEffect(() => {
     const apiUrl =
       selectedTab === 'all'
-        ? `${process.env.NEXT_PUBLIC_BASE_URL}/boards`
-        : `${process.env.NEXT_PUBLIC_BASE_URL}/boards/${ZustandId}`;
+        ? `${process.env.NEXT_PUBLIC_BASE_URL}/board`
+        : `${process.env.NEXT_PUBLIC_BASE_URL}/board/${ZustandId}`;
 
     const fetchBoardList = async () => {
       try {
@@ -56,9 +62,9 @@ function Form() {
               }
             : {};
 
-        const response = await axios.get<Board[]>(apiUrl, config); // config를 axios.get의 두 번째 인자로 전달
-        if (Array.isArray(response.data)) {
-          setBoardList(response.data);
+        const response = await axios.get<ApiResponse>(apiUrl, config);
+        if (response.data && Array.isArray(response.data.data)) {
+          setBoardList(response.data.data);
         } else {
           console.error('Expected an array but got:', response.data);
         }
@@ -70,18 +76,18 @@ function Form() {
     fetchBoardList().catch(error =>
       console.error('fetchBoardList failed:', error),
     );
-  }, [selectedTab, ZustandId]);
+  }, [selectedTab, ZustandId, ZustandToken]);
 
   const searchBoard = async (): Promise<void> => {
     // 검색 요청 로직
     try {
-      const response = await axios.get<Board[]>(
+      const response = await axios.get<ApiResponse>(
         `${process.env.NEXT_PUBLIC_BASE_URL}/board/search/${searchText}`,
       );
       // 여기서 response를 사용하여 BoardList를 업데이트
-      if (Array.isArray(response.data)) {
+      if (Array.isArray(response.data.data)) {
         // 배열인 경우, boardList를 업데이트
-        setBoardList(response.data);
+        setBoardList(response.data.data);
       } else {
         // 배열이 아닌 경우, 콘솔에 오류 메시지 출력 및 boardList를 빈 배열로 설정
         console.error(
@@ -145,13 +151,6 @@ function Form() {
       </div>
       <div className={styles.BoardContent}>
         <div className={styles.BoardContentItem}>
-          {/* {BoardList.map(board => (
-            <BoardListItem
-              key={board.boardId}
-              boardList={board}
-              onClick={() => handleClick(board.boardId)}
-            />
-          ))} */}
           {boardList.length > 0 ? (
             boardList.map(board => (
               <BoardListItem
