@@ -1,7 +1,7 @@
 interface UserInfo {
   nickname: string;
   imageUrl: string;
-  id: number;
+  id: string;
 }
 
 export type {UserInfo};
