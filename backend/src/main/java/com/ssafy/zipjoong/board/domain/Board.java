@@ -69,6 +69,10 @@ public class Board extends EntityDate {
         if (request.getBoardContent() != null && !request.getBoardContent().isEmpty()) {
             this.boardContent = request.getBoardContent();
         }
+
+        if (request.getBoardThumbnail() != null && !request.getBoardThumbnail().isEmpty()) {
+            this.boardThumbnail = request.getBoardThumbnail();
+        }
     }
 
     public void delete() {
