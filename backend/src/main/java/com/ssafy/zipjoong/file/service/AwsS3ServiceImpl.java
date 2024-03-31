@@ -107,7 +107,12 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     private String getFilePath(MultipartFile file, String fileOwnerId, String fileType) {
         String fileName = createFileName(file.getOriginalFilename());
         String folderPath = getFolderPath(fileType);
-        return folderPath + fileOwnerId + "/" + fileName;
+
+        if (fileOwnerId != null) {
+            return folderPath + fileOwnerId + "/" + fileName;
+        } else {
+            return folderPath + fileName;
+        }
     }
 
     /* 'UUID.확장자' 형식으로 fileName 생성 */
