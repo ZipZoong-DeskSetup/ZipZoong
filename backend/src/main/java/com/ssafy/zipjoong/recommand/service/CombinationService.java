@@ -54,12 +54,12 @@ public class CombinationService {
 
     /* 조합 등록 */
     @Transactional
-    public CombinationResponse saveCombination(List<SaveCombinationProductRequest> requests, String userId){
+    public CombinationResponse saveCombination(List<ProductRequest> requests, String userId){
         User user = userRepository.findById(userId).orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
         Combination combination = combinationRepository.save(Combination.builder().user(user).combinationProducts(new ArrayList<>()).build());
         int totalPrice = 0;
 
-        for(SaveCombinationProductRequest request : requests){
+        for(ProductRequest request : requests){
             Product product = productRepository.findById(request.getProductId())
                     .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
 
@@ -75,7 +75,7 @@ public class CombinationService {
                     .product(product)
                     .combination(combination)
                     .combinationProductId(combinationProductId)
-                    .combinationProductNum(request.getNum())
+                    .combinationProductNum(1)
                     .build());
 
             totalPrice += combinationProduct.getProduct().getProductPrice();
@@ -132,76 +132,6 @@ public class CombinationService {
                     combinationResponseList.add(combinationToCombinationResponse(combination, false)); // 상품 정보 디테일 없이 가져오기
                 });
         return combinationResponseList;
-    }
-
-    /* 추천 조합 조회 프로토타입 */
-    public List<CombinationResponse> getRecommendCombinations(){
-        List<CombinationResponse> combinationResponseList = new ArrayList<>();
-
-        Pageable pageable = PageRequest.of(0, 5);
-        Page<Keyboard> keyboardPage =  keyboardRepository.findAll(pageable);
-        Page<Monitor> monitorPage = monitorRepository.findAll(pageable);
-        Page<Mouse> mousePage = mouseRepository.findAll(pageable);
-
-        for(int i = 0; i < 5; i++){
-            List<ProductResponse> monitorResponses = new ArrayList<>();
-            monitorResponses.add(MonitorResponse.toDto(monitorPage.getContent().get(i)));
-            monitorResponses.add(MonitorResponse.toDto(monitorPage.getContent().get(i)));
-            int totalPrice = keyboardPage.getContent().get(i).getProductPrice()
-                    + monitorPage.getContent().get(i).getProductPrice()
-                    + mousePage.getContent().get(i).getProductPrice();
-
-            combinationResponseList.add(CombinationResponse.builder()
-                    .keyboard(KeyboardResponse.toDto(keyboardPage.getContent().get(i)))
-                    .mouse(MouseResponse.toDto(mousePage.getContent().get(i)))
-                    .monitors(monitorResponses)
-                    .totalPrice(totalPrice)
-                    .build());
-        }
-
-        return combinationResponseList;
-    }
-
-    /* 추천 조합 상세 조회 프로토타입 */
-    public RecommendRespone getRecommendCombinationInfos(){
-        Pageable pageable = PageRequest.of(0, 5);
-        Page<Keyboard> keyboardPage =  keyboardRepository.findAll(pageable);
-        Page<Monitor> monitorPage = monitorRepository.findAll(pageable);
-        Page<Mouse> mousePage = mouseRepository.findAll(pageable);
-
-        // 추천 상품
-        List<ProductResponse> productResponses = new ArrayList<>();
-        productResponses.add(MonitorResponse.toDto(monitorPage.getContent().get(0)));
-        productResponses.add(MonitorResponse.toDto(monitorPage.getContent().get(0)));
-
-        ProductResponse keyboardResponse = KeyboardResponse.toDto(keyboardPage.getContent().get(0));
-        ProductResponse mouseResponse = MouseResponse.toDto(mousePage.getContent().get(0));
-
-        // 총 가격
-        int totalPrice = keyboardPage.getContent().get(0).getProductPrice()
-                + monitorPage.getContent().get(0).getProductPrice()
-                + mousePage.getContent().get(0).getProductPrice();
-
-        // 상품별 유사 상품
-        Map<String, List<ProductResponse>> similarProduct = new HashMap<>();
-        similarProduct.put(keyboardPage.getContent().get(0).getProductName(), new ArrayList<>());
-        similarProduct.put(monitorPage.getContent().get(0).getProductName(), new ArrayList<>());
-        similarProduct.put(mousePage.getContent().get(0).getProductName(), new ArrayList<>());
-
-        for(int i = 1; i < 5; i++){
-            similarProduct.get(keyboardPage.getContent().get(0).getProductName()).add(KeyboardResponse.toDto(keyboardPage.getContent().get(i)));
-            similarProduct.get(monitorPage.getContent().get(0).getProductName()).add(MonitorResponse.toDto(monitorPage.getContent().get(i)));
-            similarProduct.get(mousePage.getContent().get(0).getProductName()).add(MouseResponse.toDto(mousePage.getContent().get(i)));
-        }
-
-        return RecommendRespone.builder()
-                .combinationId(0)
-                .monitors(productResponses)
-                .keyboard(keyboardResponse)
-                .mouse(mouseResponse)
-                .similarProduct(similarProduct)
-                .totalPrice(totalPrice)
-                .build();
     }
 
     /* 조합 삭제 */

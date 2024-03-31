@@ -9,5 +9,5 @@ import java.util.List;
 @Builder
 public class SaveCombinationRequest {
     private long combinationId;
-    private List<SaveCombinationProductRequest> products;
+    private List<ProductRequest> products;
 }
