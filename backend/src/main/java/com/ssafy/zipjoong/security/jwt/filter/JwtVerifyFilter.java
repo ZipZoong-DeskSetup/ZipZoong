@@ -39,6 +39,7 @@ public class JwtVerifyFilter extends OncePerRequestFilter {
             "/board/detail/*",
             "/board/search/*",
             "/board/hit/*",
+            "/comment/byBoard/*",
             "/board/file/*",
     };
 

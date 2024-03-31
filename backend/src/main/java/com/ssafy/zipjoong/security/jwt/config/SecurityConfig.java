@@ -95,6 +95,7 @@ public class SecurityConfig {
                         .requestMatchers("/board/detail/*").permitAll() // 게시글 상세 조회
                         .requestMatchers("/board/search/*").permitAll() // 게시글 검색
                         .requestMatchers("/board/hit/*").permitAll() // 조회수 증가
+                        .requestMatchers("/comment/byBoard/*").permitAll()
                         .requestMatchers("/board/file/*").permitAll() // 파일 업로드
                         .anyRequest().permitAll());
 
