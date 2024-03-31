@@ -11,7 +11,7 @@ interface Comment {
   commentId: number;
   commentContent: string;
   commentCreator: string;
-  commentCreatorId: number;
+  commentCreatorId: string;
   commentCreatorImg: string;
   commentCreatedAt: string;
 }

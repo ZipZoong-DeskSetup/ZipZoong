@@ -9,7 +9,7 @@ interface IUserInfoStore {
   ZustandImageUrl: UserInfo['imageUrl'];
   setZustandImageUrl: (newImageUrl: string) => void;
   ZustandId: UserInfo['id'];
-  setZustandId: (newId: number) => void;
+  setZustandId: (newId: string) => void;
   ZustandToken: string;
   setZustandToken: (newToken: string) => void;
 }
@@ -23,8 +23,8 @@ const useUserInfoStore = create<IUserInfoStore>()(
       ZustandImageUrl: '/Images/profileImg.png',
       setZustandImageUrl: (newImageUrl: string) =>
         set({ZustandImageUrl: newImageUrl}),
-      ZustandId: 0,
-      setZustandId: (newId: number) => set({ZustandId: newId}),
+      ZustandId: '',
+      setZustandId: (newId: string) => set({ZustandId: newId}),
       ZustandToken: '',
       setZustandToken: (newToken: string) => set({ZustandToken: newToken}),
     }),
