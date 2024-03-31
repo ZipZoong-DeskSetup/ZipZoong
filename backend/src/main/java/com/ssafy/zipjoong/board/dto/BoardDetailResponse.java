@@ -15,6 +15,7 @@ public class BoardDetailResponse {
     private String boardTitle;
     private String boardContent;
     private Integer boardHit;
+    private String boardThumbnail;
     private String boardCreator;
     private String boardCreatorId;
     private String boardCreatorImg;
@@ -27,6 +28,7 @@ public class BoardDetailResponse {
                 .boardTitle(board.getBoardTitle())
                 .boardContent(board.getBoardContent())
                 .boardHit(board.getBoardHit())
+                .boardThumbnail(board.getBoardThumbnail())
                 .boardCreator(board.getUser().getUserNickname())
                 .boardCreatorId(board.getUser().getUserId())
                 .boardCreatorImg(board.getUser().getUserImg())
