@@ -12,7 +12,7 @@ interface Comment {
   commentContent: string;
   commentCreator: string;
   commentCreatorId: string;
-  commentCreatorImg: string;
+  commentCreatorImg: string | null;
   commentCreatedAt: string;
 }
 

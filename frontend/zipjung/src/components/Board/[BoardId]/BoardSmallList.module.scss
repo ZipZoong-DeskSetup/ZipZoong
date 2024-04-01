@@ -14,7 +14,16 @@
 
 .createDiv{
     display: flex;
-    gap: 20px;
+    width: 30%;
+    // gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.HitImg{
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 
