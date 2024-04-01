@@ -44,6 +44,17 @@
     border: 1px solid black;
 }
 
+.recommendsDiv{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.recommendDiv{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+}
+
 .boardCommentInputDiv{
     width: 70%;
     border-bottom: 2px solid var(--main-color-dark);
