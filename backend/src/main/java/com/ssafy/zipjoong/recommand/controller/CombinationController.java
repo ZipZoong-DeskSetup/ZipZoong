@@ -32,8 +32,9 @@ public class CombinationController {
     /* 조합 등록 */
     @PostMapping("")
     @Operation(summary = "관심 조합 목록에 추가", description = "추천 받은 조합을 저장 하거나 조합 생성시 저장 /n리스트로 제품의 id(productId)값과 해당 제품의 갯수(num)를 넘겨주세요 /n유저의 토큰값을 이용하기 때문에 로그인 이후 토큰값을 넘겨주어야함 수현이한테 swagger에 로그인 구현해달라고하세요..")
-    public ResponseEntity<ResponseDto> saveCombination(@RequestHeader("Authorization") String authorizationToken, @RequestBody List<ProductRequest> requestList){
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 등록하였습니다.", combinationService.saveCombination(requestList, findUserId(authorizationToken))));
+    public ResponseEntity<ResponseDto> saveCombination(Principal principal, @RequestBody List<ProductRequest> requestList){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 등록하였습니다.", combinationService.saveCombination(requestList, authentication.getName())));
     }
 
     /* 조합에 제품 추가*/
@@ -53,8 +54,9 @@ public class CombinationController {
     /* 해당 유저의 조합 목록 조회 */
     @GetMapping("")
     @Operation(summary = "관심 조합 목록 조회", description = "자신이 저장한 조합 목록 조회 /n유저의 토큰값을 이용하기 때문에 로그인 이후 토큰값을 넘겨주어야함 수현이한테 swagger에 로그인 구현해달라고하세요..")
-    public ResponseEntity<ResponseDto> getUserCombinations(@RequestHeader("Authorization") String authorizationToken){
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 유저의 조합을 조회하였습니다.", combinationService.getUserCombinations(findUserId(authorizationToken))));
+    public ResponseEntity<ResponseDto> getUserCombinations(Principal principal){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 유저의 조합을 조회하였습니다.", combinationService.getUserCombinations(authentication.getName())));
     }
 
     /* 추천 조합 조회 프로토타입 */
@@ -84,7 +86,5 @@ public class CombinationController {
         combinationService.removeCombinationProduct(combinationId, productId);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합의 제품을 제거하였습니다."));
     }
-    private String findUserId(String authorizationToken) {
-        return JwtUtils.getUserId(authorizationToken);
-    }
+
 }
