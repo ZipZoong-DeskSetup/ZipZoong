@@ -8,6 +8,7 @@ RUN apt-get update \
     && apt-get install -y python3-pip python3-dev \
     && ln -s /usr/bin/python3 /usr/bin/python \
     && ln -s /usr/bin/pip3 /usr/bin/pip \
-    && pip install --upgrade pip
+    && pip install --upgrade pip \
+    && pip install mysql-connector-python pandas numpy scikit-learn argparse
 
 ENTRYPOINT ["java","-jar", "ZipJoong-0.0.1-SNAPSHOT.jar"]
