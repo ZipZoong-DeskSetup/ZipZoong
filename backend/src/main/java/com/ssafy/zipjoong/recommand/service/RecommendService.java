@@ -142,9 +142,15 @@ public class RecommendService {
             if (exitCode != 0) {
                 throw new CombinationException(CombinationErrorCode.RECOMMEND_FAIL);
             }
-        } catch (IOException | InterruptedException e) {
-            log.info("process error");
-            throw new CombinationException(CombinationErrorCode.RECOMMEND_FAIL);
+        } catch (IOException e) {
+            log.error("IOException occurred: ", e);
+            // 여기서 IOException에 대한 추가 처리
+        } catch (InterruptedException e) {
+            log.error("InterruptedException occurred: ", e);
+            // InterruptedException에 대한 추가 처리
+        } catch (Exception e) {
+            log.error("General exception occurred: ", e);
+            // 일반 예외 처리
         }
 
         return response;
