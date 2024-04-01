@@ -35,7 +35,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RecommendService {
@@ -46,14 +45,9 @@ public class RecommendService {
     /* 설문 기반 추천 */
     public List<CombinationResponse> getRecommendCombinations(String userId){
         if(userId.equals("anonymousUser"))throw new UserException(UserErrorCode.USER_NOT_FOUND);
-        log.info("User is not empty");
-        log.info("BASE_PATH : {}", BASE_PATH);
         List<Product> keyboards = getRecommendProduct(BASE_PATH + "/recom_keyboard_final.py", userId, false);
-        log.info("Get Keyboards : {}", keyboards);
         List<Product> monitors = getRecommendProduct(BASE_PATH + "/recom_monitor_final.py", userId, false);
-        log.info("Get Monitors : {}", monitors);
         List<Product> mouses = getRecommendProduct(BASE_PATH + "/recom_mouse_final.py", userId, false);
-        log.info("Get Mouses : {}", mouses);
 
         List<CombinationResponse> combinationResponses = new ArrayList<>();
         for(int i = 0; i < 4; i++){
@@ -115,19 +109,14 @@ public class RecommendService {
     public List<Product> getRecommendProduct(String pythonPath, String arg, boolean isSimilar){
         List<Product> response = new ArrayList<>();
         try {
-            log.info("ProcessBuilder build");
             ProcessBuilder processBuilder = isSimilar ? getSimilarProcess(pythonPath, arg) : getRecommendProcess(pythonPath, arg);
             processBuilder.redirectErrorStream(true); // 표준 오류를 표준 출력에 리다이렉트
-            log.info("Process start");
             Process process = processBuilder.start();
-            log.info("Process success");
 
             BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             Pattern pattern = Pattern.compile("\\d+"); // 숫자를 찾는 정규 표현식 패턴
-            log.info("Output Getting");
             while ((line = br.readLine()) != null) {
-                log.info("{}", line);
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.find() && matcher.find()) {
                     Product product = productRepository.findById(Integer.parseInt(matcher.group()))
@@ -138,19 +127,11 @@ public class RecommendService {
             br.close();
 
             int exitCode = process.waitFor();
-            log.info("Process wait exitCode : {}", exitCode);
             if (exitCode != 0) {
                 throw new CombinationException(CombinationErrorCode.RECOMMEND_FAIL);
             }
-        } catch (IOException e) {
-            log.error("IOException occurred: ", e);
-            // 여기서 IOException에 대한 추가 처리
-        } catch (InterruptedException e) {
-            log.error("InterruptedException occurred: ", e);
-            // InterruptedException에 대한 추가 처리
-        } catch (Exception e) {
-            log.error("General exception occurred: ", e);
-            // 일반 예외 처리
+        } catch (IOException | InterruptedException e) {
+            throw new CombinationException(CombinationErrorCode.RECOMMEND_FAIL);
         }
 
         return response;
