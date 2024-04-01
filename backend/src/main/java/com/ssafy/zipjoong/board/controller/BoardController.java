@@ -2,6 +2,7 @@ package com.ssafy.zipjoong.board.controller;
 
 
 import com.ssafy.zipjoong.board.dto.BoardCreateRequest;
+import com.ssafy.zipjoong.board.dto.BoardFileRequest;
 import com.ssafy.zipjoong.board.dto.BoardUpdateRequest;
 import com.ssafy.zipjoong.board.service.BoardService;
 import com.ssafy.zipjoong.security.jwt.utils.JwtUtils;
@@ -94,8 +95,8 @@ public class BoardController {
     // 파일 업로드
     @PostMapping("/file")
     @Operation(summary = "파일 업로드", description = "파일 업로드")
-    public ResponseEntity<ResponseDto> uploadFile(@RequestPart MultipartFile file) {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 파일을 S3에 업로드하였습니다.", boardService.uploadFile(file)));
+    public ResponseEntity<ResponseDto> uploadFile(@RequestBody BoardFileRequest base64EncodedData) {
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 파일을 S3에 업로드하였습니다.", boardService.uploadFile(base64EncodedData.getBase64File())));
     }
 
     private String findUserId(String authorizationToken) {
