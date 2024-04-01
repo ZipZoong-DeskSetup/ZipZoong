@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -34,6 +35,33 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         String filePath = getFilePath(multipartFile, fileOwnerId, fileType);
         uploadS3(multipartFile, filePath);
         return getFileUrl(filePath);
+    }
+
+
+    /**
+     * Base64 인코딩된 파일 데이터를 Amazon S3에 업로드하고 URL을 반환합니다.
+     **/
+    public String uploadBase64File(byte[] fileData, String originalFileName, String fileType) {
+        // 파일 스트림 생성
+        ByteArrayInputStream fileInputStream = new ByteArrayInputStream(fileData);
+
+        // S3에 저장될 파일명 구성
+        String filePath = buildFilePath(fileType, originalFileName);
+
+        // 메타데이터 설정
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(fileData.length);
+
+        // 파일을 S3에 업로드
+        amazonS3.putObject(bucket, filePath, fileInputStream, metadata);
+
+        // 업로드된 파일의 URL 반환
+        return amazonS3.getUrl(bucket, filePath).toString();
+    }
+
+    // 폴더 경로를 가져오고, 파일명 앞에 'BOARD_'를 추가하여 최종 경로 생성
+    private String buildFilePath(String fileType, String originalFileName) {
+        return getFolderPath(fileType) + "BOARD_" + originalFileName;
     }
 
     /* 다중 파일 업로드 */

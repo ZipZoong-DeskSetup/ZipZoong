@@ -23,10 +23,12 @@ import com.ssafy.zipjoong.user.exception.UserErrorCode;
 import com.ssafy.zipjoong.user.exception.UserException;
 import com.ssafy.zipjoong.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
+import java.time.format.DateTimeFormatter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -160,11 +162,42 @@ public class BoardServiceImpl implements BoardService {
         boardRepository.updateHit(boardId);
     }
 
-    /* 파일 업로드 */
-    @Override
-    public String uploadFile(MultipartFile file) {
-        return awsS3Service.uploadFileOne(file, null, "post");
+
+    public String uploadFile(String base64EncodedData) {
+        // MIME 타입과 파일 확장자 추출
+        String mimeType = extractMimeType(base64EncodedData);
+        String extension = extractFileExtension(mimeType);
+        byte[] decodedBytes = decodeBase64File(base64EncodedData);
+        String fileName = generateFileName(extension);
+
+        // S3에 파일 업로드 및 URL 반환
+        return awsS3Service.uploadBase64File(decodedBytes, fileName, "post");
     }
+
+
+    /**
+     *  Base64 이미지 파일 업로드
+     **/
+
+    // Base64 데이터에서 MIME 타입 추출 (예: "data:image/png;base64,...")
+    private String extractMimeType(String base64EncodedData) {
+        return base64EncodedData.split(":")[1].split(";")[0];
+    }
+    private String extractFileExtension(String mimeType) {
+        return mimeType.split("/")[1];
+    }
+    // Base64 데이터에서 실제 파일 데이터만 분리 (예: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...")
+    private byte[] decodeBase64File(String base64EncodedData) {
+        String encodedFile = base64EncodedData.substring(base64EncodedData.indexOf(",") + 1);
+        return Base64.decodeBase64(encodedFile);
+    }
+    private String generateFileName(String extension) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        return now.format(formatter) + "." + extension;
+    }
+
+
 
     /* combinationId을 이용하여 BoardCombination 생성  */
     private BoardCombination createBoardCombination(Board board, Long combinationId) {
