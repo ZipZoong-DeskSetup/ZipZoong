@@ -5,6 +5,7 @@
 import {useState} from 'react';
 import axios from 'axios';
 import ModifyButton from '@/components/Board/[BoardId]/ModifyButton';
+import useUserInfoStore from '@/stores/userInfo';
 import styles from '@/components/Board/[BoardId]/Comment/CommentModifyInput.module.scss';
 
 interface Comment {
@@ -25,6 +26,7 @@ function CommentModifyInput({comment, cancelEditing}: CommentProps) {
   const [newCommentContent, setNewCommentContent] = useState(
     comment.commentContent,
   );
+  const {ZustandToken} = useUserInfoStore();
 
   const updateComment = async () => {
     try {
@@ -33,13 +35,17 @@ function CommentModifyInput({comment, cancelEditing}: CommentProps) {
         {
           commentContent: newCommentContent,
         },
+        {
+          headers: {
+            Authorization: `Bearer ${ZustandToken}`,
+          },
+        },
       );
       console.log('Update success:', response.data);
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.error('Update failed:', error);
     }
-    window.location.reload();
   };
 
   const handleClick = () => {
