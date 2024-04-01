@@ -7,7 +7,6 @@ import com.ssafy.zipjoong.security.oauth2.service.OAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -50,7 +49,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public LoginSuccessHandler commonLoginSuccessHandler() {
+    public LoginSuccessHandler loginSuccessHandler() {
         return new LoginSuccessHandler();
     }
 
@@ -101,9 +100,10 @@ public class SecurityConfig {
 
         httpSecurity.addFilterBefore(jwtVerifyFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        httpSecurity.oauth2Login(httpSecurityOAuth2LoginConfigurer ->
+        httpSecurity
+                .oauth2Login(httpSecurityOAuth2LoginConfigurer ->
                 httpSecurityOAuth2LoginConfigurer.loginPage("/oauth2/login")
-                        .successHandler(commonLoginSuccessHandler())
+                        .successHandler(loginSuccessHandler())
                         .userInfoEndpoint(userInfoEndpointConfig ->
                                 userInfoEndpointConfig.userService(oAuth2UserService)));
 

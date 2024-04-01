@@ -5,6 +5,7 @@ import com.ssafy.zipjoong.security.jwt.exception.CustomExpiredJwtException;
 import com.ssafy.zipjoong.security.jwt.exception.CustomJwtException;
 import com.ssafy.zipjoong.security.jwt.utils.JwtConstants;
 import com.ssafy.zipjoong.security.jwt.utils.JwtUtils;
+import com.ssafy.zipjoong.security.jwt.utils.RefererUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,7 +48,7 @@ public class JwtVerifyFilter extends OncePerRequestFilter {
         if(header == null) {
             throw new CustomJwtException("토큰이 전달되지 않았습니다");
         } else if (!header.startsWith(JwtConstants.JWT_TYPE)) {
-            throw new CustomJwtException("BEARER 로 시작하지 않는 올바르지 않은 토큰 형식입니다");
+            throw new CustomJwtException("Bearer 로 시작하지 않는 올바르지 않은 토큰 형식입니다");
         }
     }
 
@@ -61,6 +62,16 @@ public class JwtVerifyFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("--------------------------- JwtVerifyFilter ---------------------------");
+
+        // CustomRequestMatcher 로직 추가
+        log.info("Referer = {}", request.getHeader("Referer"));
+        log.info("RequestURI = {}", request.getRequestURI());
+
+        String referer = request.getHeader("Referer");
+        if (referer != null && !referer.isEmpty()) {
+            // Referer 값을 세션에 저장
+            request.getSession().setAttribute("referer", referer);
+        }
 
         String authHeader = request.getHeader(JwtConstants.JWT_HEADER);
 
