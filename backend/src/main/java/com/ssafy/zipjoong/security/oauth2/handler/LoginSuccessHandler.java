@@ -29,6 +29,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
     private final String GOOGLE_LOGIN_URL = "/login/oauth2/code/google";
     private final String NAVER_LOGIN_URL = "/login/oauth2/code/naver";
 
+    private final String LOGIN_URL = "/user/login";
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         log.info("--------------------------- CommonLoginSuccessHandler ---------------------------");
@@ -50,7 +51,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         String redirectUrl = (savedRequest != null) ? savedRequest.getRedirectUrl() : "/";
 
         // 추가 파라미터 설정
-        if (redirectUrl.equals(KAKAO_LOGIN_URL)) {
+        if (redirectUrl.equals(LOGIN_URL)) {
             redirectUrl += "?userId=" + encodedName + "&accessToken=" + encodedToken;
         }
 
