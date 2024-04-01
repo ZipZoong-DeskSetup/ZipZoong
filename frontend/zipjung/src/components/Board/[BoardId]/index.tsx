@@ -219,7 +219,7 @@ function Form() {
 
   return (
     <div className={styles.BoardDetailDiv}>
-      {ZustandId === boardDetail.boardCreatorId ? (
+      {ZustandId !== boardDetail.boardCreatorId ? (
         <div className={styles.creatorButton}>
           <GoBackButton text="뒤로" />
           <div className={styles.ButtonDiv}>
@@ -260,7 +260,7 @@ function Form() {
         <div className={styles.boardContent}>{boardDetail.boardContent}</div>
       </div>
       <div className={styles.boardCommentInputDiv}>
-        <CommentInput />
+        <CommentInput boardId={ZustandboardId} />
       </div>
       <div className={styles.boardCommentDiv}>
         <CommentList key={boardDetail.boardId} comments={comments} />
