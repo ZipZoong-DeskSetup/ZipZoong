@@ -47,7 +47,7 @@ public class RecommendService {
     public List<CombinationResponse> getRecommendCombinations(String userId){
         if(userId.equals("anonymousUser"))throw new UserException(UserErrorCode.USER_NOT_FOUND);
         log.info("User is not empty");
-
+        log.info("BASE_PATH : {}", BASE_PATH);
         List<Product> keyboards = getRecommendProduct(BASE_PATH + "/recom_keyboard_final.py", userId, false);
         log.info("Get Keyboards : {}", keyboards);
         List<Product> monitors = getRecommendProduct(BASE_PATH + "/recom_monitor_final.py", userId, false);
