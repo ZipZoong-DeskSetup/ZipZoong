@@ -9,6 +9,7 @@ import com.ssafy.zipjoong.util.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/combination")
 @RequiredArgsConstructor
@@ -64,6 +66,7 @@ public class CombinationController {
     @Operation(summary = "추천 받기 프로토 타입", description = "설문 기반 추천 서비스")
     public ResponseEntity<ResponseDto> getRecommendCombinations(Principal principal){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.debug("userId : {}", authentication.getName());
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 추천받았습니다.", recommendService.getRecommendCombinations(authentication.getName())));
     }
 
