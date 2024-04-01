@@ -19,6 +19,8 @@ import com.ssafy.zipjoong.recommand.dto.ProductRequest;
 import com.ssafy.zipjoong.recommand.dto.RecommendRespone;
 import com.ssafy.zipjoong.recommand.exception.CombinationErrorCode;
 import com.ssafy.zipjoong.recommand.exception.CombinationException;
+import com.ssafy.zipjoong.user.exception.UserErrorCode;
+import com.ssafy.zipjoong.user.exception.UserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +42,8 @@ public class RecommendService {
 
     /* 설문 기반 추천 */
     public List<CombinationResponse> getRecommendCombinations(String userId){
+        if(userId.equals("anonymousUser"))throw new UserException(UserErrorCode.USER_NOT_FOUND);
+
         String BASE_PATH = "src/main/python";
         List<Product> keyboards = getRecommendProduct(BASE_PATH + "/recom_keyboard_final.py", userId, false);
         List<Product> monitors = getRecommendProduct(BASE_PATH + "/recom_monitor_final.py", userId, false);
@@ -114,6 +118,7 @@ public class RecommendService {
             String line;
             Pattern pattern = Pattern.compile("\\d+"); // 숫자를 찾는 정규 표현식 패턴
             while ((line = br.readLine()) != null) {
+                System.out.println(line);
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.find() && matcher.find()) {
                     Product product = productRepository.findById(Integer.parseInt(matcher.group()))

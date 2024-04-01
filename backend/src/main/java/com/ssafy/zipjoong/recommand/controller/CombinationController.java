@@ -11,8 +11,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,8 +60,9 @@ public class CombinationController {
     /* 추천 조합 조회 프로토타입 */
     @GetMapping("/recommend")
     @Operation(summary = "추천 받기 프로토 타입", description = "설문 기반 추천 서비스")
-    public ResponseEntity<ResponseDto> getRecommendCombinations(@RequestHeader("Authorization") String authorizationToken){
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 추천받았습니다.", recommendService.getRecommendCombinations(findUserId(authorizationToken))));
+    public ResponseEntity<ResponseDto> getRecommendCombinations(Principal principal){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 추천받았습니다.", recommendService.getRecommendCombinations(authentication.getName())));
     }
 
     /* 추천 조합 상세 조회 프로토타입 */
