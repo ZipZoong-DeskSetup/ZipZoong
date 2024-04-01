@@ -94,11 +94,12 @@ interface IBoardDetail {
   boardTitle: string;
   boardContent: string;
   boardHit: number;
+  boardThumbnail: null | string;
   boardCreator: null | string;
   boardCreatorId: string;
   boardCreatorImg: null | string;
   boardCreatedAt: string;
-  boardCombinations: ICombination[]; // ICombination은 이미 정의된 조합 데이터의 타입입니다.
+  boardCombinations: ICombinationData[];
 }
 
 interface IBoardDetailResponse {
@@ -131,6 +132,7 @@ function Form() {
         try {
           const response = await axios.get<IBoardDetailResponse>(
             `${process.env.NEXT_PUBLIC_BASE_URL}/board/detail/${ZustandboardModifyId}`,
+            {headers: {Authorization: `Bearer ${ZustandToken}`}},
           );
           const {data} = response.data;
           setFormTitle(data.boardTitle);
