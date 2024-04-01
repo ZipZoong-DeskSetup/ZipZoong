@@ -5,7 +5,6 @@ import com.ssafy.zipjoong.security.jwt.exception.CustomExpiredJwtException;
 import com.ssafy.zipjoong.security.jwt.exception.CustomJwtException;
 import com.ssafy.zipjoong.security.jwt.utils.JwtConstants;
 import com.ssafy.zipjoong.security.jwt.utils.JwtUtils;
-import com.ssafy.zipjoong.security.jwt.utils.RefererUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
