@@ -24,7 +24,7 @@ public class JwtVerifyFilter extends OncePerRequestFilter {
 
     private static final String[] whitelist = {
             "/",
-            "/login",
+            "/login/**",
             "/refresh",
             "/product/**",
             "/swagger-resources/**",
