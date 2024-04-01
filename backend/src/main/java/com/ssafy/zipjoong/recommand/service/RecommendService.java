@@ -41,13 +41,13 @@ import java.util.regex.Pattern;
 public class RecommendService {
 
     private final ProductRepository productRepository;
+    private final String BASE_PATH = System.getenv("RECOM_PATH");
 
     /* 설문 기반 추천 */
     public List<CombinationResponse> getRecommendCombinations(String userId){
         if(userId.equals("anonymousUser"))throw new UserException(UserErrorCode.USER_NOT_FOUND);
         log.info("User is not empty");
 
-        String BASE_PATH = "src/main/python";
         List<Product> keyboards = getRecommendProduct(BASE_PATH + "/recom_keyboard_final.py", userId, false);
         log.info("Get Keyboards : {}", keyboards);
         List<Product> monitors = getRecommendProduct(BASE_PATH + "/recom_monitor_final.py", userId, false);
@@ -73,7 +73,6 @@ public class RecommendService {
 
     /* 제품 기반 유사 제품 추천 */
     public RecommendRespone getRecommendCombinationInfo(List<ProductRequest> productRequests){
-        String BASE_PATH = "src/main/python";
         List<ProductResponse> monitorResponses = new ArrayList<>();
         KeyboardResponse keyboardResponse = null;
         MouseResponse mouseResponse = null;
