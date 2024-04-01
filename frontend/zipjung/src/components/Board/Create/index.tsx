@@ -96,6 +96,7 @@ function Form() {
   const [combinationDetails, setCombinationDetails] = useState<ICombination[]>(
     [],
   );
+  const [boardThumbnail, setBoardThumbnail] = useState<string>('');
   const {ZustandId, ZustandToken} = useUserInfoStore();
   const {
     zustandLikedCombination,
@@ -224,8 +225,11 @@ function Form() {
         boardTitle: formTitle,
         boardContent: formContent,
         boardCreatorId: ZustandId,
+        boardThumbnail, // 첫 번째 이미지 URL 추가
         combinationIdList: zustandLikedCombination,
       };
+
+      console.log(postData);
 
       const config = {
         headers: {
@@ -274,7 +278,11 @@ function Form() {
         )}
       </div>
       <div className={styles.createContent}>
-        <QuillEditor onChange={handleChangeContent} />
+        <QuillEditor
+          onChange={handleChangeContent}
+          content={formContent}
+          setFirstImageUrl={setBoardThumbnail} // 첫 번째 이미지 URL을 설정하기 위해 함수 전달
+        />
       </div>
 
       <div className={styles.createButtons}>
