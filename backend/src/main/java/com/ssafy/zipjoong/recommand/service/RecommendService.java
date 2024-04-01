@@ -159,7 +159,7 @@ public class RecommendService {
     /* ProcessBuilder 설문 기반 추천 */
     private ProcessBuilder getRecommendProcess(String pythonPath, String userId) {
         return new ProcessBuilder(
-                "python",
+                "python3",
                 pythonPath,
                 "--host", System.getenv("MYSQL_HOST"),
                 "--user", System.getenv("MYSQL_USER"),
@@ -172,7 +172,7 @@ public class RecommendService {
     /* ProcessBuilder 유사 제품 추천 */
     private ProcessBuilder getSimilarProcess(String pythonPath, String productId) {
         return new ProcessBuilder(
-                "python",
+                "python3",
                 pythonPath,
                 "--host", System.getenv("MYSQL_HOST"),
                 "--user", System.getenv("MYSQL_USER"),
