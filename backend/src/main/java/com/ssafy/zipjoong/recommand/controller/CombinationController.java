@@ -66,7 +66,7 @@ public class CombinationController {
     @Operation(summary = "추천 받기 프로토 타입", description = "설문 기반 추천 서비스")
     public ResponseEntity<ResponseDto> getRecommendCombinations(Principal principal){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.debug("userId : {}", authentication.getName());
+        log.info("userId : {}", authentication.getName());
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 추천받았습니다.", recommendService.getRecommendCombinations(authentication.getName())));
     }
 
