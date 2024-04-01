@@ -8,7 +8,7 @@ interface Comment {
   commentContent: string;
   commentCreator: string;
   commentCreatorId: string;
-  commentCreatorImg: string;
+  commentCreatorImg: string | null;
   commentCreatedAt: string;
 }
 
@@ -19,6 +19,10 @@ interface CommentProps {
 
 function CommentListItem({comment, toggleModify}: CommentProps) {
   const {ZustandId} = useUserInfoStore();
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  };
 
   return (
     <div className={styles.CommentListContain}>
@@ -26,14 +30,14 @@ function CommentListItem({comment, toggleModify}: CommentProps) {
         <div className={styles.CommentCreate}>
           <div className={styles.CommentCreator}>
             <Image
-              src={comment.commentCreatorImg}
+              src={comment.commentCreatorImg || '/Images/profileImg.png'}
               width={25}
               height={25}
               alt="프로필이미지"
             />
             <div>{comment.commentCreator}</div>
           </div>
-          <div>{comment.commentCreatedAt}</div>
+          <div>{formatDate(comment.commentCreatedAt)}</div>
         </div>
         <div>{comment.commentContent}</div>
       </div>

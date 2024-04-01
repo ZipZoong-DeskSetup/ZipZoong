@@ -233,8 +233,6 @@ function Form() {
         },
       };
 
-      // console.log(postData);
-      // console.log(config);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/board`, // 요청 URL
         postData,
