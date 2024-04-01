@@ -8,10 +8,12 @@ interface Board {
   boardTitle: string | null;
   boardContent: string | null;
   boardHit: number;
+  boardThumbnail: string | null;
   boardCreator: string | null;
   boardCreatorId: string;
   boardCreatorImg: string | null;
   boardCreatedAt: string;
+  boardCombinations: [];
 }
 
 interface BoardListItemProps {
@@ -20,29 +22,6 @@ interface BoardListItemProps {
 }
 
 function BoardListItem({boardList, onClick}: BoardListItemProps) {
-  // const router = useRouter();
-  // const {setZustandBoardId} = useBoardStore();
-
-  // const moveToDetail = async () => {
-  //   try {
-  //     await axios.post(
-  //       `${process.env.NEXT_PUBLIC_BASE_URL}/board/hit/${boardList.boardId}`,
-  //     );
-
-  //     console.log('POST 요청 성공');
-  //   } catch (error) {
-  //     console.error('POST 요청 실패:', error);
-  //   }
-  //   setZustandBoardId(boardList.boardId);
-  //   router.push(`/board/${boardList.boardId}`);
-  // };
-
-  // const handleClick = () => {
-  //   moveToDetail().catch(err => {
-  //     console.log(err);
-  //   });
-  // };
-
   return (
     <div className={styles.ListItem} onClick={onClick}>
       <div className={styles.Head}>
@@ -55,7 +34,14 @@ function BoardListItem({boardList, onClick}: BoardListItemProps) {
         {boardList.boardCreator}
       </div>
       <div className={styles.Content}>
-        <div>{boardList.boardContent}</div>
+        <div>
+          <Image
+            src={boardList.boardThumbnail || '/Images/boardThumbnail.png'}
+            width={200}
+            height={200}
+            alt="썸네일"
+          />
+        </div>
         <div>{boardList.boardTitle}</div>
       </div>
     </div>
