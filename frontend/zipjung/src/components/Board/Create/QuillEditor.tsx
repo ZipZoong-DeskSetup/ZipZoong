@@ -1,62 +1,82 @@
+/* eslint-disable no-console */
 // QuillEditor 컴포넌트 수정
 import dynamic from 'next/dynamic';
 import {useMemo, useState, useEffect} from 'react';
+import axios from 'axios';
 import 'react-quill/dist/quill.snow.css';
 import './QuillEditor.module.scss';
+import useUserInfoStore from '@/stores/userInfo';
 
 type TInputEditor = {
   onChange: (value: string) => void;
   content?: string;
+  setFirstImageUrl?: (url: string) => void; // 새로운 prop 추가
 };
 
-// interface ImageResponse {
-//   message: string;
-//   data: {};
-// }
+interface UploadResponse {
+  message: string;
+  data: string;
+}
 
 const ReactQuill = dynamic(() => import('react-quill'), {ssr: false});
 
-const QuillEditor = ({onChange, content = ''}: TInputEditor) => {
+const QuillEditor = ({
+  onChange,
+  content = '',
+  setFirstImageUrl,
+}: TInputEditor) => {
   const [contents, setContents] = useState(content);
+  const {ZustandToken} = useUserInfoStore();
 
   useEffect(() => {
     setContents(content);
   }, [content]);
 
-  // const imageHandler = () => {
-  //   const input = document.createElement('input');
-  //   input.setAttribute('type', 'file');
-  //   input.click();
+  const ChangeContents = async (newContent: string) => {
+    const doc = new DOMParser().parseFromString(newContent, 'text/html');
+    const images = doc.querySelectorAll('img');
+    let isFirstImage = true;
 
-  //   input.onchange = async () => {
-  //     const file = input.files[0];
-  //     if (file) {
-  //       // 이미 Base64로 인코딩된 이미지 데이터를 읽기
-  //       const reader = new FileReader();
-  //       reader.readAsDataURL(file);
-  //       reader.onloadend = async () => {
-  //         const base64data = reader.result;
+    const uploadPromises = Array.from(images).map(async img => {
+      const src = img.getAttribute('src');
+      if (src && src.startsWith('data:image')) {
+        try {
+          const response = await axios.post<UploadResponse>(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/board/file`,
+            {base64File: src}, // 문자열 'src'가 아니라 변수 src의 값을 사용
+            {
+              headers: {
+                Authorization: `Bearer ${ZustandToken}`,
+              },
+            },
+          );
+          const newSrc = response.data.data; // 서버로부터 받은 새 이미지 URL
+          img.setAttribute('src', newSrc); // 이미지 src 속성 업데이트
 
-  //         // 서버로 POST 요청 보내기
-  //         try {
-  //           const response = await axios.post<ImageResponse>(
-  //             `${process.env.NEXT_PUBLIC_BASE_URL}/board/file`,
-  //             {
-  //               file: base64data,
-  //             },
-  //           );
-  //           const {imageUrl} = response.data.data; // 서버로부터 받은 이미지 URL
-  //           const quill = ReactQuill.getEditor(); // Quill 인스턴스 얻기
-  //           const range = quill.getSelection(true); // 현재 선택된 위치 얻기
-  //           quill.insertEmbed(range.index, 'image', imageUrl); // 이미지 삽입
-  //           quill.setSelection(range.index + 1); // 이미지 삽입 후 커서 위치 조정
-  //         } catch (error) {
-  //           console.error('이미지 업로드 실패:', error);
-  //         }
-  //       };
-  //     }
-  //   };
-  // };
+          // 썸네일
+          if (isFirstImage && setFirstImageUrl) {
+            setFirstImageUrl(newSrc);
+            isFirstImage = false;
+          }
+        } catch (error) {
+          console.error('Error uploading image:', error);
+          // 여기서 에러 처리 로직을 추가할 수 있습니다.
+        }
+      }
+    });
+
+    await Promise.all(uploadPromises); // 모든 이미지 업로드가 완료될 때까지 기다립니다.
+
+    const newHtml = doc.body.innerHTML; // 업데이트된 HTML 가져오기
+    setContents(newHtml); // 상태 업데이트
+    onChange(newHtml); // 부모 컴포넌트로 변경된 내용 전달
+  };
+
+  const handleContentChange = (newContent: string) => {
+    ChangeContents(newContent).catch(err => {
+      console.error(err);
+    });
+  };
 
   const modules = useMemo(
     () => ({
@@ -83,12 +103,6 @@ const QuillEditor = ({onChange, content = ''}: TInputEditor) => {
     }),
     [],
   );
-
-  const handleContentChange = (Newcontent: string) => {
-    setContents(Newcontent);
-    onChange(Newcontent);
-    console.log(Newcontent);
-  };
 
   return (
     <div className={'content'}>
