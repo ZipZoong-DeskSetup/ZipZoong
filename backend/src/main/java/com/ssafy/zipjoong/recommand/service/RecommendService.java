@@ -22,6 +22,7 @@ import com.ssafy.zipjoong.recommand.exception.CombinationException;
 import com.ssafy.zipjoong.user.exception.UserErrorCode;
 import com.ssafy.zipjoong.user.exception.UserException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -34,6 +35,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RecommendService {
@@ -110,13 +112,17 @@ public class RecommendService {
     public List<Product> getRecommendProduct(String pythonPath, String arg, boolean isSimilar){
         List<Product> response = new ArrayList<>();
         try {
+            log.debug("ProcessBuilder build");
             ProcessBuilder processBuilder = isSimilar ? getSimilarProcess(pythonPath, arg) : getRecommendProcess(pythonPath, arg);
             processBuilder.redirectErrorStream(true); // 표준 오류를 표준 출력에 리다이렉트
+            log.debug("Process start");
             Process process = processBuilder.start();
+
 
             BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             Pattern pattern = Pattern.compile("\\d+"); // 숫자를 찾는 정규 표현식 패턴
+            log.debug("Output Getting");
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
                 Matcher matcher = pattern.matcher(line);
@@ -127,7 +133,9 @@ public class RecommendService {
                 }
             }
             br.close();
+
             int exitCode = process.waitFor();
+            log.debug("Process wait exitCode : {}", exitCode);
             if (exitCode != 0) {
                 throw new CombinationException(CombinationErrorCode.RECOMMEND_FAIL);
             }
