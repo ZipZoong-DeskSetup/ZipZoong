@@ -1,7 +1,3 @@
-'''
-2. 연결 종료 후 DF만들기
-
-'''
 import mysql.connector
 import pandas as pd
 import numpy as np
@@ -196,54 +192,6 @@ def find_similar_products(survey_row, test_df, top_n=4, price_weight=0.5):
     
     return similar_products
 
-# 예시 사용
-# test_df는 비교 대상인 전체 제품 데이터 프레임.
 similar_products = find_similar_products(keyboard_testdf, test_df, top_n=4, price_weight=0.5)
 
 print(similar_products['product_id'])
-
-# def calculate_price_similarity(prices, small_value=1):
-#     # 가격 차이 계산
-#     price_diff = np.abs(prices.reshape(-1, 1) - prices.reshape(1, -1))
-#     # 가격 차이의 역수를 유사도로 사용 (0으로 나누는 것을 방지하기 위해 small_value 추가)
-#     price_similarity = 1 / (price_diff + small_value)
-#     return price_similarity
-
-# def find_similar_products(index, df, top_n=5):
-#     # 가격 유사도 계산
-#     prices = df['keyboard_price'].to_numpy()
-#     price_sim = calculate_price_similarity(prices)
-    
-#     # 제품명을 제외한 속성만 선택하고, 'prod_price', 'product_id'도 제외
-#     features = df.drop(columns=['product_name', 'keyboard_price', 'product_id'])
-#     scaler = StandardScaler()
-#     features_scaled = scaler.fit_transform(features)
-    
-#     # 코사인 유사도 계산
-#     cosine_sim = cosine_similarity(features_scaled, features_scaled)
-    
-#     # 총 유사도 = 가격 유사도 * 가중치 + 코사인 유사도 * (1 - 가중치)
-#     # 여기서는 가격 유사도의 중요도를 높이기 위해 가중치를 조절합니다.
-#     total_sim = price_sim * 0.6 + cosine_sim * 0.4
-    
-#     # 자기 자신을 제외한 유사 제품 찾기
-#     similarity_scores = total_sim[index]
-    
-#     # 자기 자신을 제외하고 유사도가 높은 순으로 정렬하여 상위 N개 선택
-#     similar_indices = np.argsort(similarity_scores)[-top_n-1:-1][::-1]
-#     similar_indices = similar_indices[similar_indices != index]  # 자기 자신 제외
-    
-#     if len(similar_indices) > top_n:  # 만약 자기 자신을 제외하고도 N개보다 많다면, 상위 N개만 선택
-#         similar_indices = similar_indices[:top_n]
-    
-#     # 유사 제품 반환
-#     result_df = df.iloc[similar_indices].copy()
-#     result_df['similarity'] = similarity_scores[similar_indices]
-#     result_df = result_df.sort_values(by='similarity', ascending=False)
-    
-#     return result_df
-
-# index = 400
-# similar_products = find_similar_products(index, test_df)
-
-# print(similar_products['product_id'])
