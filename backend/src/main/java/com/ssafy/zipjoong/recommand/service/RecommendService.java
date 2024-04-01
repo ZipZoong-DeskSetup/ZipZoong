@@ -118,7 +118,6 @@ public class RecommendService {
             String line;
             Pattern pattern = Pattern.compile("\\d+"); // 숫자를 찾는 정규 표현식 패턴
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.find() && matcher.find()) {
                     Product product = productRepository.findById(Integer.parseInt(matcher.group()))
