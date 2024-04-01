@@ -121,7 +121,7 @@ public class RecommendService {
             processBuilder.redirectErrorStream(true); // 표준 오류를 표준 출력에 리다이렉트
             log.info("Process start");
             Process process = processBuilder.start();
-
+            log.info("Process success");
 
             BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
@@ -144,6 +144,7 @@ public class RecommendService {
                 throw new CombinationException(CombinationErrorCode.RECOMMEND_FAIL);
             }
         } catch (IOException | InterruptedException e) {
+            log.info("process error");
             throw new CombinationException(CombinationErrorCode.RECOMMEND_FAIL);
         }
 
