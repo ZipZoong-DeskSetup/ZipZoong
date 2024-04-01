@@ -6,23 +6,33 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics.pairwise import euclidean_distances
 from survey import monitor_testdf
-
+import argparse
 import warnings
 
 # 경고 메시지를 무시하도록 설정
 warnings.filterwarnings("ignore")
 
 
+# 명령줄 인수 파서 생성 및 인수 정의
+parser = argparse.ArgumentParser(description="Connect to MySQL database and fetch data.")
+parser.add_argument("--host", required=True, help="MySQL server address")
+parser.add_argument("--user", required=True, help="MySQL user name")
+parser.add_argument("--password", required=True, help="MySQL user password")
+parser.add_argument("--database", required=True, help="Database name")
+parser.add_argument("--port", type=int, default=3306, help="Database port")
+parser.add_argument("--user_id", required=True, help="User ID to query")
+
+# 인수 파싱
+args = parser.parse_args()
+
 # MySQL 서버에 연결
 conn = mysql.connector.connect(
-    host='j10a204.p.ssafy.io',        # MySQL 서버 주소
-    user='a204',    # MySQL 사용자 이름
-    password='zipjoong204^^',# MySQL 사용자 비밀번호
-    database='a204_db', # 사용할 데이터베이스 이름
-    port=3300
-
+    host=args.host,
+    user=args.user,
+    password=args.password,
+    database=args.database,
+    port=args.port
 )
-
 try:
     # 커서 생성
     cursor = conn.cursor()
@@ -201,9 +211,7 @@ def find_similar_products(survey_row, test_df, top_n=4, price_weight=0.5):
     
     return similar_products
 
-# 예시 사용
-# survey_row는 monitor_testdf로부터 가져온 단일 행 데이터프레임입니다.
-# test_df는 비교 대상인 전체 제품 데이터 프레임입니다.
 similar_products = find_similar_products(monitor_testdf, test_df, top_n=4, price_weight=0.5)
 
 print(similar_products['product_id'])
+
