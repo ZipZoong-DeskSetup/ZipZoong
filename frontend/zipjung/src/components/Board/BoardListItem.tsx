@@ -31,18 +31,18 @@ function BoardListItem({boardList, onClick}: BoardListItemProps) {
           height={30}
           alt="유저이미지"
         />
-        {boardList.boardCreator}
+        <div className={styles.CreatorNickname}>{boardList.boardCreator}</div>
       </div>
       <div className={styles.Content}>
         <div>
           <Image
             src={boardList.boardThumbnail || '/Images/boardThumbnail.png'}
-            width={200}
-            height={200}
+            width={180}
+            height={120}
             alt="썸네일"
           />
         </div>
-        <div>{boardList.boardTitle}</div>
+        <div className={styles.TilteDiv}>{boardList.boardTitle}</div>
       </div>
     </div>
   );
