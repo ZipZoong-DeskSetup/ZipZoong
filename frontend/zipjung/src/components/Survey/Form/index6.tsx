@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Question from '@/components/Survey/Question';
 import SurveyBox from '@/components/Survey/SurveyBox';
 import PageMove from '@/components/Survey/PageMove';
@@ -13,8 +13,12 @@ import styles from '@/components/Survey/index.module.scss';
  */
 const Form = () => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
-  const {setZustandKeyboardConnection, setZustandMouseConnection} =
+  const [answer, setAnswer] = useState<string | number | boolean>(-1);
+  const {setZustandKeyboardConnection, zustandKeyboardConnection} =
     useSimpleSurveyStore();
+  const [isFocus, setIsFocus] = useState<string | number | boolean>(
+    zustandKeyboardConnection,
+  );
   const questionContent = '유선, 무선 중 선호하시는 방법이 있나요?';
   const presentPage: string = '6';
   const content: [string, string, 'WIRE' | 'WIRELESS' | 'BOTH'][] = [
@@ -23,15 +27,23 @@ const Form = () => {
     ['유/무선', '', 'BOTH'],
   ];
 
+  useEffect(() => {
+    const initFocus = zustandKeyboardConnection;
+    setIsFocus(initFocus);
+    if (isFocus !== -1 && isFocus !== 'INIT') {
+      setIsClicked(true);
+    }
+  }, [answer, isFocus, zustandKeyboardConnection]);
+
   const futurePage: string = (parseInt(presentPage, 10) + 1).toString();
 
   // TODO: 배열 만들어서 저장하기(페이지 이동하기에서 주스탠드 저장하기)(마지막 질문들에서 서버에 보내기)
   const handleClick = (index: number) => {
     // eslint-disable-next-line no-console
-    const answer: 'WIRE' | 'WIRELESS' | 'BOTH' = content[index][2];
-    setZustandKeyboardConnection(answer);
-    setZustandMouseConnection(answer);
+    const nowAnswer: 'WIRE' | 'WIRELESS' | 'BOTH' = content[index][2];
+    setZustandKeyboardConnection(nowAnswer);
     setIsClicked(true);
+    setAnswer(nowAnswer);
   };
   return (
     <div className={styles.container}>
@@ -40,6 +52,7 @@ const Form = () => {
         content={content}
         boxClick={handleClick}
         design={'threeStyles'}
+        isFocus={isFocus}
       />
       <Pass pageNumber={futurePage} />
       <PageMove presentPage={presentPage} isClicked={isClicked} />
