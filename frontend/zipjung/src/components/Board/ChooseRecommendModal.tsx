@@ -58,7 +58,7 @@ function ChooseRecommendModal({onClick}: ChooseRecommendListProps) {
     fetchCombinations().catch(error => {
       console.error(error);
     });
-  }, []);
+  }, [ZustandToken]);
 
   // 조합 선택 함수 수정
   const onSelectCombination = (combinationId: number) => {
