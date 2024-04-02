@@ -36,38 +36,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         log.info("authentication.getCustomOAuth2User() = {}", customOAuth2User);
 
         Map<String, Object> responseMap = customOAuth2User.getUserInfo();
-        String userId = customOAuth2User.getUsername();
-        boolean isNewUser = userService.isNewUser(userId);
-
-//        String accessToken = JwtUtils.generateToken(responseMap, JwtConstants.ACCESS_EXP_TIME);
-//        String refreshToken = JwtUtils.generateToken(responseMap, JwtConstants.REFRESH_EXP_TIME);
-
         responseMap.put("accessToken", JwtUtils.generateToken(responseMap, JwtConstants.ACCESS_EXP_TIME));
         responseMap.put("refreshToken", JwtUtils.generateToken(responseMap, JwtConstants.REFRESH_EXP_TIME));
-
-//        log.info("accessToken : " + accessToken);
-//        log.info("refToken : " + refreshToken);
-
-        String referer = request.getHeader("Referer");
-
-        log.info("Referer = {}", referer);
-        log.info("RequestURI = {}", request.getRequestURI());
-
-        String redirectUrl = "https://zipzoong.store/oauth2/redirect";
-
-        if(KAKAO_LOGIN_URL.equals(request.getRequestURI()) && referer != null) {
-            log.info("KAKAO Login Referer: " + referer);
-        } else if(GOOGLE_LOGIN_URL.equals(request.getRequestURI()) && referer != null) {
-            log.info("GOOGLE Login Referer: " + referer);
-        } else if(NAVER_LOGIN_URL.equals(request.getRequestURI()) && referer != null) {
-            log.info("NAVER Login Referer: " + referer);
-        }
-
-        responseMap.put("referer", referer);
-
-//        response.sendRedirect(redirectUrl+"?userId="+userId+"&isNewUser="+isNewUser+"&accessToken="+accessToken+"&refreshToken="+refreshToken);
-
-
 
         Gson gson = new Gson();
         String json = gson.toJson(responseMap);
@@ -77,6 +47,5 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         PrintWriter writer = response.getWriter();
         writer.println(json);
         writer.flush();
-
     }
 }
