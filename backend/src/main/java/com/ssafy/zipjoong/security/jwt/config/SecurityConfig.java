@@ -98,6 +98,8 @@ public class SecurityConfig {
                         .requestMatchers("/board/hit/*").permitAll() // 조회수 증가
                         .requestMatchers("/comment/byBoard/*").permitAll()
                         .requestMatchers("/board/file/*").permitAll() // 파일 업로드
+                        .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/favicon.ico").permitAll()
                         .anyRequest().permitAll());
 
         httpSecurity.addFilterBefore(jwtVerifyFilter(), UsernamePasswordAuthenticationFilter.class);
