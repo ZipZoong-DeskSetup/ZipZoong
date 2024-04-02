@@ -1,51 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {useState, useEffect} from 'react';
 // import axios from 'axios';
-import styled from 'styled-components';
+import styles from '@/components/MyPage/UpdateInfo/ChangeNickname.module.scss';
 import useUserInfoStore from '@/stores/userInfo';
 import {NicknameCheck} from '@/types/MyPage';
 import ChangeCheckModal from '@/components/MyPage/Modal/ChangeCheckModal';
 
-const Name = styled.div`
-  font-size: 25px;
-  margin-bottom: 30px;
-  margin-top: 50px;
-`;
-
-const ChangeButton = styled.button`
-  border-radius: 10px;
-  width: 103px;
-  height: 48px;
-  background-color: var(--button-main-color);
-  display: flex;
-  font-size: 16px;
-  font-weight: bold;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Nickname = styled.input`
-  border-radius: 10px;
-  border: solid 1px var(--main-color-dark);
-  padding-left: 10px;
-`;
-
-const FirstContainer = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 60%;
-`;
-
-const SecondContainer = styled.div`
-  width: 600px;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const Hidden = styled.span`
-  width: 103px;
-`;
 const ChangeNickname = () => {
   const {ZustandNickname, setZustandNickname} = useUserInfoStore();
   const initNickname: string = ZustandNickname || ' ';
@@ -140,18 +100,21 @@ const ChangeNickname = () => {
     setIsModalOpen(true);
   };
   return (
-    <FirstContainer>
-      <Name>닉네임</Name>
-      <SecondContainer>
-        <Hidden></Hidden>
-        <Nickname
+    <div className={styles.firstContainer}>
+      <div className={styles.name}>닉네임</div>
+      <div className={styles.secondContainer}>
+        <span className={styles.hidden}></span>
+        <input
+          className={styles.nickname}
           type="text"
           value={valueNickname}
           onChange={handleChange}
           maxLength={8}
         />
-        <ChangeButton onClick={handleClick}>변경</ChangeButton>
-      </SecondContainer>
+        <button className={styles.changeButton} onClick={handleClick}>
+          변경
+        </button>
+      </div>
       <ChangeCheckModal
         contents={contents}
         isOpen={isModalOpen}
@@ -164,7 +127,7 @@ const ChangeNickname = () => {
       {!duplication && ZustandNickname !== valueNickname && (
         <div style={{color: 'green'}}>사용 가능한 닉네임입니다.</div>
       )}
-    </FirstContainer>
+    </div>
   );
 };
 
