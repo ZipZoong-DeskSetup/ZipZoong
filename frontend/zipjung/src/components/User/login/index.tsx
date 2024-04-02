@@ -41,13 +41,7 @@ function Form() {
   return (
     <div className={styles.login}>
       <a href="/">
-        <Image
-          src="/Images/zipjung_logo.png"
-          width={150}
-          height={80}
-          alt="zipjung_logo"
-          className={styles.logo}
-        />
+        <Image src="/Images/LOGO3.png" width={120} height={40} alt="logo" />
       </a>
       <div className={styles.loginText}>Login</div>
       <div className={styles.loginContent}>
