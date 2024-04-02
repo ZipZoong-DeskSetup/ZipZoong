@@ -34,8 +34,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         log.info("authentication.getCustomOAuth2User() = {}", customOAuth2User);
 
         Map<String, Object> responseMap = customOAuth2User.getUserInfo();
-        String userId = customOAuth2User.getUsername();
-        boolean isNewUser = userService.isNewUser(userId);
+        boolean isNewUser = userService.isNewUser(customOAuth2User.getUsername());
 
         String accessToken = JwtUtils.generateToken(responseMap, JwtConstants.ACCESS_EXP_TIME);
         String refreshToken = JwtUtils.generateToken(responseMap, JwtConstants.REFRESH_EXP_TIME);
@@ -58,6 +57,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             log.info("NAVER Login Referer: " + referer);
         }
 
-        response.sendRedirect(redirectUrl+"?userId="+userId+"&isNewUser="+isNewUser+"&accessToken="+accessToken+"&refreshToken="+refreshToken);
+        response.sendRedirect(redirectUrl+"?isNewUser="+isNewUser+"&accessToken="+accessToken+"&refreshToken="+refreshToken);
     }
 }
