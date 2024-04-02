@@ -57,7 +57,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             log.info("NAVER Login Referer: " + referer);
         }
 
-        response.sendRedirect(redirectUrl+"?isNewUser="+isNewUser+"?accessToken="+accessToken+"?refreshToken="+refreshToken);
+        response.sendRedirect(redirectUrl+"?isNewUser="+isNewUser+"&accessToken="+accessToken+"&refreshToken="+refreshToken);
     }
 }
-
