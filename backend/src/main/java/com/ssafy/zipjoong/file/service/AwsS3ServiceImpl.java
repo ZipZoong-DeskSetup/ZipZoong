@@ -31,8 +31,8 @@ public class AwsS3ServiceImpl implements AwsS3Service {
 
     /* 단일 파일 업로드 */
     @Override
-    public String uploadFileOne(MultipartFile multipartFile, String fileOwnerId, String fileType){
-        String filePath = getFilePath(multipartFile, fileOwnerId, fileType);
+    public String uploadFileOne(MultipartFile multipartFile, String fileType){
+        String filePath = getFilePath(multipartFile, fileType);
         uploadS3(multipartFile, filePath);
         return getFileUrl(filePath);
     }
@@ -73,11 +73,11 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     *   fileType => "post"
     */
     @Override
-    public List<String> uploadFiles(List<MultipartFile> multipartFiles, String fileOwnerId, String fileType) {
+    public List<String> uploadFiles(List<MultipartFile> multipartFiles, String fileType) {
         List<String> fileUrlList = new ArrayList<>();
 
         multipartFiles.forEach(file -> {
-            String filePath = getFilePath(file, fileOwnerId, fileType);
+            String filePath = getFilePath(file, fileType);
             uploadS3(file, filePath);
             String fileUrl = getFileUrl(filePath);
             fileUrlList.add(fileUrl);
@@ -132,15 +132,10 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     }
 
     /* S3에 저장될 파일 경로 반환 */
-    private String getFilePath(MultipartFile file, String fileOwnerId, String fileType) {
+    private String getFilePath(MultipartFile file, String fileType) {
         String fileName = createFileName(file.getOriginalFilename());
         String folderPath = getFolderPath(fileType);
-
-        if (fileOwnerId != null) {
-            return folderPath + fileOwnerId + "/" + fileName;
-        } else {
-            return folderPath + fileName;
-        }
+        return folderPath + fileName;
     }
 
     /* 'UUID.확장자' 형식으로 fileName 생성 */
