@@ -12,6 +12,8 @@ interface IUserInfoStore {
   setZustandId: (newId: string) => void;
   ZustandToken: string;
   setZustandToken: (newToken: string) => void;
+  ZustandRFToken: string;
+  setZustandRFToken: (newRF: string) => void;
 }
 
 const useUserInfoStore = create<IUserInfoStore>()(
@@ -27,6 +29,8 @@ const useUserInfoStore = create<IUserInfoStore>()(
       setZustandId: (newId: string) => set({ZustandId: newId}),
       ZustandToken: '',
       setZustandToken: (newToken: string) => set({ZustandToken: newToken}),
+      ZustandRFToken: '',
+      setZustandRFToken: (newRF: string) => set({ZustandRFToken: newRF}),
     }),
     {
       name: 'UserInfo',
