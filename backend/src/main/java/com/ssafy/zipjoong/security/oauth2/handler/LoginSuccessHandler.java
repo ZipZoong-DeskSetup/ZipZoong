@@ -1,6 +1,5 @@
 package com.ssafy.zipjoong.security.oauth2.handler;
 
-import com.google.gson.Gson;
 import com.ssafy.zipjoong.security.jwt.utils.JwtConstants;
 import com.ssafy.zipjoong.security.jwt.utils.JwtUtils;
 import com.ssafy.zipjoong.security.oauth2.user.CustomOAuth2User;
@@ -14,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Map;
 
 @Slf4j
@@ -36,16 +34,30 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         log.info("authentication.getCustomOAuth2User() = {}", customOAuth2User);
 
         Map<String, Object> responseMap = customOAuth2User.getUserInfo();
-        responseMap.put("accessToken", JwtUtils.generateToken(responseMap, JwtConstants.ACCESS_EXP_TIME));
-        responseMap.put("refreshToken", JwtUtils.generateToken(responseMap, JwtConstants.REFRESH_EXP_TIME));
+        String userId = customOAuth2User.getUsername();
+        boolean isNewUser = userService.isNewUser(userId);
 
-        Gson gson = new Gson();
-        String json = gson.toJson(responseMap);
+        String accessToken = JwtUtils.generateToken(responseMap, JwtConstants.ACCESS_EXP_TIME);
+        String refreshToken = JwtUtils.generateToken(responseMap, JwtConstants.REFRESH_EXP_TIME);
 
-        response.setContentType("application/json; charset=UTF-8");
+        log.info("accessToken : " + accessToken);
+        log.info("refToken : " + refreshToken);
 
-        PrintWriter writer = response.getWriter();
-        writer.println(json);
-        writer.flush();
+        String referer = request.getHeader("Referer");
+
+        log.info("Referer = {}", referer);
+        log.info("RequestURI = {}", request.getRequestURI());
+
+        String redirectUrl = "https://zipzoong.store/oauth2/redirect";
+
+        if(KAKAO_LOGIN_URL.equals(request.getRequestURI()) && referer != null) {
+            log.info("KAKAO Login Referer: " + referer);
+        } else if(GOOGLE_LOGIN_URL.equals(request.getRequestURI()) && referer != null) {
+            log.info("GOOGLE Login Referer: " + referer);
+        } else if(NAVER_LOGIN_URL.equals(request.getRequestURI()) && referer != null) {
+            log.info("NAVER Login Referer: " + referer);
+        }
+
+        response.sendRedirect(redirectUrl+"?userId="+userId+"&isNewUser="+isNewUser+"&accessToken="+accessToken+"&refreshToken="+refreshToken);
     }
 }
