@@ -64,7 +64,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         responseMap.put("accessToken", accessToken);
         responseMap.put("refreshToken", refreshToken);
-        responseMap.put("Referer", referer);
+
+        if(referer != null) {
+            responseMap.put("Referer", referer);
+        }
 
         Gson gson = new Gson();
         String json = gson.toJson(responseMap);
