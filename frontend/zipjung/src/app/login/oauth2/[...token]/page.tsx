@@ -12,6 +12,7 @@ export default function Page() {
   const user = searchParams.get('isNewUser');
   const accessToken = searchParams.get('accessToken');
   const refreshToken = searchParams.get('refreshToken');
+
   if (accessToken !== null) {
     setZustandToken(accessToken);
   }
