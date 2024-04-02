@@ -33,17 +33,19 @@ function Header() {
   return (
     <div className={styles.Header}>
       <div className={styles.Logo}>
-        <Image
-          src="/Images/zipjung_logo.png"
-          width={70}
-          height={40}
-          alt="zipjung_logo"
-        />
+        <a href="/">
+          <Image
+            src="/Images/zipjung_logo.png"
+            width={70}
+            height={40}
+            alt="zipjung_logo"
+          />
+        </a>
         <span>집중</span>
       </div>
 
       <div className={styles.Navbar}>
-        <a href="/survey">추천</a>
+        <a href="/survey/1">추천</a>
 
         <a href="/board">게시판</a>
 
@@ -64,7 +66,7 @@ function Header() {
                 )}
               </div>
             </div>
-            <a href="./mypage">
+            <a href="/mypage">
               <Image
                 src={ZustandImageUrl}
                 width={40}

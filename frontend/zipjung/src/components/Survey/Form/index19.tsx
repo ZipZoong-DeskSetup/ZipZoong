@@ -38,7 +38,6 @@ const Form = () => {
     zustandHealth,
   );
   const questionContent = '손 건강이 안 좋으신가요?';
-  const presentPage: string = '19';
   const content: [string, string, boolean][] = [
     ['예', '', true],
     ['아니오', '', false],
@@ -129,7 +128,6 @@ const Form = () => {
       />
       <LastPass pageNumber={'result'} />
       <LastPageMove
-        presentPage={presentPage}
         isClicked={isClicked}
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         submitClick={handleSubmit}
