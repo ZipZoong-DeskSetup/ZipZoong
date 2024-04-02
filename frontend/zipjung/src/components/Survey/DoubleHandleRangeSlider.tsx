@@ -2,7 +2,7 @@
 
 import {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import useFirstSurveyStore from '@/stores/firstSurvey';
+import useDebounce from '@/hooks/useDebounce';
 
 const FirstContainer = styled.div`
   width: 100%;
@@ -104,23 +104,22 @@ const PriceInfo = styled.div`
   width: 100%;
   justify-content: space-between;
 `;
-const DoubleHandleRangeSlider = () => {
-  const [maxValue, setMaxValue] = useState(500);
-  const {setZustandTotalPrice} = useFirstSurveyStore();
-
+const DoubleHandleRangeSlider = ({
+  maxValue,
+  setMaxValue,
+}: {
+  maxValue: number;
+  setMaxValue: (value: number) => void;
+}) => {
+  const [middlePrice, setMiddlePrice] = useState<number>(maxValue);
+  const debouncedPrice = useDebounce(middlePrice, 1000);
   const handleMaxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newMax: number = parseInt(event.target.value, 10);
-    setMaxValue(newMax);
+    setMiddlePrice(newMax);
   };
-
   useEffect(() => {
-    const saveMaxValue = () => {
-      setZustandTotalPrice(maxValue);
-    };
-    const timerId = setTimeout(saveMaxValue, 500);
-    return () => clearTimeout(timerId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [maxValue]);
+    setMaxValue(debouncedPrice);
+  }, [debouncedPrice, setMaxValue]);
 
   return (
     <FirstContainer>
