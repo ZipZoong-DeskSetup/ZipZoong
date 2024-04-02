@@ -5,7 +5,7 @@
 // import { useEffect } from 'react';
 import {useEffect, useState} from 'react';
 // import axios from 'axios';
-import styled from 'styled-components';
+import styles from '@/components/MyPage/MyProduct/index.module.scss';
 import MoMaKey from '@/components/MyPage/MyProduct/MoMaKey';
 import MoveRecommend from '@/components/Common/MoveRecommend';
 import RecommendDetailProduct from '@/components/Recommend/Detail/RecommendDetailProduct';
@@ -16,31 +16,6 @@ import {
   MouseDetail,
   KeyboardDetail,
 } from '@/types/Recommendation';
-
-const ProductContainer = styled.div`
-  width: 100%;
-  display: flex;
-  height: 300px;
-  justify-content: center;
-`;
-
-const MiddleContainer = styled.div`
-  width: 60%;
-`;
-
-const MiddleSortContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const NoItem = styled.div`
-  margin-top: 80px;
-  margin-bottom: 60px;
-  font-size: 38px;
-  color: var(--original-font-color);
-  font-weight: 550;
-`;
 
 /**
  * 0. 좋아요 버튼 분석-> 서버에 보내는지 확인, 서버에 보내면 관련 정보 받는지 확인
@@ -226,31 +201,31 @@ const MyProductForm = () => {
 
   // TODO: 선택한 것 없을 시 선택한 것 없음 문구와 함께 추천받으러 가기 띄우기
   return (
-    <ProductContainer>
-      <MiddleContainer>
+    <div className={styles.productContainer}>
+      <div className={styles.middleContainer}>
         {likedProducts === null ||
         likedProducts.keyboard.length +
           likedProducts.monitor.length +
           likedProducts.mouse.length ===
           0 ? (
-          <MiddleSortContainer>
-            <NoItem>선택한 제품이 없어요</NoItem>
+          <div className={styles.middleSortContainer}>
+            <div className={styles.noItem}>선택한 제품이 없어요</div>
             <MoveRecommend
               detail="추천 받으러 가기"
               address="/survey"
               styleName="mypage"
             />
-          </MiddleSortContainer>
+          </div>
         ) : (
           <>
             <MoMaKey productSelect={productSelect} />
-            <MiddleSortContainer>
+            <div className={styles.middleSortContainer}>
               {ProductList(selectedProduct)}
-            </MiddleSortContainer>
+            </div>
           </>
         )}
-      </MiddleContainer>
-    </ProductContainer>
+      </div>
+    </div>
   );
 };
 export default MyProductForm;
