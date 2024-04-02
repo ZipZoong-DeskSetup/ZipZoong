@@ -8,6 +8,7 @@ import com.ssafy.zipjoong.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -89,8 +90,10 @@ public class SecurityConfig {
                         .requestMatchers("/v3/api-docs").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/api-docs/**").permitAll()
-                        .requestMatchers("/combination").permitAll()
-                        .requestMatchers("/combination/**").permitAll()
+                        .requestMatchers("/combination/product").permitAll()
+                        .requestMatchers("/combination/{combinationId}").permitAll()
+                        .requestMatchers("/combination/recommend/info").permitAll()
+                        .requestMatchers("/combination/{combinationId}/product/{productId}").permitAll()
                         .requestMatchers("/user/nickname/check").permitAll()
                         .requestMatchers("/board").permitAll() // 전체 게시글 목록 조회
                         .requestMatchers("/board/detail/*").permitAll() // 게시글 상세 조회
