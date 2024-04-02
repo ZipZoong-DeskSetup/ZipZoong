@@ -33,7 +33,6 @@ function Header() {
   return (
     <div className={styles.Header}>
       <div className={styles.Logo}>
-<<<<<<< HEAD
         <a href="/">
           <Image
             src="/Images/zipjung_logo.png"
@@ -43,9 +42,6 @@ function Header() {
           />
         </a>
         <span>집중</span>
-=======
-        <Image src="/Images/LOGO1.png" width={120} height={150} alt="logo" />
->>>>>>> 7a5a5438d8493971b29722a94ae4e8bbfdd74023
       </div>
 
       <div className={styles.Navbar}>
