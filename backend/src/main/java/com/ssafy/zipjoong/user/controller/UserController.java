@@ -5,10 +5,14 @@ import com.ssafy.zipjoong.user.dto.UserNicknameUpdateRequest;
 import com.ssafy.zipjoong.user.service.UserService;
 import com.ssafy.zipjoong.util.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +27,17 @@ import java.util.Map;
 @Tag(name = "유저 API", description = "유저 API")
 public class UserController {
     private final UserService userService;
+
+    // 회원가입
+    @PostMapping(value = "/signup", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "회원가입", description = "회원가입")
+    public ResponseEntity<ResponseDto> signUp(@RequestHeader("Authorization") String authorizationToken,
+                                              @RequestParam("nickname") String nickname,
+                                              @Parameter(description = "유저 프로필 이미지", content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE, schema = @Schema(type = "string", format = "binary"))) @RequestPart(value = "userImg", required = false) MultipartFile userImg) {
+        String userId = findUserId(authorizationToken);
+        userService.signUp(userId, nickname, userImg);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 회원가입을 완료하였습니다."));
+    }
 
     // 내 정보 조회
     @GetMapping("/info")

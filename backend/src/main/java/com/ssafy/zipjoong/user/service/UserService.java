@@ -5,6 +5,9 @@ import com.ssafy.zipjoong.user.dto.UserResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
+    // 회원가입
+    void signUp(String userId, String nickname, MultipartFile userImg);
+
     // 신규 유저 여부 확인
     boolean isNewUser(String userId);
 
