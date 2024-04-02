@@ -2,6 +2,7 @@ package com.ssafy.zipjoong.user.service;
 
 import com.ssafy.zipjoong.file.service.AwsS3ServiceImpl;
 import com.ssafy.zipjoong.user.domain.User;
+import com.ssafy.zipjoong.user.dto.UserCreateRequest;
 import com.ssafy.zipjoong.user.dto.UserNicknameUpdateRequest;
 import com.ssafy.zipjoong.user.dto.UserResponse;
 import com.ssafy.zipjoong.user.exception.UserErrorCode;
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // 새 프로필 사진을 S3에 업로드
-        String newImgUrl = awsS3Service.uploadFileOne(newUserImg, userId, "profile");
+        String newImgUrl = awsS3Service.uploadFileOne(newUserImg, "profile");
 
         // 프로필 사진 경로 업데이트
         user.updateUserImg(newImgUrl);
