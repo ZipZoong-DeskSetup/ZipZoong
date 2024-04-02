@@ -1,0 +1,27 @@
+.navContainer {
+    width: 60%;
+    margin: auto;
+}
+
+.position {
+    font-size: 25px;
+    display: flex;
+    margin: 3px;
+    padding: 6px 3px;
+    justify-content: space-between;
+}
+
+.divisionLine{
+    border: 0;
+    height: 1px;
+    background-color: var(--main-color-dark);
+}
+
+.clickedMenu{
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.menu{
+    cursor: pointer;
+}
