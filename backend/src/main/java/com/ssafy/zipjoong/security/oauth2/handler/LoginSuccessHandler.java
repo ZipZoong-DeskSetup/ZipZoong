@@ -1,5 +1,6 @@
 package com.ssafy.zipjoong.security.oauth2.handler;
 
+import com.google.gson.Gson;
 import com.ssafy.zipjoong.security.jwt.utils.JwtConstants;
 import com.ssafy.zipjoong.security.jwt.utils.JwtUtils;
 import com.ssafy.zipjoong.security.oauth2.user.CustomOAuth2User;
@@ -34,7 +35,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         log.info("authentication.getCustomOAuth2User() = {}", customOAuth2User);
 
         Map<String, Object> responseMap = customOAuth2User.getUserInfo();
-        boolean isNewUser = userService.isNewUser(customOAuth2User.getUsername());
+        String userId = customOAuth2User.getUsername();
+        boolean isNewUser = userService.isNewUser(userId);
 
         String accessToken = JwtUtils.generateToken(responseMap, JwtConstants.ACCESS_EXP_TIME);
         String refreshToken = JwtUtils.generateToken(responseMap, JwtConstants.REFRESH_EXP_TIME);
@@ -47,7 +49,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         log.info("Referer = {}", referer);
         log.info("RequestURI = {}", request.getRequestURI());
 
-        String redirectUrl = "https://zipzoong.store/oauth2/redirect";
+//        String redirectUrl = "https://zipzoong.store/oauth2/redirect";
+//        String redirectUrl = "http://localhost:3000/oauth2/redirect";
 
         if(KAKAO_LOGIN_URL.equals(request.getRequestURI()) && referer != null) {
             log.info("KAKAO Login Referer: " + referer);
@@ -57,6 +60,16 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             log.info("NAVER Login Referer: " + referer);
         }
 
-        response.sendRedirect(redirectUrl+"?isNewUser="+isNewUser+"&accessToken="+accessToken+"&refreshToken="+refreshToken);
+//        response.sendRedirect(redirectUrl+"?userId="+userId+"&isNewUser="+isNewUser+"&accessToken="+accessToken+"&refreshToken="+refreshToken);
+
+        responseMap.put("accessToken", accessToken);
+        responseMap.put("refreshToken", refreshToken);
+        responseMap.put("Referer", referer);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(responseMap);
+
+        response.setContentType("application/json; charset=UTF-8");
+        response.getWriter().write(json);
     }
 }
