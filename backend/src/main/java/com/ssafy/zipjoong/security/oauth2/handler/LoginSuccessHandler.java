@@ -35,23 +35,35 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         log.info("authentication.getCustomOAuth2User() = {}", customOAuth2User);
 
         Map<String, Object> responseMap = customOAuth2User.getUserInfo();
-//        String userId = customOAuth2User.getUsername();
-//        boolean isNewUser = userService.isNewUser(userId);
+        String userId = customOAuth2User.getUsername();
+        boolean isNewUser = userService.isNewUser(userId);
 
-        String accessToken = JwtUtils.generateToken(responseMap, JwtConstants.ACCESS_EXP_TIME);
-        String refreshToken = JwtUtils.generateToken(responseMap, JwtConstants.REFRESH_EXP_TIME);
+//        String accessToken = JwtUtils.generateToken(responseMap, JwtConstants.ACCESS_EXP_TIME);
+//        String refreshToken = JwtUtils.generateToken(responseMap, JwtConstants.REFRESH_EXP_TIME);
 
-        log.info("accessToken : " + accessToken);
-        log.info("refToken : " + refreshToken);
+        responseMap.put("accessToken", JwtUtils.generateToken(responseMap, JwtConstants.ACCESS_EXP_TIME));
+        responseMap.put("refreshToken", JwtUtils.generateToken(responseMap, JwtConstants.REFRESH_EXP_TIME));
+
+//        log.info("accessToken : " + accessToken);
+//        log.info("refToken : " + refreshToken);
 
         String referer = request.getHeader("Referer");
 
         log.info("Referer = {}", referer);
         log.info("RequestURI = {}", request.getRequestURI());
 
+        responseMap.put("Referer", referer);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(responseMap);
+
+        response.setContentType("application/json; charset=UTF-8");
+        response.getWriter().write(json);
+
+
 //        String redirectUrl = "https://zipzoong.store/oauth2/redirect";
 //        String redirectUrl = "http://localhost:3000/oauth2/redirect";
-
+//
 //        if(KAKAO_LOGIN_URL.equals(request.getRequestURI()) && referer != null) {
 //            log.info("KAKAO Login Referer: " + referer);
 //        } else if(GOOGLE_LOGIN_URL.equals(request.getRequestURI()) && referer != null) {
@@ -59,20 +71,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 //        } else if(NAVER_LOGIN_URL.equals(request.getRequestURI()) && referer != null) {
 //            log.info("NAVER Login Referer: " + referer);
 //        }
-
+//
 //        response.sendRedirect(redirectUrl+"?userId="+userId+"&isNewUser="+isNewUser+"&accessToken="+accessToken+"&refreshToken="+refreshToken);
-
-        responseMap.put("accessToken", accessToken);
-        responseMap.put("refreshToken", refreshToken);
-
-        if(referer != null) {
-            responseMap.put("Referer", referer);
-        }
-
-        Gson gson = new Gson();
-        String json = gson.toJson(responseMap);
-
-        response.setContentType("application/json; charset=UTF-8");
-        response.getWriter().write(json);
     }
 }
