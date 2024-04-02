@@ -7,17 +7,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 public class UserCreateRequest {
-    private String userId;
     private String userNickname;
     private MultipartFile userImg;
-    private UserRoleType userRole;
 
-    public User toEntity(String userId, String userImgPath) {
+    public User toEntity(String userImgPath) {
         return User.builder()
-                .userId(userId)
                 .userNickname(userNickname)
                 .userImg(userImgPath)
-                .userRole(userRole)
+                .userRole(UserRoleType.ROLE_USER)
                 .build();
     }
 }

@@ -20,6 +20,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AwsS3ServiceImpl awsS3Service;
 
+    /* 신규 유저 여부 확인 */
+    @Override
+    public boolean isNewUser(String userId) {
+        return !userRepository.existsById(userId);
+    }
+
     /* 내 정보 조회 */
     @Override
     public UserResponse getUserInfo(String userId) {
