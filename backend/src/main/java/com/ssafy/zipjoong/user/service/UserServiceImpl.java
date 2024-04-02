@@ -20,6 +20,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AwsS3ServiceImpl awsS3Service;
 
+    /* 신규 유저 여부 확인 */
+    @Override
+    public boolean isNewUser(String userId) {
+        return !userRepository.existsById(userId);
+    }
+
     /* 내 정보 조회 */
     @Override
     public UserResponse getUserInfo(String userId) {
@@ -56,7 +62,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // 새 프로필 사진을 S3에 업로드
-        String newImgUrl = awsS3Service.uploadFileOne(newUserImg, userId, "profile");
+        String newImgUrl = awsS3Service.uploadFileOne(newUserImg, "profile");
 
         // 프로필 사진 경로 업데이트
         user.updateUserImg(newImgUrl);

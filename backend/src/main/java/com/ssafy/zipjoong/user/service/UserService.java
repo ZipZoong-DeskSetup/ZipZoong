@@ -5,6 +5,9 @@ import com.ssafy.zipjoong.user.dto.UserResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
+    // 신규 유저 여부 확인
+    boolean isNewUser(String userId);
+
     // 내 정보 조회
     UserResponse getUserInfo(String userId);
 
