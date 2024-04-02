@@ -111,7 +111,6 @@ function Form() {
   const [formTitle, setFormTitle] = useState<string>('');
   const [formContent, setFormContent] = useState<string>('');
   const [showModal, setShowModal] = useState<boolean>(false);
-  // const [likeRecommend, setLikeRecommend] = useState<ICombination>();
   const [combinationDetails, setCombinationDetails] = useState<ICombination[]>(
     [],
   );
@@ -132,12 +131,10 @@ function Form() {
         try {
           const response = await axios.get<IBoardDetailResponse>(
             `${process.env.NEXT_PUBLIC_BASE_URL}/board/detail/${ZustandboardModifyId}`,
-            {headers: {Authorization: `Bearer ${ZustandToken}`}},
           );
           const {data} = response.data;
           setFormTitle(data.boardTitle);
           setFormContent(data.boardContent);
-          // 여기서 combinationDetails와 같은 다른 상태들도 필요한 경우 설정해주세요.
         } catch (error) {
           console.error('Failed to fetch board details', error);
         }
@@ -158,7 +155,7 @@ function Form() {
               `${process.env.NEXT_PUBLIC_BASE_URL}/combination/${combinationId}`,
               {
                 headers: {
-                  Authorization: ZustandToken,
+                  Authorization: `Bearer ${ZustandToken}`,
                 },
               },
             );
@@ -280,8 +277,8 @@ function Form() {
 
       console.log(postData);
       console.log(config);
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/board`, // 요청 URL
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/board/${ZustandboardModifyId}`, // 요청 URL
         postData,
         config,
       );

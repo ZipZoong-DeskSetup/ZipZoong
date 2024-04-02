@@ -19,13 +19,7 @@ function Form() {
   return (
     <div className={styles.signUp}>
       <a href="/">
-        <Image
-          src="/Images/zipjung_logo.png"
-          width={150}
-          height={80}
-          alt="zipjung_logo"
-          className={styles.logo}
-        />
+        <Image src="/Images/LOGO3.png" width={120} height={40} alt="logo" />
       </a>
       <div className={styles.signUpTitle}>사용하실 닉네임을 입력해주세요.</div>
       <div className={styles.signUpInfo}>
