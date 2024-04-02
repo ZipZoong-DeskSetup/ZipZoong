@@ -3,10 +3,12 @@ package com.ssafy.zipjoong.security.jwt.controller;
 import com.ssafy.zipjoong.security.jwt.exception.CustomJwtException;
 import com.ssafy.zipjoong.security.jwt.utils.JwtConstants;
 import com.ssafy.zipjoong.security.jwt.utils.JwtUtils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -14,15 +16,17 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "토큰 API", description = "토큰 API")
 public class JwtController {
 
-    @RequestMapping("/refresh")
+    @PostMapping("/refresh")
+    @Operation(summary = "토큰 재발급", description = "토큰 재발급")
     public Map<String, Object> refresh(@RequestHeader("Authorization") String authHeader, String refreshToken) {
         log.info("Refresh Token = {}", refreshToken);
         if (authHeader == null) {
             throw new CustomJwtException("Access Token이 존재하지 않습니다");
         } else if (!authHeader.startsWith(JwtConstants.JWT_TYPE)) {
-            throw new CustomJwtException("올바르지 않은 토큰 형식입니다. 토큰은 BEARER로 시작해야 합니다.");
+            throw new CustomJwtException("올바르지 않은 토큰 형식입니다. 토큰은 Bearer로 시작해야 합니다.");
         }
 
         String accessToken = JwtUtils.getTokenFromHeader(authHeader);
