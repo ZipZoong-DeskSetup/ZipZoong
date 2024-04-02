@@ -1,5 +1,9 @@
-// import Form from '@/components/Survey/Form/index12';
+import Form from '@/components/Survey/Form/index12';
 
 export default function Page() {
-  return <>{/* <Form /> */}</>;
+  return (
+    <>
+      <Form />
+    </>
+  );
 }
