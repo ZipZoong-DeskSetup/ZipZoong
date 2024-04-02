@@ -1,7 +1,7 @@
 import {create} from 'zustand';
 
 import {persist} from 'zustand/middleware';
-// 용도, 가격, 색
+
 interface IFirstSurveyStore {
   zustandMonitorUsage: -1 | 1 | 2 | 4 | 8 | 16;
   setZustandMonitorUsage: (newUsage: -1 | 1 | 2 | 4 | 8 | 16) => void;
@@ -30,7 +30,7 @@ const useFirstSurveyStore = create<IFirstSurveyStore>()(
       zustandMouseUsage: -1,
       setZustandMouseUsage: (newUsage: -1 | 1 | 2 | 4 | 8 | 16) =>
         set({zustandMouseUsage: newUsage}),
-      zustandTotalPrice: 0,
+      zustandTotalPrice: 10,
       setZustandTotalPrice: (newPrice: number) =>
         set({zustandTotalPrice: newPrice}),
       zustandColor: 'INIT',

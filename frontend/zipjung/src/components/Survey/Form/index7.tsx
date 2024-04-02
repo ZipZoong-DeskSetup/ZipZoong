@@ -1,11 +1,11 @@
 'use client';
 
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import axios from 'axios';
 import Question from '@/components/Survey/Question';
 import SurveyBox from '@/components/Survey/SurveyBox';
 import LastPageMove from '@/components/Survey/LastPageMove';
-import Pass from '@/components/Survey/Pass';
+import LastPass from '@/components/Survey/LastPass';
 import useUserInfoStore from '@/stores/userInfo';
 import useSimpleSurveyStore from '@/stores/simpleSurvey';
 import useFirstSurveyStore from '@/stores/firstSurvey';
@@ -17,10 +17,9 @@ import styles from '@/components/Survey/index.module.scss';
 // TODO: 마지막 -> 서버 보내기
 const Form = () => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
-  useSimpleSurveyStore();
+  const [answer, setAnswer] = useState<string | number | boolean>(-1);
   const {
     setZustandKeyboardHealth,
-    setZustandMouseHealth,
     zustandKeyboardLayout,
     zustandKeyboardConnection,
     zustandKeyboardHealth,
@@ -28,6 +27,9 @@ const Form = () => {
   const {ZustandToken} = useUserInfoStore();
   const {zustandMonitorUsage, zustandTotalPrice, zustandColor} =
     useFirstSurveyStore();
+  const [isFocus, setIsFocus] = useState<string | number | boolean>(
+    zustandKeyboardHealth,
+  );
   const questionContent = '손 건강이 안 좋으신가요?';
   const presentPage: string = '7';
   const content: [string, string, boolean][] = [
@@ -35,14 +37,23 @@ const Form = () => {
     ['아니오', '', false],
   ];
 
+  useEffect(() => {
+    const initFocus = zustandKeyboardHealth;
+    setIsFocus(initFocus);
+    if (isFocus !== -1 && isFocus !== 'INIT') {
+      setIsClicked(true);
+    }
+  }, [answer, isFocus, zustandKeyboardHealth]);
+
   const SimpleSurvey: ISimpleSurvey = {
     surveyDetail: 'SIMPLE',
     monitorPrice: 0,
     keyboardPrice: 0,
     mousePrice: 0,
     monitorCount: 1,
-    monitorSize: [4],
-    monitorRatio: [1],
+    // FIXME: 백이랑 맞추고 수정 필요
+    monitorSize: 4,
+    monitorRatio: 1,
     monitorPanel: 'FLAT',
     keyboardType: 'MECHANICAL',
     keyboardSound: 'RED',
@@ -51,10 +62,10 @@ const Form = () => {
 
   const handleClick = (index: number) => {
     // eslint-disable-next-line no-console
-    const answer: boolean = content[index][2];
-    setZustandKeyboardHealth(answer);
-    setZustandMouseHealth(answer);
+    const nowAnswer: boolean = content[index][2];
+    setZustandKeyboardHealth(nowAnswer);
     setIsClicked(true);
+    setAnswer(nowAnswer);
   };
 
   const handleSubmit = async (): Promise<void> => {
@@ -101,8 +112,9 @@ const Form = () => {
         content={content}
         boxClick={handleClick}
         design={'twoStyles'}
+        isFocus={isFocus}
       />
-      <Pass pageNumber={'result'} />
+      <LastPass pageNumber={'result'} />
       <LastPageMove
         presentPage={presentPage}
         isClicked={isClicked}

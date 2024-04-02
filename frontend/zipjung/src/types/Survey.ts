@@ -15,8 +15,8 @@ interface ISurvey {
   mouseConnection: 'WIRE' | 'WIRELESS' | 'BOTH';
   keyboardHealth: boolean;
   mouseHealth: boolean;
-  monitorSize: (1 | 2 | 4 | 8 | 16)[];
-  monitorRatio: (1 | 2 | 4 | 8)[];
+  monitorSize: number;
+  monitorRatio: number;
   monitorPanel: 'FLAT' | 'CURVED';
   keyboardType: 'MEMBRANE' | 'PANTOGRAPH' | 'MECHANICAL';
   keyboardSound: 'RED' | 'BLACK' | 'BROWN' | 'BLUE';
@@ -29,8 +29,8 @@ interface ISimpleSurvey {
   keyboardPrice: 0;
   mousePrice: 0;
   monitorCount: 1;
-  monitorSize: [4];
-  monitorRatio: [1];
+  monitorSize: 4;
+  monitorRatio: 1;
   monitorPanel: 'FLAT';
   keyboardType: 'MECHANICAL';
   keyboardSound: 'RED';
