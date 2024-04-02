@@ -2,7 +2,6 @@ package com.ssafy.zipjoong.user.service;
 
 import com.ssafy.zipjoong.file.service.AwsS3ServiceImpl;
 import com.ssafy.zipjoong.user.domain.User;
-import com.ssafy.zipjoong.user.dto.UserCreateRequest;
 import com.ssafy.zipjoong.user.dto.UserNicknameUpdateRequest;
 import com.ssafy.zipjoong.user.dto.UserResponse;
 import com.ssafy.zipjoong.user.exception.UserErrorCode;
@@ -20,6 +19,25 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final AwsS3ServiceImpl awsS3Service;
+
+    /* 회원가입 */
+    @Transactional
+    @Override
+    public void signUp(String userId, String nickname, MultipartFile userImg) {
+        User user = findUser(userId);
+
+        // 닉네임 저장
+        user.updateUserNickname(nickname);
+
+        // s3에 프로필 사진 업로드
+        String imgUrl = null;
+        if(userImg != null) {
+            imgUrl = awsS3Service.uploadFileOne(userImg, "profile");
+        }
+
+        // 프로필 사진 경로 저장
+        user.updateUserImg(imgUrl);
+    }
 
     /* 신규 유저 여부 확인 */
     @Override
