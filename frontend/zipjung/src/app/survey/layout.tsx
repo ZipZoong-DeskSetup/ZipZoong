@@ -2,11 +2,11 @@ import Header from '@/components/Common/Header';
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
-    <>
-      <header>
+    <div>
+      <section>
         <Header />
-      </header>
-      <body>{children}</body>
-    </>
+      </section>
+      <section>{children}</section>
+    </div>
   );
 }
