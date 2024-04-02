@@ -28,7 +28,7 @@ public class UserController {
     @GetMapping("/info")
     @Operation(summary = "내 정보 조회", description = "내 정보 조회")
     public ResponseEntity<ResponseDto> getUserInfo(@RequestHeader("Authorization") String authorizationToken) {
-        String userId = JwtUtils.getUserId(authorizationToken);
+        String userId = findUserId(authorizationToken);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 유저 정보를 조회하였습니다.", userService.getUserInfo(userId)));
     }
 
@@ -51,7 +51,7 @@ public class UserController {
     @Operation(summary = "닉네임 변경", description = "닉네임 변경")
     public ResponseEntity<ResponseDto> updateNickname(@RequestHeader("Authorization") String authorizationToken,
                                                       @RequestBody UserNicknameUpdateRequest updateRequest) {
-        String userId = JwtUtils.getUserId(authorizationToken);
+        String userId = findUserId(authorizationToken);
         userService.updateNickname(userId, updateRequest);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 닉네임을 변경하였습니다."));
     }
@@ -61,9 +61,13 @@ public class UserController {
     @Operation(summary = "프로필 사진 변경", description = "프로필 사진 변경")
     public ResponseEntity<ResponseDto> updateProfile(@RequestHeader("Authorization") String authorizationToken,
                                                      @RequestPart MultipartFile userImg) {
-        String userId = JwtUtils.getUserId(authorizationToken);
+        String userId = findUserId(authorizationToken);
         userService.updateUserImg(userId, userImg);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 프로필 사진을 변경하였습니다."));
+    }
+
+    private String findUserId(String authorizationToken) {
+        return JwtUtils.getUserId(authorizationToken);
     }
 
 }
