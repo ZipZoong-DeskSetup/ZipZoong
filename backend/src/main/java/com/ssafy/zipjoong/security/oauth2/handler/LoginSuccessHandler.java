@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 @Slf4j
@@ -72,7 +73,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         String json = gson.toJson(responseMap);
 
         response.setContentType("application/json; charset=UTF-8");
-        response.getWriter().write(json);
+
+        PrintWriter writer = response.getWriter();
+        writer.println(json);
+        writer.flush();
 
     }
 }
