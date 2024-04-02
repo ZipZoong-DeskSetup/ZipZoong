@@ -47,7 +47,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         log.info("Referer = {}", referer);
         log.info("RequestURI = {}", request.getRequestURI());
 
-        String redirectUrl = "https://back.zipzoong.store/oauth2/redirect";
+        String redirectUrl = "https://zipzoong.store/oauth2/redirect";
 
         if(KAKAO_LOGIN_URL.equals(request.getRequestURI()) && referer != null) {
             log.info("KAKAO Login Referer: " + referer);
