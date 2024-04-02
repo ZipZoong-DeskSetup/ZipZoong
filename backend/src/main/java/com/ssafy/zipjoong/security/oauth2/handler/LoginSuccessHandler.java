@@ -1,5 +1,6 @@
 package com.ssafy.zipjoong.security.oauth2.handler;
 
+import com.google.gson.Gson;
 import com.ssafy.zipjoong.security.jwt.utils.JwtConstants;
 import com.ssafy.zipjoong.security.jwt.utils.JwtUtils;
 import com.ssafy.zipjoong.security.oauth2.user.CustomOAuth2User;
@@ -37,11 +38,14 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         String userId = customOAuth2User.getUsername();
         boolean isNewUser = userService.isNewUser(userId);
 
-        String accessToken = JwtUtils.generateToken(responseMap, JwtConstants.ACCESS_EXP_TIME);
-        String refreshToken = JwtUtils.generateToken(responseMap, JwtConstants.REFRESH_EXP_TIME);
+//        String accessToken = JwtUtils.generateToken(responseMap, JwtConstants.ACCESS_EXP_TIME);
+//        String refreshToken = JwtUtils.generateToken(responseMap, JwtConstants.REFRESH_EXP_TIME);
 
-        log.info("accessToken : " + accessToken);
-        log.info("refToken : " + refreshToken);
+        responseMap.put("accessToken", JwtUtils.generateToken(responseMap, JwtConstants.ACCESS_EXP_TIME));
+        responseMap.put("refreshToken", JwtUtils.generateToken(responseMap, JwtConstants.REFRESH_EXP_TIME));
+
+//        log.info("accessToken : " + accessToken);
+//        log.info("refToken : " + refreshToken);
 
         String referer = request.getHeader("Referer");
 
@@ -58,6 +62,17 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             log.info("NAVER Login Referer: " + referer);
         }
 
-        response.sendRedirect(redirectUrl+"?userId="+userId+"&isNewUser="+isNewUser+"&accessToken="+accessToken+"&refreshToken="+refreshToken);
+        responseMap.put("referer", referer);
+
+//        response.sendRedirect(redirectUrl+"?userId="+userId+"&isNewUser="+isNewUser+"&accessToken="+accessToken+"&refreshToken="+refreshToken);
+
+
+
+        Gson gson = new Gson();
+        String json = gson.toJson(responseMap);
+
+        response.setContentType("application/json; charset=UTF-8");
+        response.getWriter().write(json);
+
     }
 }
