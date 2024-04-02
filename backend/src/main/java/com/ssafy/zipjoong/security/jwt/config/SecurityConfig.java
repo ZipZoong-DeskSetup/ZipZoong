@@ -4,6 +4,7 @@ import com.ssafy.zipjoong.security.oauth2.handler.LoginFailHandler;
 import com.ssafy.zipjoong.security.oauth2.handler.LoginSuccessHandler;
 import com.ssafy.zipjoong.security.jwt.filter.JwtVerifyFilter;
 import com.ssafy.zipjoong.security.oauth2.service.OAuth2UserService;
+import com.ssafy.zipjoong.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final OAuth2UserService oAuth2UserService;
+    private final UserService userService;
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -50,7 +52,7 @@ public class SecurityConfig {
 
     @Bean
     public LoginSuccessHandler loginSuccessHandler() {
-        return new LoginSuccessHandler();
+        return new LoginSuccessHandler(userService);
     }
 
     @Bean
@@ -96,6 +98,8 @@ public class SecurityConfig {
                         .requestMatchers("/board/hit/*").permitAll() // 조회수 증가
                         .requestMatchers("/comment/byBoard/*").permitAll()
                         .requestMatchers("/board/file/*").permitAll() // 파일 업로드
+                        .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/favicon.ico").permitAll()
                         .anyRequest().permitAll());
 
         httpSecurity.addFilterBefore(jwtVerifyFilter(), UsernamePasswordAuthenticationFilter.class);

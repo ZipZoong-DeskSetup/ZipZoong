@@ -66,12 +66,6 @@ public class JwtVerifyFilter extends OncePerRequestFilter {
         log.info("Referer = {}", request.getHeader("Referer"));
         log.info("RequestURI = {}", request.getRequestURI());
 
-        String referer = request.getHeader("Referer");
-        if (referer != null && !referer.isEmpty()) {
-            // Referer 값을 세션에 저장
-            request.getSession().setAttribute("referer", referer);
-        }
-
         String authHeader = request.getHeader(JwtConstants.JWT_HEADER);
 
         try {
