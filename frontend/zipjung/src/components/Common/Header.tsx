@@ -33,13 +33,7 @@ function Header() {
   return (
     <div className={styles.Header}>
       <div className={styles.Logo}>
-        <Image
-          src="/Images/zipjung_logo.png"
-          width={70}
-          height={40}
-          alt="zipjung_logo"
-        />
-        <span>집중</span>
+        <Image src="/Images/LOGO1.png" width={120} height={150} alt="logo" />
       </div>
 
       <div className={styles.Navbar}>
