@@ -50,7 +50,6 @@ const Form = () => {
     keyboardPrice: 0,
     mousePrice: 0,
     monitorCount: 1,
-    // FIXME: 백이랑 맞추고 수정 필요
     monitorSize: 4,
     monitorRatio: 1,
     monitorPanel: 'FLAT',
@@ -93,12 +92,15 @@ const Form = () => {
           zustandKeyboardHealth !== 'INIT' ? zustandKeyboardHealth : false,
       };
 
-      await axios.post<ISurvey>(`${process.env.NEXT_PUBLIC_BASE_URL}/survey`, {
-        headers: {
-          Authorization: `Bearer ${ZustandToken}`,
-        },
+      await axios.post<ISurvey>(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/survey`,
         data,
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${ZustandToken}`,
+          },
+        },
+      );
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('survey data post error: ', error);

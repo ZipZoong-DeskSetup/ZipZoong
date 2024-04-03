@@ -15,6 +15,18 @@
   justify-content: center;
 }
 
+.unchangeButton {
+  border-radius: 10px;
+  width: 103px;
+  height: 48px;
+  background-color: var(--button-main-disabled-color);
+  display: flex;
+  font-size: 16px;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+}
+
 .firstContainer {
   display: flex;
   align-items: center;
