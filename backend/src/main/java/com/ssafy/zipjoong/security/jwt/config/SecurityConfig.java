@@ -99,7 +99,7 @@ public class SecurityConfig {
 
         httpSecurity
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer ->
-                httpSecurityOAuth2LoginConfigurer.loginPage("/oauth2/login")
+                httpSecurityOAuth2LoginConfigurer.loginPage("https://back.zipzoong.store/oauth2/login")
                         .successHandler(loginSuccessHandler())
                         .userInfoEndpoint(userInfoEndpointConfig ->
                                 userInfoEndpointConfig.userService(oAuth2UserService)));
