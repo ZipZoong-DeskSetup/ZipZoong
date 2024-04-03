@@ -71,6 +71,7 @@ function Form() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 폼의 기본 제출 동작을 방지합니다.
+    // eslint-disable-next-line no-alert
     alert('추천받기 요청이 처리되었습니다.');
   };
 
@@ -96,14 +97,17 @@ function Form() {
         if (response.data && Array.isArray(response.data.data)) {
           setBoardList(response.data.data);
         } else {
+          // eslint-disable-next-line no-console
           console.error('Expected an array but got:', response.data);
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Error fetching board list:', error);
       }
     };
 
     fetchBoardList().catch(error =>
+      // eslint-disable-next-line no-console
       console.error('fetchBoardList failed:', error),
     );
   }, [selectedTab, ZustandId, ZustandToken]);
