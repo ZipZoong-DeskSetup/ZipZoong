@@ -10,9 +10,6 @@ import com.ssafy.zipjoong.product.dto.MouseResponse;
 import com.ssafy.zipjoong.product.dto.ProductResponse;
 import com.ssafy.zipjoong.product.exception.ProductErrorCode;
 import com.ssafy.zipjoong.product.exception.ProductException;
-import com.ssafy.zipjoong.product.repository.KeyboardRepository;
-import com.ssafy.zipjoong.product.repository.MonitorRepository;
-import com.ssafy.zipjoong.product.repository.MouseRepository;
 import com.ssafy.zipjoong.product.repository.ProductRepository;
 import com.ssafy.zipjoong.recommand.dto.CombinationResponse;
 import com.ssafy.zipjoong.recommand.dto.ProductRequest;
@@ -22,7 +19,6 @@ import com.ssafy.zipjoong.recommand.exception.CombinationException;
 import com.ssafy.zipjoong.user.exception.UserErrorCode;
 import com.ssafy.zipjoong.user.exception.UserException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -54,12 +50,15 @@ public class RecommendService {
             List<ProductResponse> monitorResponse = new ArrayList<>();
             monitorResponse.add(MonitorResponse.toDto(monitors.get(i)));
             int totalPrice = monitors.get(i).getProductPrice() + keyboards.get(i).getProductPrice() + mouses.get(i).getProductPrice();
-            combinationResponses.add(CombinationResponse.builder()
+
+            CombinationResponse combinationResponse = CombinationResponse.builder()
                     .mouse(MouseResponse.toDto(mouses.get(i)))
                     .keyboard(KeyboardResponse.toDto(keyboards.get(i)))
                     .monitors(monitorResponse)
-                    .totalPrice(totalPrice)
-                    .build());
+                    .build();
+
+            combinationResponse.setPrice(totalPrice);
+            combinationResponses.add(combinationResponse);
         }
 
         return combinationResponses;
@@ -70,16 +69,22 @@ public class RecommendService {
         List<ProductResponse> monitorResponses = new ArrayList<>();
         KeyboardResponse keyboardResponse = null;
         MouseResponse mouseResponse = null;
+        int totalPrice = 0;
         for(ProductRequest request : productRequests){
             Product product = productRepository.findById(request.getProductId())
                     .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
-
-            if (product instanceof Keyboard)
+            if (product instanceof Keyboard) {
                 keyboardResponse = KeyboardResponse.toDto((Keyboard) product);
-            else if (product instanceof Monitor)
+                totalPrice += product.getProductPrice();
+            }
+            else if (product instanceof Monitor){
                 monitorResponses.add(MonitorResponse.toDto((Monitor) product));
-            else if (product instanceof Mouse)
+                totalPrice += product.getProductPrice();
+            }
+            else if (product instanceof Mouse){
                 mouseResponse = MouseResponse.toDto((Mouse) product);
+                totalPrice += product.getProductPrice();
+            }
         }
         // 상품별 유사 상품
         Map<String, List<ProductResponse>> similarProduct = new HashMap<>();
@@ -96,14 +101,17 @@ public class RecommendService {
             similarProduct.get(mouseResponse.getName()).add(MouseResponse.toDto((Mouse) similarMouse.get(i)));
         }
 
-        return RecommendRespone.builder()
+        RecommendRespone recommendRespone = RecommendRespone.builder()
                 .combinationId(0)
                 .monitors(monitorResponses)
                 .keyboard(keyboardResponse)
                 .mouse(mouseResponse)
                 .similarProduct(similarProduct)
-                .totalPrice(keyboardResponse.getPrice() + monitorResponses.get(0).getPrice() + mouseResponse.getPrice())
                 .build();
+
+        recommendRespone.setPrice(totalPrice);
+
+        return recommendRespone;
     }
 
     public List<Product> getRecommendProduct(String pythonPath, String arg, boolean isSimilar){
