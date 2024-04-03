@@ -1,27 +1,27 @@
 .login {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
 }
 
 .logo {
-    margin: 50px 0;
+  margin: 50px 0;
 }
 .loginText {
-    font-size: 32px;
-    font-weight: bold;
-    margin: 10px;
+  font-size: 32px;
+  font-weight: bold;
+  margin: 10px;
 }
 
 .loginContent {
-    font-size: 16px;
+  font-size: 16px;
 }
 
-.loginButtons{
-    display: flex;
-    flex-direction: column;
-    margin-top: 50px;
-    gap: 10px;
+.loginButtons {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  gap: 10px;
 }
