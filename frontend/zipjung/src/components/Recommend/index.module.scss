@@ -12,6 +12,15 @@
     color: var(--original-font-color)
 }
 
+.restartButton{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-weight: bold;
+    width: 900px;
+    gap: 5px;
+}
+
 .simulationDiv{
     overflow: hidden;
     width: 900px;
