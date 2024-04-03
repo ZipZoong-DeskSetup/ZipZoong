@@ -1,33 +1,5 @@
-import styled from 'styled-components';
 import {useState} from 'react';
-
-const NavContainer = styled.div`
-  width: 60%;
-  margin: auto;
-`;
-
-const Position = styled.div`
-  font-size: 25px;
-  display: flex;
-  margin: 3px;
-  padding: 6px 3px;
-  justify-content: space-between;
-`;
-
-const DivisionLine = styled.hr`
-  border: 0;
-  height: 1px;
-  background-color: var(--main-color-dark);
-`;
-
-const ClickedMenu = styled.span`
-  font-weight: 700;
-  cursor: pointer;
-`;
-
-const Menu = styled.span`
-  cursor: pointer;
-`;
+import styles from '@/components/MyPage/NavBar.module.scss';
 
 const NavBar = ({updateMenu}: {updateMenu: (idx: number) => void}) => {
   const [selectedMenu, setSelectedMenu] = useState<number>(0);
@@ -40,22 +12,30 @@ const NavBar = ({updateMenu}: {updateMenu: (idx: number) => void}) => {
   };
 
   return (
-    <NavContainer>
-      <Position>
+    <div className={styles.navContainer}>
+      <div className={styles.position}>
         {menu.map((item, idx) =>
           idx === selectedMenu ? (
-            <ClickedMenu key={idx} onClick={() => handleClick(idx)}>
+            <span
+              className={styles.clickedMenu}
+              key={idx}
+              onClick={() => handleClick(idx)}
+            >
               {item}
-            </ClickedMenu>
+            </span>
           ) : (
-            <Menu key={idx} onClick={() => handleClick(idx)}>
+            <span
+              className={styles.menu}
+              key={idx}
+              onClick={() => handleClick(idx)}
+            >
               {item}
-            </Menu>
+            </span>
           ),
         )}
-      </Position>
-      <DivisionLine />
-    </NavContainer>
+      </div>
+      <hr className={styles.divisionLine} />
+    </div>
   );
 };
 

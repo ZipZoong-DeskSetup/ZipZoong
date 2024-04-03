@@ -1,0 +1,39 @@
+.name{
+    font-size: 25px;
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+.changeButton{
+    border-radius: 10px;
+    width: 103px;
+    height: 48px;
+    background-color: var(--button-main-color);
+    display: flex;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+}
+
+.firstContainer{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 60%;
+}
+
+.secondContainer{
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.hidden{
+    width: 103px;
+}
+
+.nickname{
+    border-radius: 10px;
+    border: solid 1px var(--main-color-dark);
+    padding-left: 10px;   
+}

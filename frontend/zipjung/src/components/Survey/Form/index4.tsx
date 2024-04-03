@@ -23,7 +23,6 @@ const Form = () => {
       자세한 설문 후 추천을 받고 싶나요?
     </span>
   );
-  const presentPage: string = '4';
   const content: [string, string, '5' | '11'][] = [
     ['간단하게', '', '5'],
     ['자세하게', '', '11'],
@@ -55,11 +54,7 @@ const Form = () => {
         design={'twoStyles'}
         isFocus={isFocus}
       />
-      <Intersection
-        presentPage={presentPage}
-        isClicked={isClicked}
-        goal={ZustandSelection}
-      />
+      <Intersection isClicked={isClicked} goal={ZustandSelection} />
     </div>
   );
 };
