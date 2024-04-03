@@ -37,6 +37,7 @@ const Form = () => {
   const [isFocus, setIsFocus] = useState<string | number | boolean>(
     zustandHealth,
   );
+  const [token, setToken] = useState<string>(ZustandToken);
   const questionContent = '손 건강이 안 좋으신가요?';
   const content: [string, string, boolean][] = [
     ['예', '', true],
@@ -49,7 +50,8 @@ const Form = () => {
     if (isFocus !== -1 && isFocus !== 'INIT') {
       setIsClicked(true);
     }
-  }, [answer, isFocus, zustandHealth]);
+    setToken(ZustandToken);
+  }, [token, ZustandToken, answer, isFocus, zustandHealth]);
 
   const handleClick = (index: number) => {
     // eslint-disable-next-line no-console
@@ -106,12 +108,15 @@ const Form = () => {
         mouseSound: zustandSound === 'INIT' ? true : zustandSound,
       };
 
-      await axios.post<ISurvey>(`${process.env.NEXT_PUBLIC_BASE_URL}/survey`, {
-        headers: {
-          Authorization: `Bearer ${ZustandToken}`,
-        },
+      await axios.post<ISurvey>(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/survey`,
         data,
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('survey data post error: ', error);
