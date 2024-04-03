@@ -2,13 +2,12 @@
 
 import axios from 'axios';
 import {useState, useEffect} from 'react';
-import { Carousel } from 'react-responsive-carousel';
-import { useNavigate } from 'react-router-dom';
+import {Carousel} from 'react-responsive-carousel';
 import useUserInfoStore from '@/stores/userInfo';
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // 필요한 스타일을 가져옵니다.
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // 필요한 스타일을 가져옵니다.
+import Image from 'next/image';
 import CarouselStyles from './ImageCarousel.module.css'; // 커스텀 스타일
 import Main from './main.module.css'; // 메인 스타일
-import Image from 'next/image';
 
 type TabName = 'all' | 'mine';
 
@@ -30,12 +29,11 @@ interface ApiResponse {
   data: Board[] | null;
 }
 
-
 interface CarouselProps {
   items: Board[];
 }
 
-const ImageCarousel: React.FC<CarouselProps> = ({ items }) => {
+const ImageCarousel: React.FC<CarouselProps> = ({items}) => {
   return (
     <Carousel
       showArrows={true}
@@ -51,21 +49,23 @@ const ImageCarousel: React.FC<CarouselProps> = ({ items }) => {
       className={CarouselStyles.carousel} // 커스텀 클래스 이름을 적용
     >
       {items.map(item => (
-        <a href='board/${item.boardId}'>
-        <div key={item.boardId}>
-          <img src={item.boardThumbnail || '/Images/boardThumbnail.png'} 
-          alt="썸네일" />
-        </div>
+        <a key={item.boardId} href={`board/${item.boardId}`}>
+          <div>
+            <Image
+              src={item.boardThumbnail || '/Images/boardThumbnail.png'}
+              width={230}
+              height={230}
+              alt="썸네일"
+            />
+          </div>
         </a>
       ))}
     </Carousel>
   );
 };
 
-
-
 function Form() {
-  const [selectedTab, setSelectedTab] = useState<TabName>('all');
+  const [selectedTab] = useState<TabName>('all');
   const {ZustandId, ZustandToken} = useUserInfoStore();
   const [boardList, setBoardList] = useState<Board[]>([]);
 
@@ -109,93 +109,136 @@ function Form() {
   }, [selectedTab, ZustandId, ZustandToken]);
 
   return (
-    <div className={Main.main}> {/* 이 부분에 스타일을 추가하여 가운데 정렬 */}
-    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-      <Image
+    <div className={Main.main}>
+      {' '}
+      {/* 이 부분에 스타일을 추가하여 가운데 정렬 */}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Image
           src="/Images/LOGO2.png"
           width={140}
           height={160}
           alt="main_LOGO2"
         />
       </div>
-      <p className={Main.mainFont1}>데스크 셋업 중심에 "집중"이 된다.</p>
+      <p className={Main.mainFont1}>
+        데스크 셋업 중심에 &quot;집중&quot;이 된다.
+      </p>
       <p className={Main.mainSpace}></p>
       <a href="/survey/1">
-      <button style={{
-        height: '120px',
-        width: '500px',
-        backgroundColor: '#92C7CF', // 버튼의 배경색
-        color: 'white', // 글자 색상
-        border: 'none', // 테두리 없음
-        padding: '10px 20px', // 패딩: 상하 10px, 좌우 20px
-        borderRadius: '10px', // 모서리 둥글게
-        fontSize: '30px', // 글자 크기
-        fontWeight: 'bold',
-        cursor: 'pointer', // 마우스 오버 시 커서 변경
-        boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.2)', // 그림자 효과
-        outline: 'none' // 포커스 시 아웃라인 제거
-      }}>
+        <button
+          style={{
+            height: '120px',
+            width: '500px',
+            backgroundColor: '#92C7CF', // 버튼의 배경색
+            color: 'white', // 글자 색상
+            border: 'none', // 테두리 없음
+            padding: '10px 20px', // 패딩: 상하 10px, 좌우 20px
+            borderRadius: '10px', // 모서리 둥글게
+            fontSize: '30px', // 글자 크기
+            fontWeight: 'bold',
+            cursor: 'pointer', // 마우스 오버 시 커서 변경
+            boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.2)', // 그림자 효과
+            outline: 'none', // 포커스 시 아웃라인 제거
+          }}
+        >
           데스크 셋업 추천받기
         </button>
-        </a>
-        <p style={{
-        padding: '20px'
-      }}></p>
+      </a>
+      <p
+        style={{
+          padding: '20px',
+        }}
+      ></p>
       <ImageCarousel items={boardList} />
-      <form onSubmit={handleSubmit}>
-      </form>
+      <form onSubmit={handleSubmit}></form>
       <p className={Main.mainSpace}></p>
-      <p className={Main.mainFont2}>사용자의 용도와 조건에 맞추어 모니터, 마우스, 키보드를</p>
-      <p className={Main.mainFont2}>모두 합친 조합을 1분안에 추천받을 수 있는 서비스입니다.</p>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-      <p className={Main.mainSpace2}></p>
-      <p className={Main.mainSpace}></p>
-      <Image
+      <p className={Main.mainFont2}>
+        사용자의 용도와 조건에 맞추어 모니터, 마우스, 키보드를
+      </p>
+      <p className={Main.mainFont2}>
+        모두 합친 조합을 1분안에 추천받을 수 있는 서비스입니다.
+      </p>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <p className={Main.mainSpace2}></p>
+        <p className={Main.mainSpace}></p>
+        <Image
           src="/Images/LOGO3.png"
           width={100}
           height={120}
           alt="main_LOGO2"
         />
-      <p className={Main.mainSpace}></p>
-      <p className={Main.mainFont2}>이런분께 추천합니다.</p>
-      <p className={Main.mainSpace}></p>
-      <Image
+        <p className={Main.mainSpace}></p>
+        <p className={Main.mainFont2}>이런분께 추천합니다.</p>
+        <p className={Main.mainSpace}></p>
+        <Image
           src="/Images/people.png"
           width={600}
           height={140}
           alt="main_people"
-      />
-        <div style={{ display: 'flex' }}>
-          <p className={Main.mainFont3}>데스크 셋업을<br/>처음하시는 분</p>
+        />
+        <div style={{display: 'flex'}}>
+          <p className={Main.mainFont3}>
+            데스크 셋업을
+            <br />
+            처음하시는 분
+          </p>
           <p className={Main.fixSpace}></p>
-          <p className={Main.mainFont3}>나에게 맞는<br/>데스크 셋업 조합을<br/>알고 싶은 분</p>
+          <p className={Main.mainFont3}>
+            나에게 맞는
+            <br />
+            데스크 셋업 조합을
+            <br />
+            알고 싶은 분
+          </p>
           <p className={Main.fixSpace}></p>
-          <p className={Main.mainFont3}>다른 사람의<br/>데스크 셋업이<br/>궁금하신 분</p>
+          <p className={Main.mainFont3}>
+            다른 사람의
+            <br />
+            데스크 셋업이
+            <br />
+            궁금하신 분
+          </p>
         </div>
-      <p className={Main.mainSpace}></p>
-      <a href="/survey/1">
-      <button type="submit" style={{
-        height: '120px',
-        width: '500px',
-        backgroundColor: '#92C7CF', // 버튼의 배경색
-        color: 'white', // 글자 색상
-        border: 'none', // 테두리 없음
-        padding: '10px 20px', // 패딩: 상하 10px, 좌우 20px
-        borderRadius: '10px', // 모서리 둥글게
-        fontSize: '30px', // 글자 크기
-        fontWeight: 'bold',
-        cursor: 'pointer', // 마우스 오버 시 커서 변경
-        boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.2)', // 그림자 효과
-        outline: 'none' // 포커스 시 아웃라인 제거
-      }}>
-          데스크 셋업 추천받기
-        </button>
+        <p className={Main.mainSpace}></p>
+        <a href="/survey/1">
+          <button
+            type="submit"
+            style={{
+              height: '120px',
+              width: '500px',
+              backgroundColor: '#92C7CF', // 버튼의 배경색
+              color: 'white', // 글자 색상
+              border: 'none', // 테두리 없음
+              padding: '10px 20px', // 패딩: 상하 10px, 좌우 20px
+              borderRadius: '10px', // 모서리 둥글게
+              fontSize: '30px', // 글자 크기
+              fontWeight: 'bold',
+              cursor: 'pointer', // 마우스 오버 시 커서 변경
+              boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.2)', // 그림자 효과
+              outline: 'none', // 포커스 시 아웃라인 제거
+            }}
+          >
+            데스크 셋업 추천받기
+          </button>
         </a>
         <p className={Main.mainSpace2}></p>
-</div>
+      </div>
     </div>
   );
 }
 
 export default Form;
-
