@@ -6,6 +6,7 @@ import com.ssafy.zipjoong.security.jwt.filter.JwtVerifyFilter;
 import com.ssafy.zipjoong.security.oauth2.service.OAuth2UserService;
 import com.ssafy.zipjoong.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -29,6 +30,12 @@ import java.util.List;
 public class SecurityConfig {
     private final OAuth2UserService oAuth2UserService;
     private final UserService userService;
+
+    @Value("${app.security.permitAllGetPatterns}")
+    private String[] permitAllGetPatterns;
+
+    @Value("${app.security.permitAllPostPatterns}")
+    private String[] permitAllPostPatterns;
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -79,31 +86,14 @@ public class SecurityConfig {
 
         httpSecurity.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                 authorizationManagerRequestMatcherRegistry
-                        .requestMatchers("/").permitAll()
+                        .requestMatchers(HttpMethod.GET, permitAllGetPatterns).permitAll()
+                        .requestMatchers(HttpMethod.POST, permitAllPostPatterns).permitAll()
+                        .requestMatchers("/combination/recommend").authenticated()
                         .requestMatchers("/oauth2/login").permitAll()
-                        .requestMatchers("/recommend/**").permitAll()
-                        .requestMatchers("/survey/**").permitAll()
-                        .requestMatchers("/connect/**").permitAll()
-                        .requestMatchers("/product/**").permitAll()
-                        .requestMatchers("/swagger-resources/**").permitAll()
-                        .requestMatchers("/swagger-ui/**").permitAll()
-                        .requestMatchers("/v3/api-docs").permitAll()
-                        .requestMatchers("/v3/api-docs/**").permitAll()
-                        .requestMatchers("/api-docs/**").permitAll()
-                        .requestMatchers("/combination/product").permitAll()
-                        .requestMatchers("/combination/{combinationId}").permitAll()
-                        .requestMatchers("/combination/recommend/info").permitAll()
-                        .requestMatchers("/combination/{combinationId}/product/{productId}").permitAll()
-                        .requestMatchers("/user/nickname/check").permitAll()
-                        .requestMatchers("/board").permitAll() // 전체 게시글 목록 조회
-                        .requestMatchers("/board/detail/*").permitAll() // 게시글 상세 조회
-                        .requestMatchers("/board/search/*").permitAll() // 게시글 검색
-                        .requestMatchers("/board/hit/*").permitAll() // 조회수 증가
-                        .requestMatchers("/comment/byBoard/*").permitAll()
-                        .requestMatchers("/board/file/*").permitAll() // 파일 업로드
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/favicon.ico").permitAll()
-                        .anyRequest().permitAll());
+                        .anyRequest().authenticated()
+        );
 
         httpSecurity.addFilterBefore(jwtVerifyFilter(), UsernamePasswordAuthenticationFilter.class);
 
