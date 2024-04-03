@@ -408,7 +408,7 @@ const Form = () => {
         `${process.env.NEXT_PUBLIC_BASE_URL}/combination/recommend`,
         {
           headers: {
-            Authorization: ZustandToken,
+            Authorization: `Bearer ${ZustandToken}`,
           },
         },
       )
