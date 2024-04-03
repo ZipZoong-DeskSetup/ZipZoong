@@ -26,13 +26,12 @@ const PageMove = ({
   return (
     <div className={styles.container}>
       {isClicked ? (
-        // FIXME: a태그 살리기
-        // <a href={`/survey/result`}>
-        <div className={styles.move} onClick={handleSubmitClick}>
-          다음
-        </div>
+        <a href={`/survey/result`}>
+          <div className={styles.move} onClick={handleSubmitClick}>
+            다음
+          </div>
+        </a>
       ) : (
-        // {/* </a> */}
         <a>
           <div className={styles.disabled}>다음</div>
         </a>
