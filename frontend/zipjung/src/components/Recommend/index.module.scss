@@ -14,10 +14,24 @@
   margin: 20px;
 }
 
-.recommendHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.restartButton{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-weight: bold;
+    width: 900px;
+    gap: 5px;
+}
+
+.simulationDiv{
+    overflow: hidden;
+    width: 900px;
+    height: 450px;
+    border: 1px solid #F0EDE6;
+    padding: 10px;
+    background-color: #F0EDE6;
+    margin: 20px;
+    border-radius: 5px;
 }
 
 .recommendId {
