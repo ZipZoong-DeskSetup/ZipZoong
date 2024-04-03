@@ -30,13 +30,16 @@ const Form = () => {
     null,
   );
   const {ZustandToken} = useUserInfoStore();
+  const [token, setToken] = useState<string>('');
   useEffect(() => {
+    setToken(ZustandToken);
+
     axios
       .get<ICombinationResponse>(
         `${process.env.NEXT_PUBLIC_BASE_URL}/combination/recommend`,
         {
           headers: {
-            Authorization: `Bearer ${ZustandToken}`,
+            Authorization: `Bearer ${token}`,
           },
         },
       )
@@ -48,7 +51,10 @@ const Form = () => {
       // eslint-disable-next-line no-console
       .catch(error => console.error('combination recommend: ', error));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [token, ZustandToken]);
+
+  console.log(token);
+
   return (
     <div className={styles.FirstContainer}>
       <Question questionContent="이런 조합은 어떠세요?" />
