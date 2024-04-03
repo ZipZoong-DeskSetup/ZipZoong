@@ -35,6 +35,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentResponse> getAllByBoard(int boardId) {
         return commentRepository.findByBoardBoardId(boardId).stream()
+                .filter(comment -> !Boolean.TRUE.equals(comment.getCommentIsDeleted()))
                 .map(CommentResponse::toDto)
                 .toList();
     }
