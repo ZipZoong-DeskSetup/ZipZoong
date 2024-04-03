@@ -30,10 +30,10 @@ const Form = () => {
     null,
   );
   const {ZustandToken} = useUserInfoStore();
-  const [token, setToken] = useState<string>('');
+  const [token, setToken] = useState<string>(ZustandToken);
+
   useEffect(() => {
     setToken(ZustandToken);
-
     axios
       .get<ICombinationResponse>(
         `${process.env.NEXT_PUBLIC_BASE_URL}/combination/recommend`,
@@ -51,9 +51,7 @@ const Form = () => {
       // eslint-disable-next-line no-console
       .catch(error => console.error('combination recommend: ', error));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, ZustandToken]);
-
-  console.log(token);
+  }, [ZustandToken, token]);
 
   return (
     <div className={styles.FirstContainer}>
