@@ -43,7 +43,7 @@ public class JwtVerifyFilter extends OncePerRequestFilter {
             "/board/hit/*",
             "/comment/byBoard/*",
             "/board/file/*",
-            "/survey/**",
+            "/survey",
     };
 
     private static void checkAuthorizationHeader(String header) {
