@@ -22,11 +22,10 @@ public class MonitorResponse extends ProductResponse{
 
     /* 모니터 entity -> 모니터 response(dto) */
     public static MonitorResponse toDto(Monitor monitor){
-        return MonitorResponse.builder()
+        MonitorResponse monitorResponse = MonitorResponse.builder()
                 .category("MONITOR")
                 .id(monitor.getProductId())
                 .name(monitor.getProductName())
-                .price(monitor.getProductPrice())
                 .brand(monitor.getProductBrand())
                 .img(monitor.getProductImg())
                 .url(monitor.getProductUrl())
@@ -37,5 +36,8 @@ public class MonitorResponse extends ProductResponse{
                 .panelType(monitor.getMonitorPanelType())
                 .panelFormType(monitor.getMonitorPanelForm())
                 .build();
+
+        monitorResponse.setPrice(monitor.getProductPrice());
+        return monitorResponse;
     }
 }
