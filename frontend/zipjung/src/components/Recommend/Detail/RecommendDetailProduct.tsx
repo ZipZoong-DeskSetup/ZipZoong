@@ -59,6 +59,10 @@ const RecommendDetailProduct: React.FC<RecommendDetailProductProps> = ({
   item,
 }) => {
   console.log(item);
+  const detailsString = Object.entries(item.details)
+    .map(([key, value]) => `${key}: ${value}`)
+    .join(' | ');
+
   return (
     <div className={styles.productDiv}>
       {/* head */}
@@ -74,14 +78,15 @@ const RecommendDetailProduct: React.FC<RecommendDetailProductProps> = ({
       <div className={styles.productDetail}>
         <Image src={item.img} width={100} height={100} alt="제품 사진" />
         {/* <div className={styles.detail}>{item.details}</div> */}
-        <ul>
+        <div className={styles.detail}>{detailsString}</div>
+        {/* <ul>
           {Object.entries(item.details).map(([key, value]) => (
             <li key={key}>
-              <strong>{key}:</strong>
+              <strong>{key}: </strong>
               {value}
             </li>
           ))}
-        </ul>
+        </ul> */}
       </div>
       {/* 가격 */}
       <div className={styles.productPrice}>
