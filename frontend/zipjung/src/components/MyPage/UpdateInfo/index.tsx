@@ -31,8 +31,7 @@ const UpdateForm = () => {
     // axios
     //   .get<MyPageUserInfo>(`${process.env.NEXT_PUBLIC_BASE_URL}/${userId}`, {
     //     headers: {
-    //       key: 'Authorization',
-    //       value: token,
+    //       Authorization: `Bearer ${ZustandToken}`,
     //     },
     //   })
     //   .then(response => {
