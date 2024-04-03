@@ -35,13 +35,12 @@ function Header() {
       <div className={styles.Logo}>
         <a href="/">
           <Image
-            src="/Images/zipjung_logo.png"
-            width={70}
-            height={40}
+            src="/Images/LOGO1.png"
+            width={140}
+            height={110}
             alt="zipjung_logo"
           />
         </a>
-        <span>집중</span>
       </div>
 
       <div className={styles.Navbar}>
