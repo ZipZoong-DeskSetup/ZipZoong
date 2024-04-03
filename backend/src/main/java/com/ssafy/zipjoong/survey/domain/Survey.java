@@ -17,6 +17,7 @@ public class Survey implements Serializable {
 
     @Id
     @Column(name = "survey_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int surveyId;
 
     @Column(name = "user_id", nullable = false, length = 50)
