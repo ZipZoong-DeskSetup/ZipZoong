@@ -95,7 +95,7 @@ const Form = () => {
 
       await axios.post<ISurvey>(`${process.env.NEXT_PUBLIC_BASE_URL}/survey`, {
         headers: {
-          Authorization: ZustandToken,
+          Authorization: `Bearer ${ZustandToken}`,
         },
         data,
       });
