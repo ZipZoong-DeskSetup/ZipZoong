@@ -63,7 +63,7 @@ const CombinationForm = () => {
   //       `${process.env.NEXT_PUBLIC_BASE_URL}/combination`,
   //       {
   //         headers: {
-  //           'Authorization': ZustandToken,
+  //           Authorization: `Bearer ${ZustandToken}`,
   //         },
   //       },
   //     )
