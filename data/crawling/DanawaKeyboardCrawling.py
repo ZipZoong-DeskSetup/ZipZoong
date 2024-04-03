@@ -293,8 +293,13 @@ import mysql.connector
 
 #MySQL 서버 연결 정보
 config = {
-
+    'user': 'username',
+    'password': 'password',
+    'host': 'url',
+    'port': 3306,
+    'database': 'database',
 }
+
 
 # MySQL 서버에 연결
 conn = mysql.connector.connect(**config)
