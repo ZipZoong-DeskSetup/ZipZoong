@@ -16,16 +16,6 @@ const PageMove = ({
 
   return (
     <div className={styles.container}>
-      {presentPage === '1' ? (
-        <a>
-          <div className={styles.disabled}>이전</div>
-        </a>
-      ) : (
-        <a href={`/survey/${pageNumber - 1}`} onClick={onPageMove}>
-          <div className={styles.move}>이전</div>
-        </a>
-      )}
-
       {isClicked ? (
         <a href={`/survey/${pageNumber + 1}`} onClick={onPageMove}>
           <div className={styles.move}>다음</div>

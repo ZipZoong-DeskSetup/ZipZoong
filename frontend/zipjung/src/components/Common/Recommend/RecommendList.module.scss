@@ -1,49 +1,48 @@
 .recommendList {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
 }
 
 .productDiv1 {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .productDiv2 {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.productTitle{
-    font-size: 15px;
-    font-weight: bold;
-    color: #696B73;
+.productTitle {
+  font-size: 15px;
+  font-weight: bold;
+  color: #696b73;
 }
 
-.productModel{
-    font-size: 15px;
-}   
-
-.productPrice{
-    font-size: 22px;
-    font-weight: bold;
-    color: #696B73;
+.productModel {
+  font-size: 15px;
 }
 
-.monitorDiv{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.productPrice {
+  font-size: 22px;
+  font-weight: bold;
+  color: #696b73;
 }
 
-.PriceBtn{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    
+.monitorDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.PriceBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
