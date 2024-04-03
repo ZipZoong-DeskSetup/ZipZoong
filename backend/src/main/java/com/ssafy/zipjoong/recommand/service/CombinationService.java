@@ -172,10 +172,10 @@ public class CombinationService {
     public CombinationResponse combinationToCombinationResponse(Combination combination, boolean isDeep){
         List<ProductResponse> monitorResponse = new ArrayList<>();
 
-        CombinationResponse  combinationResponse = CombinationResponse.builder()
+        CombinationResponse combinationResponse = CombinationResponse.builder()
                 .combinationId(combination.getCombinationId())
-                .totalPrice(combination.getCombinationPrice())
                 .build();
+        combinationResponse.setPrice(combination.getCombinationPrice());
 
         combination.getCombinationProducts().forEach(combinationProduct -> {
             Product product = combinationProduct.getProduct();
