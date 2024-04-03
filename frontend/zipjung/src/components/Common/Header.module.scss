@@ -1,44 +1,44 @@
 .Header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--custom-header-color);
-    width: 100%;
-    height: 70px;
-    padding: 0 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--custom-header-color);
+  width: 100%;
+  height: 70px;
+  padding: 0 70px;
 }
 
 .Logo {
-    display: flex;
-    align-items: center;
-    font-size: 22px;
-    font-weight: bolder;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  font-weight: bolder;
+  gap: 10px;
 }
 
 .Navbar {
-    display: flex;
-    align-items: center;
-    gap: 55px;
-    font-size: 15px;
-    font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 55px;
+  font-size: 15px;
+  font-weight: 600;
 }
 
-.Logoutdiv{
-    display: flex;
-    align-items: center;
-    gap: 25px;
+.Logoutdiv {
+  display: flex;
+  align-items: center;
+  gap: 25px;
 }
 
-.Logout{
-   position: relative;
+.Logout {
+  position: relative;
 }
 
 .LogoutToggle {
-    position: absolute;
-    top: 25px;
+  position: absolute;
+  top: 25px;
 }
 
 .profileImg {
-    border-radius: 100px;
+  border-radius: 100px;
 }
