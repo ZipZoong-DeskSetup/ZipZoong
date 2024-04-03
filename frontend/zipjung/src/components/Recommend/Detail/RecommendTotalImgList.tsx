@@ -2,21 +2,58 @@ import {useEffect, useState} from 'react';
 import Image from 'next/image';
 import {IoMdArrowDropleft, IoMdArrowDropright} from 'react-icons/io';
 import {Hardware} from '@/types/Recommendation';
-import RecommendPrice from '@/components/Common/Recommend/RecommendPrice';
 import RecommendDetailProduct from '@/components/Recommend/Detail/RecommendDetailProduct';
 import styles from '@/components/Recommend/Detail/RecommendTotalImgList.module.scss';
 
 interface RecommendTotalImgListProps {
-  carouselList: Hardware | undefined;
+  carouselList: Hardware;
 }
 
+interface MonitorDetails {
+  size: number;
+  resolution: string;
+  aspectRatio: string;
+  refreshRate: number;
+  panelType: string;
+  panelFormType: string;
+}
+
+interface KeyboardDetails {
+  connect: string;
+  connectInterface?: string | null;
+  keySwitch: string;
+  led?: string;
+  num: number;
+  force?: string | null;
+  color: string;
+  form: string;
+  contact: string;
+}
+
+interface MouseDetails {
+  connect: string;
+  connectInterface?: string | null;
+  mouseType: string;
+  dpi?: string | null;
+  color: string;
+  weight?: string | null;
+  width: number;
+  length: number;
+  height: number;
+  isSound: boolean;
+}
+
+// 이제 ItemProps 인터페이스를 수정하여 details의 타입을 적절하게 지정합니다.
 interface ItemProps {
   id: number;
-  model: string;
-  detail: string;
+  name: string;
+  brand: string;
   img: string;
-  price: number;
-  link: string;
+  price: string;
+  url: string;
+  category: string;
+  type: 'monitor' | 'keyboard' | 'mouse';
+  details: MonitorDetails | KeyboardDetails | MouseDetails; // Union 타입을 사용
 }
 
 function RecommendTotalImgList({carouselList}: RecommendTotalImgListProps) {
@@ -26,12 +63,53 @@ function RecommendTotalImgList({carouselList}: RecommendTotalImgListProps) {
   // 제품을 하나의 배열로 생성
   useEffect(() => {
     if (carouselList) {
-      const items: ItemProps[] = [
-        ...carouselList.monitor,
-        carouselList.keyboard,
-        carouselList.mouse,
-      ];
+      const monitorsItems: ItemProps[] = carouselList.monitors.map(monitor => ({
+        ...monitor,
+        type: 'monitor',
+        details: {
+          size: monitor.size,
+          resolution: monitor.resolution,
+          aspectRatio: monitor.aspectRatio,
+          refreshRate: monitor.refreshRate,
+          panelType: monitor.panelType,
+          panelFormType: monitor.panelFormType,
+        },
+      }));
 
+      const keyboardItem: ItemProps = {
+        ...carouselList.keyboard,
+        type: 'keyboard',
+        details: {
+          connect: carouselList.keyboard.connect,
+          connectInterface: carouselList.keyboard.connectInterface,
+          keySwitch: carouselList.keyboard.keySwitch,
+          led: carouselList.keyboard.led,
+          num: carouselList.keyboard.num,
+          force: carouselList.keyboard.force,
+          color: carouselList.keyboard.color,
+          form: carouselList.keyboard.form,
+          contact: carouselList.keyboard.contact,
+        },
+      };
+
+      const mouseItem: ItemProps = {
+        ...carouselList.mouse,
+        type: 'mouse',
+        details: {
+          connect: carouselList.mouse.connect,
+          connectInterface: carouselList.mouse.connectInterface,
+          mouseType: carouselList.mouse.mouseType,
+          dpi: carouselList.mouse.dpi,
+          color: carouselList.mouse.color,
+          weight: carouselList.mouse.weight,
+          width: carouselList.mouse.width,
+          length: carouselList.mouse.length,
+          height: carouselList.mouse.height,
+          isSound: carouselList.mouse.isSound,
+        },
+      };
+
+      const items = [...monitorsItems, keyboardItem, mouseItem];
       setImageList(items);
     }
   }, [carouselList]);
@@ -44,7 +122,7 @@ function RecommendTotalImgList({carouselList}: RecommendTotalImgListProps) {
           <div className={styles.carouselImg}>
             <Image src={item.img} width={130} height={130} alt="제품이미지" />
           </div>
-          <div className={styles.carouselModel}>{item.model}</div>
+          <div className={styles.carouselModel}>{item.name}</div>
           <div className={styles.carouselPrice}>
             <div>{item.price}</div>
           </div>
@@ -61,7 +139,7 @@ function RecommendTotalImgList({carouselList}: RecommendTotalImgListProps) {
         <div className={styles.carouselImg}>
           <Image src={item.img} width={130} height={130} alt="제품이미지" />
         </div>
-        <div className={styles.carouselModel}>{item.model}</div>
+        <div className={styles.carouselModel}>{item.name}</div>
         <div className={styles.carouselPrice}>
           <div>{item.price}</div>
         </div>
@@ -104,9 +182,7 @@ function RecommendTotalImgList({carouselList}: RecommendTotalImgListProps) {
             <IoMdArrowDropright className={styles.prevBtn} />
           </button>
         </div>
-        <div className={styles.totalPrice}>
-          <RecommendPrice key={carouselList?.id} item={carouselList} />
-        </div>
+        <div className={styles.totalPrice}>{carouselList.totalPrice} 원</div>
       </div>
       <div>
         {imageList.map(item => (
