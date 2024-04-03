@@ -1,6 +1,5 @@
 import {create} from 'zustand';
-import {persist} from 'zustand/middleware';
-
+import {createJSONStorage, persist} from 'zustand/middleware';
 import {UserInfo} from '@/types/UserInfo';
 
 interface IUserInfoStore {
@@ -34,6 +33,7 @@ const useUserInfoStore = create<IUserInfoStore>()(
     }),
     {
       name: 'UserInfo',
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 );
