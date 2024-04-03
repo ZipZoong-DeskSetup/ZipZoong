@@ -5,8 +5,38 @@
     
 }
 
+.ment{
+    font-size: 25px;
+    font-weight: bold;
+    margin: 20px;
+    color: var(--original-font-color)
+}
+
+.simulationDiv{
+    overflow: hidden;
+    width: 900px;
+    height: 450px;
+    border: 1px solid #F0EDE6;
+    padding: 10px;
+    background-color: #F0EDE6;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+.simulationDiv2{
+    overflow: hidden;
+    width: 900px;
+    height: 400px;
+}
+
+.memo{
+    font-size: 13px;
+    font-weight: bold;
+    color: red;
+}
+
 .contain{
-    width: 700px;
+    width: 900px;
     height: auto;   
     min-height: 250px;
     background-color: #F0EDE6;
@@ -46,6 +76,12 @@
     flex-direction: column;
     align-items: flex-end;
     justify-content: space-between;
+}
+
+.price{
+    font-size: 27px;
+    font-weight: bold;
+    color: var(--main-color-dark);
 }
 
 .toggleButton{

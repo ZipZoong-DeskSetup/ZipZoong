@@ -13,11 +13,11 @@ interface RecommendListProps {
 }
 
 const RecommendList: React.FC<RecommendListProps> = ({item}) => {
-  const {monitor, keyboard, mouse} = item;
+  const {monitors, keyboard, mouse} = item;
 
   // 모니터 배열을 순회하여 정보를 렌더링하는 함수
-  const renderMonitors = (monitors: MonitorDetail[], title: string) =>
-    monitors.map((monitorItem, index) => (
+  const renderMonitors = (monitorList: MonitorDetail[], title: string) =>
+    monitorList.map((monitorItem, index) => (
       <div key={`monitor-${index}`} className={styles.productDiv1}>
         <div className={styles.productDiv2}>
           <Image
@@ -27,11 +27,11 @@ const RecommendList: React.FC<RecommendListProps> = ({item}) => {
             alt="모니터아이콘"
           />
           <div className={styles.productTitle}>{title}</div>
-          <div className={styles.productModel}>{monitorItem.model}</div>
+          <div className={styles.productModel}>{monitorItem.name}</div>
         </div>
         <div className={styles.PriceBtn}>
           <div className={styles.productPrice}>{monitorItem.price}</div>
-          <ProductLikeButton key={monitorItem.model} itemId={monitorItem.id} />
+          <ProductLikeButton key={monitorItem.id} itemId={monitorItem.id} />
         </div>
         <hr />
       </div>
@@ -55,7 +55,7 @@ const RecommendList: React.FC<RecommendListProps> = ({item}) => {
           alt={`${title} 아이콘`}
         />
         <div className={styles.productTitle}>{title}</div>
-        <div className={styles.productModel}>{product.model}</div>
+        <div className={styles.productModel}>{product.name}</div>
       </div>
       <div className={styles.PriceBtn}>
         <div className={styles.productPrice}>{product.price}</div>
@@ -68,7 +68,7 @@ const RecommendList: React.FC<RecommendListProps> = ({item}) => {
   return (
     <div className={styles.recommendList}>
       <div className={styles.monitorDiv}>
-        {renderMonitors(monitor, '모니터')}
+        {renderMonitors(monitors, '모니터')}
       </div>
       <div>{renderProduct(keyboard, '키보드')}</div>
       <div>{renderProduct(mouse, '마우스')}</div>

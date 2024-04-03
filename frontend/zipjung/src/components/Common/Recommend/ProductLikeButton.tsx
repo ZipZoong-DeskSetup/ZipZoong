@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import axios from 'axios';
 import {FaBookmark, FaRegBookmark} from 'react-icons/fa6';
-import {Hardware} from '@/types/Recommendation';
+// import {Hardware} from '@/types/Recommendation';
 import styles from '@/components/Common/Recommend/ProductLikeButton.module.scss';
 
 type PostResponse = {
@@ -15,19 +15,19 @@ function ProductLikeButton({itemId}: {itemId: number}) {
 
   // 좋아요 상태를 초기화하는 함수
   // TODO: 주석풀기
-  useEffect(() => {
-    axios
-      .get<Hardware[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/favorite/product`)
-      .then(response => {
-        // itemId와 일치하는 항목을 찾습니다.
-        const found = response.data.find(hardware => hardware.id === itemId);
-        setIsLiked(!!found);
-        if (found) {
-          setProductId(found.id);
-        }
-      })
-      .catch(error => console.error('Fetching favorites failed', error));
-  }, [itemId]);
+  // useEffect(() => {
+  //   axios
+  //     .get<Hardware[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/favorite/product`)
+  //     .then(response => {
+  //       // itemId와 일치하는 항목을 찾습니다.
+  //       const found = response.data.find(hardware => hardware.id === itemId);
+  //       setIsLiked(!!found);
+  //       if (found) {
+  //         setProductId(found.id);
+  //       }
+  //     })
+  //     .catch(error => console.error('Fetching favorites failed', error));
+  // }, [itemId]);
 
   const handleLike = () => {
     if (isLiked) {
