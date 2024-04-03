@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         log.info("username = {}", userId);
 
         return userRepository.findById(userId)
-                .map(user -> new CustomOAuth2User(user, Collections.singleton(new SimpleGrantedAuthority(user.getUserRole().toString()))))
+                .map(user -> new CustomOAuth2User(user, Collections.singleton(new SimpleGrantedAuthority(user.getUserRole().toString())), false))
                 .orElseThrow(() -> new UsernameNotFoundException("등록되지 않은 사용자입니다"));
     }
 }
