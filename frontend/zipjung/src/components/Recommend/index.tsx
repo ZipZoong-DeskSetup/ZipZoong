@@ -6,11 +6,12 @@ import {useState, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
 import axios from 'axios';
 import {TiArrowSortedDown} from 'react-icons/ti';
+import {GrPowerCycle} from 'react-icons/gr';
 import {Hardware} from '@/types/Recommendation';
 import RecommendImgList from '@/components/Common/Recommend/RecommendImgList';
 import RecommendList from '@/components/Common/Recommend/RecommendList';
 import RecommendDetailButton from '@/components/Common/Recommend/GoRecommendDetailButton';
-// import RecommendLikeButton from '@/components/Common/Recommend/RecommendLikeButton';
+import RecommendLikeButton from '@/components/Common/Recommend/RecommendLikeButton';
 import useUserInfoStore from '@/stores/userInfo';
 import useRecommendStore from '@/stores/recommend';
 import styles from '@/components/Recommend/index.module.scss';
@@ -32,6 +33,14 @@ interface CombinationDetail {
   keyboard: KeyboardDetail;
   mouse: MouseDetail;
   similarProduct: SimilarProduct;
+  totalPrice: string;
+}
+
+interface Combination {
+  combinationId: number;
+  monitors: MonitorDetail[];
+  keyboard: KeyboardDetail;
+  mouse: MouseDetail;
   totalPrice: string;
 }
 
@@ -106,6 +115,15 @@ interface Product {
   category: string;
 }
 
+interface LikedCombinations {
+  [index: number]: {combinationId: number; isLiked: boolean};
+}
+
+interface LikeRecommendResponse {
+  message: string;
+  data: Combination;
+}
+
 function Form() {
   const {
     ZustandRecommendList,
@@ -113,38 +131,36 @@ function Form() {
     setZustandRecommendDetail,
   } = useRecommendStore();
   const {ZustandToken} = useUserInfoStore();
+  const [token, setToken] = useState<string>('');
   const [openDropdownIndex, setOpenDropdownIndex] = useState<number | null>(
     null,
   );
-
+  const [likedCombinations, setLikedCombinations] = useState<LikedCombinations>(
+    {},
+  );
   const router = useRouter();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get<RecommendResponse>(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/combination/recommend`,
-          {
-            headers: {
-              Authorization: `Bearer ${ZustandToken}`,
-              // Authorization:
-              //   'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwidXNlcklkIjoiZ29vZ2xlIDExNTk4MzE4OTYyODE1NDU2MTU1NSIsImlhdCI6MTcxMjAzODU2NiwiZXhwIjoxNzEyMTI0OTY2fQ.FEYYv92apqc8S2YJ3VT9Pwo2L9KIQ_veQnDJO2BJt52gBJwozpzHZ5YPRcOSrdt8-1F12lWNtGkRbFnVYN9QXg',
-            },
+    setToken(ZustandToken);
+
+    axios
+      .get<RecommendResponse>(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/combination/recommend`,
+        {
+          headers: {
+            // Authorization: `Bearer ${token}`,
+            Authorization:
+              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwidXNlcklkIjoiZ29vZ2xlIDExNTk4MzE4OTYyODE1NDU2MTU1NSIsImlhdCI6MTcxMjE1MTI2MSwiZXhwIjoxNzEyMjM3NjYxfQ.vG8VqgcCYl8BnlkhZkrEvpAqgf9Pu4SCKRR4s6Wv3iDVC0bpWvVChyFbTPe5NIhzY3dkwBC8RUrv0dphorbK6g',
           },
-        );
-        setZustandRecommendList(response.data.data);
-        // console.log(ZustandRecommendList);
-      } catch (error) {
-        console.error('Fetching recommend list failed:', error);
-      }
-    };
-
-    fetchData().catch(err => {
-      console.error(err);
-    });
-  }, [setZustandRecommendList, ZustandToken]);
-
-  // 상세 페이지로 이동하는 함수를 배열 인덱스 기반으로 변경
+        },
+      )
+      .then(response => {
+        if (response !== null) {
+          setZustandRecommendList(response.data.data);
+        }
+      })
+      .catch(error => console.error('Fetching recommend list failed:', error));
+  }, [setZustandRecommendList, ZustandToken, token]);
 
   // 상세 정보 조회를 위한 비동기 함수
   const fetchCombinationDetail = async (index: number) => {
@@ -168,11 +184,11 @@ function Form() {
   };
 
   const handleDetailClick = (index: number) => {
-    const selectedCombination = ZustandRecommendList[index];
-    console.log(selectedCombination);
+    // const selectedCombination = ZustandRecommendList[index];
+    // console.log(selectedCombination);
     fetchCombinationDetail(index).catch(err => {
       console.error(err);
-    }); // 비동기 로직을 처리하는 별도의 함수 호출
+    });
   };
 
   const toggleDropdown = (index: number) => {
@@ -183,9 +199,99 @@ function Form() {
     }
   };
 
+  // 관심조합 추가/삭제
+  // 관심조합 추가(axios요청)
+  const addCombinationToLikes = async (index: number) => {
+    const combination = ZustandRecommendList[index];
+    const productIds = [
+      ...combination.monitors.map(monitor => ({productId: monitor.id})),
+      {productId: combination.keyboard.id},
+      {productId: combination.mouse.id},
+    ];
+
+    try {
+      const response = await axios.post<LikeRecommendResponse>(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/combination`,
+        productIds,
+        {
+          headers: {
+            Authorization: `Bearer ${ZustandToken}`,
+            // Authorization:
+            //   'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwidXNlcklkIjoiZ29vZ2xlIDExNTk4MzE4OTYyODE1NDU2MTU1NSIsImlhdCI6MTcxMjE1MTI2MSwiZXhwIjoxNzEyMjM3NjYxfQ.vG8VqgcCYl8BnlkhZkrEvpAqgf9Pu4SCKRR4s6Wv3iDVC0bpWvVChyFbTPe5NIhzY3dkwBC8RUrv0dphorbK6g',
+          },
+        },
+      );
+
+      // 응답에서 combinationId 받기
+      const {combinationId} = response.data.data;
+      // 상태 업데이트
+      setLikedCombinations(prevState => ({
+        ...prevState,
+        [index]: {combinationId, isLiked: true},
+      }));
+    } catch (error) {
+      console.error('Error adding combination to likes:', error);
+    }
+  };
+
+  // 관심조합 삭제
+  const removeCombinationFromLikes = async (index: number) => {
+    const {combinationId} = likedCombinations[index];
+    try {
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/combination/${combinationId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${ZustandToken}`,
+            // Authorization:
+            //   'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwidXNlcklkIjoiZ29vZ2xlIDExNTk4MzE4OTYyODE1NDU2MTU1NSIsImlhdCI6MTcxMjE1MTI2MSwiZXhwIjoxNzEyMjM3NjYxfQ.vG8VqgcCYl8BnlkhZkrEvpAqgf9Pu4SCKRR4s6Wv3iDVC0bpWvVChyFbTPe5NIhzY3dkwBC8RUrv0dphorbK6g',
+          },
+        },
+      );
+
+      // 상태 업데이트
+      setLikedCombinations(prevState => {
+        const newState = {...prevState};
+        delete newState[index];
+        return newState;
+      });
+    } catch (error) {
+      console.error('Error removing combination from likes:', error);
+    }
+  };
+
+  // `isLiked` 상태를 결정하는 로직 변경
+  const isCombinationLiked = (index: number): boolean => {
+    return !!likedCombinations[index]?.isLiked;
+  };
+
+  const toggleLike = (index: number) => {
+    const isCurrentlyLiked = isCombinationLiked(index);
+    if (isCurrentlyLiked) {
+      removeCombinationFromLikes(index).catch(error => {
+        console.error(error);
+      });
+    } else {
+      addCombinationToLikes(index).catch(error => {
+        console.error(error);
+      });
+    }
+  };
+
+  const handleRestartRecommendation = () => {
+    router.push('/survey');
+  };
+
   return (
     <div className={styles.contains}>
       <div className={styles.ment}>설문 기반으로 도출된 결과입니다.</div>
+      <div
+        onClick={handleRestartRecommendation}
+        className={styles.restartButton}
+      >
+        <GrPowerCycle />
+        <div>다시 추천받기</div>
+      </div>
       <div className={styles.simulationDiv}>
         <div className={styles.simulationDiv2}>
           <iframe
@@ -210,16 +316,14 @@ function Form() {
         {ZustandRecommendList.map((item, index) => [
           <div className={styles.contain} key={item.combinationId}>
             <div className={styles.recommendHead}>
-              <div className={styles.recommendId}>추천</div>
+              <div className={styles.recommendId}>추천 {index + 1}</div>
               {/* 관심목록 추가 */}
-              {/* <div className={styles.shareLike}>
+              <div className={styles.shareLike}>
                 <RecommendLikeButton
-                  key={item.combinationId}
-                  item={item}
-                  updateCombinationId={updateCombinationId}
-                  itemIndex={index}
+                  isLiked={isCombinationLiked(index)}
+                  onToggleLike={() => toggleLike(index)}
                 />
-              </div> */}
+              </div>
             </div>
 
             <div className={styles.ImgPrice}>
