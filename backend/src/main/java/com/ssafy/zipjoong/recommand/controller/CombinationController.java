@@ -32,7 +32,7 @@ public class CombinationController {
 
     /* 조합 등록 */
     @PostMapping("")
-    @Operation(summary = "관심 조합 목록에 추가", description = "추천 받은 조합을 저장 하거나 조합 생성시 저장 /n리스트로 제품의 id(productId)값과 해당 제품의 갯수(num)를 넘겨주세요 /n유저의 토큰값을 이용하기 때문에 로그인 이후 토큰값을 넘겨주어야함 수현이한테 swagger에 로그인 구현해달라고하세요..")
+    @Operation(summary = "관심 조합 목록에 추가", description = "추천 받은 조합을 저장 하거나 조합 생성시 저장 /n리스트로 제품의 id(productId)값을 넘겨주세요")
     public ResponseEntity<ResponseDto> saveCombination(Principal principal, @RequestBody List<ProductRequest> requestList){
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 등록하였습니다.", combinationService.saveCombination(requestList, principal.getName())));
     }
@@ -53,20 +53,20 @@ public class CombinationController {
 
     /* 해당 유저의 조합 목록 조회 */
     @GetMapping("")
-    @Operation(summary = "관심 조합 목록 조회", description = "자신이 저장한 조합 목록 조회 /n유저의 토큰값을 이용하기 때문에 로그인 이후 토큰값을 넘겨주어야함 수현이한테 swagger에 로그인 구현해달라고하세요..")
+    @Operation(summary = "관심 조합 목록 조회", description = "자신이 저장한 조합 목록 조회 ")
     public ResponseEntity<ResponseDto> getUserCombinations(Principal principal){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 유저의 조합을 조회하였습니다.", combinationService.getUserCombinations(authentication.getName())));
     }
 
-    /* 추천 조합 조회 프로토타입 */
+    /* 추천 조합 조회 */
     @GetMapping("/recommend")
-    @Operation(summary = "추천 받기 프로토 타입", description = "설문 기반 추천 서비스")
+    @Operation(summary = "추천 받기", description = "설문 기반 추천 서비스")
     public ResponseEntity<ResponseDto> getRecommendCombinations(Principal principal){
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("성공적으로 조합을 추천받았습니다.", recommendService.getRecommendCombinations(principal.getName())));
     }
 
-    /* 추천 조합 상세 조회 프로토타입 */
+    /* 추천 조합 상세 조회 */
     @PostMapping("/recommend/info")
     @Operation(summary = "추천 받은 조합 세부 내용 조회", description = "추천 조합 상세 조회 및 유사 제품 추천")
     public ResponseEntity<ResponseDto> getRecommendCombinationInfos(@RequestBody List<ProductRequest> requestList){
