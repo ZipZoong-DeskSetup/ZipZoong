@@ -26,11 +26,10 @@ public class KeyboardResponse extends ProductResponse{
 
     /* 키보드 entity -> 키보드 response(dto) */
     public static KeyboardResponse toDto(Keyboard keyboard) {
-        return KeyboardResponse.builder()
+        KeyboardResponse keyboardResponse = KeyboardResponse.builder()
                 .category("KEYBOARD")
                 .id(keyboard.getProductId())
                 .name(keyboard.getProductName())
-                .price(keyboard.getProductPrice())
                 .brand(keyboard.getProductBrand())
                 .img(keyboard.getProductImg())
                 .url(keyboard.getProductUrl())
@@ -44,5 +43,7 @@ public class KeyboardResponse extends ProductResponse{
                 .form(keyboard.getKeyboardForm())
                 .contact(keyboard.getKeyboardContact())
                 .build();
+        keyboardResponse.setPrice(keyboard.getProductPrice());
+        return keyboardResponse;
     }
 }

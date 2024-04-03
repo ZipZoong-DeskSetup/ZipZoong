@@ -26,11 +26,10 @@ public class MouseResponse extends ProductResponse{
 
     /* 마우스 entity -> 마우스 response(dto) */
     public static MouseResponse toDto(Mouse mouse){
-        return MouseResponse.builder()
+        MouseResponse mouseResponse = MouseResponse.builder()
                 .category("MOUSE")
                 .id(mouse.getProductId())
                 .name(mouse.getProductName())
-                .price(mouse.getProductPrice())
                 .brand(mouse.getProductBrand())
                 .img(mouse.getProductImg())
                 .url(mouse.getProductUrl())
@@ -45,5 +44,8 @@ public class MouseResponse extends ProductResponse{
                 .height(mouse.getMouseHeight())
                 .isSound(mouse.getMouseIsSound())
                 .build();
+
+        mouseResponse.setPrice(mouse.getProductPrice());
+        return mouseResponse;
     }
 }
