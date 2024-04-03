@@ -1,8 +1,8 @@
 'use client';
 
 import {useState, useEffect} from 'react';
+import styles from '@/components/MyPage/UpdateInfo/index.module.scss';
 // import axios from 'axios';
-import styled from 'styled-components';
 // import {MyPageUserInfo} from '@/types/MyPage';
 import ChangeImg from '@/components/MyPage/UpdateInfo/ChangeImg';
 import ChangeNickname from '@/components/MyPage/UpdateInfo/ChangeNickname';
@@ -13,28 +13,6 @@ import ChangeNickname from '@/components/MyPage/UpdateInfo/ChangeNickname';
  * 2. props로 내려주기
  *
  */
-
-const UpdateContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-`;
-const EmailContainer = styled.div``;
-
-const Name = styled.div`
-  font-size: 25px;
-  margin-bottom: 30px;
-  margin-top: 50px;
-`;
-
-const EmailInput = styled.input`
-  border-radius: 10px;
-  background-color: white;
-  height: 48px;
-  border: solid 1px var(--main-color-dark);
-  padding-left: 10px;
-`;
 
 const UpdateForm = () => {
   const [pUserImg, setPUserImg] = useState<string>('');
@@ -53,8 +31,7 @@ const UpdateForm = () => {
     // axios
     //   .get<MyPageUserInfo>(`${process.env.NEXT_PUBLIC_BASE_URL}/${userId}`, {
     //     headers: {
-    //       key: 'Authorization',
-    //       value: token,
+    //       Authorization: `Bearer ${ZustandToken}`,
     //     },
     //   })
     //   .then(response => {
@@ -73,14 +50,19 @@ const UpdateForm = () => {
   }, []);
 
   return (
-    <UpdateContainer>
+    <div className={styles.updateContainer}>
       <ChangeImg pUserImg={pUserImg} />
       <ChangeNickname />
-      <EmailContainer>
-        <Name>이메일</Name>
-        <EmailInput type="text" value={pUserEmail} disabled />
-      </EmailContainer>
-    </UpdateContainer>
+      <div>
+        <div className={styles.name}>이메일</div>
+        <input
+          className={styles.emailInput}
+          type="text"
+          value={pUserEmail}
+          disabled
+        />
+      </div>
+    </div>
   );
 };
 export default UpdateForm;
