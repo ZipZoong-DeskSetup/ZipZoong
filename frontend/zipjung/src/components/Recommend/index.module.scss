@@ -1,15 +1,17 @@
 .contains {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.ment{
-    font-size: 25px;
-    font-weight: bold;
-    margin: 20px;
-    color: var(--original-font-color)
+.contain {
+  width: 700px;
+  height: auto;
+  min-height: 250px;
+  background-color: #f0ede6;
+  border-radius: 10px;
+  padding: 30px;
+  margin: 20px;
 }
 
 .restartButton{
@@ -32,79 +34,44 @@
     border-radius: 5px;
 }
 
-.simulationDiv2{
-    overflow: hidden;
-    width: 900px;
-    height: 400px;
+.recommendId {
+  font-size: 20px;
+  font-weight: bold;
 }
 
-.memo{
-    font-size: 13px;
-    font-weight: bold;
-    color: red;
+.shareLike {
+  display: flex;
+  gap: 10px;
 }
 
-.contain{
-    width: 900px;
-    height: auto;   
-    min-height: 250px;
-    background-color: #F0EDE6;
-    border-radius: 10px;
-    padding: 30px;
-    margin: 20px;
-}
-
-.recommendHead{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.recommendId{
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.shareLike{
-    display: flex;
-    gap: 10px;
-}
-
-.ImgPrice{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    
+.ImgPrice {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
 }
 
 .BtnPrice {
-    height: 128.75px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: space-between;
+  height: 128.75px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
 }
 
-.price{
-    font-size: 27px;
-    font-weight: bold;
-    color: var(--main-color-dark);
+.toggleButton {
+  display: flex;
+  justify-content: right;
 }
 
-.toggleButton{
-    display: flex;
-    justify-content: right;
+.toggleBtn {
+  width: 25px;
+  height: 25px;
 }
 
-.toggleBtn{
-    width: 25px;
-    height: 25px;
-}
-
-.totalPrice{
-    font-size: 27px;
-    font-weight: bold;
-    color: var(--main-color-dark);
+.totalPrice {
+  font-size: 27px;
+  font-weight: bold;
+  color: var(--main-color-dark);
 }
