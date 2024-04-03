@@ -86,6 +86,7 @@ public class SecurityConfig {
 
         httpSecurity.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                 authorizationManagerRequestMatcherRegistry
+                        .requestMatchers("/").permitAll()
                         .requestMatchers(HttpMethod.GET, permitAllGetPatterns).permitAll()
                         .requestMatchers(HttpMethod.POST, permitAllPostPatterns).permitAll()
                         .requestMatchers("/combination/recommend").authenticated()
