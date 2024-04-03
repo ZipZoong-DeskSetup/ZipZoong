@@ -1,0 +1,38 @@
+/* main.css */
+.main {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.mainSpace {
+    padding: 20px;
+}
+
+.mainSpace2 {
+    padding: 60px;
+}
+
+.fixSpace {
+    padding: 20px;
+}
+
+
+
+.mainFont1 {
+    font-size: 24px;
+    padding: 10px;
+    color: black;
+}
+
+.mainFont2 {
+    font-size: 20px;
+    padding: 4px;
+    color: black;
+}
+
+.mainFont3{
+    white-space: pre-line;
+    padding: 30px;
+    font-size: 16px;
+    color: black;
+}
