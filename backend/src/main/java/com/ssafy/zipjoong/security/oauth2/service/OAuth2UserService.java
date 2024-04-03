@@ -47,11 +47,19 @@ public class OAuth2UserService  extends DefaultOAuth2UserService {
         // 리소스 서버에서 발급받은 정보로 userId 생성
         String userId = oAuth2UserInfo.getProvider() + " " + oAuth2UserInfo.getProviderId();
 
-        // 유저 조회, 없다면 사용자 생성
+        // 유저 조회, 없다면 유저 생성
         Optional<User> byUserId = userRepository.findById(userId);
-        User user = byUserId.orElseGet(() -> saveUser(userId));
+        User user;
+        boolean isNewUser = false;
+        if (byUserId.isPresent()) {
+            user = byUserId.get();
+        } else {
+            user = saveUser(userId);
+            isNewUser = true;
+        }
 
-        return new CustomOAuth2User(user, Collections.singleton(new SimpleGrantedAuthority(user.getUserRole().toString())), attributes);
+        return new CustomOAuth2User(user, Collections.singleton(new SimpleGrantedAuthority(user.getUserRole().toString())), attributes, isNewUser);
+
     }
 
     // userId에 해당하는 유저가 없으면 새로운 유저를 생성하여 저장

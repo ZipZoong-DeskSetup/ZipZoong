@@ -67,7 +67,7 @@ public class JwtUtils {
 
         User user = User.builder().userId(userId).userRole(userRole).build();
         Set<SimpleGrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority(user.getUserRole().toString()));
-        CustomOAuth2User customOAuth2User = new CustomOAuth2User(user, authorities);
+        CustomOAuth2User customOAuth2User = new CustomOAuth2User(user, authorities, false);
 
         return new UsernamePasswordAuthenticationToken(customOAuth2User, "", authorities);
     }

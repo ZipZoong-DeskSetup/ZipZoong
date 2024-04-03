@@ -15,15 +15,19 @@ public class CustomOAuth2User implements UserDetails, OAuth2User {
     private Collection<? extends GrantedAuthority> authorities;
     private Map<String, Object> attributes;
 
-    public CustomOAuth2User(User user, Collection<? extends GrantedAuthority> authorities) {
+    private final boolean isNewUser;
+
+    public CustomOAuth2User(User user, Collection<? extends GrantedAuthority> authorities, boolean isNewUser) {
         this.user = user;
         this.authorities = authorities;
+        this.isNewUser = isNewUser;
     }
 
-    public CustomOAuth2User(User user, Collection<? extends GrantedAuthority> authorities, Map<String, Object> attributes) {
+    public CustomOAuth2User(User user, Collection<? extends GrantedAuthority> authorities, Map<String, Object> attributes, boolean isNewUser) {
         this.user = user;
         this.authorities = authorities;
         this.attributes = attributes;
+        this.isNewUser = isNewUser;
     }
 
     public Map<String, Object> getUserInfo() {
@@ -76,5 +80,9 @@ public class CustomOAuth2User implements UserDetails, OAuth2User {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public boolean isNewUser() {
+        return isNewUser;
     }
 }

@@ -34,7 +34,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         log.info("authentication.getCustomOAuth2User() = {}", customOAuth2User);
 
         Map<String, Object> responseMap = customOAuth2User.getUserInfo();
-        boolean isNewUser = userService.isNewUser(customOAuth2User.getUsername());
+        boolean isNewUser = customOAuth2User.isNewUser();
 
         String accessToken = JwtUtils.generateToken(responseMap, JwtConstants.ACCESS_EXP_TIME);
         String refreshToken = JwtUtils.generateToken(responseMap, JwtConstants.REFRESH_EXP_TIME);
