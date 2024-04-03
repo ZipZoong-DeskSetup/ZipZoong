@@ -3,6 +3,8 @@
 import '@/styles/reset.css';
 import Header from '@/components/Common/Header';
 import useUserInfoStore from '@/stores/userInfo';
+import Form from '@/components/MainPage';
+import Footer from '@/components/Common/Footer/Footer';
 
 export default function Page() {
   const {ZustandToken} = useUserInfoStore();
@@ -11,13 +13,10 @@ export default function Page() {
     console.log(ZustandToken);
   }
   return (
-    <>
+    <div style={{backgroundColor: '#FBF9F1'}}>
       <Header></Header>
-    </>
+      <Form></Form>
+      <Footer></Footer>
+    </div>
   );
 }
-
-// export default function Page() {
-
-//   return <><h2>시작</h2></>
-//   };
