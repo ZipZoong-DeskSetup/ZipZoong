@@ -11,11 +11,6 @@ function Form() {
     },
     {
       id: '2',
-      link: `https://back.zipzoong.store/oauth2/authorization/naver`,
-      image: '/Images/LoginNaverButton.png',
-    },
-    {
-      id: '3',
       link: `https://back.zipzoong.store/oauth2/authorization/kakao`,
       image: '/Images/LoginKakaoButton.png',
     },
