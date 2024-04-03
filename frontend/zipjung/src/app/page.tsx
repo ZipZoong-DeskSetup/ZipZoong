@@ -13,7 +13,7 @@ export default function Page() {
     console.log(ZustandToken);
   }
   return (
-    <div style={{ backgroundColor: '#FBF9F1' }}>
+    <div style={{backgroundColor: '#FBF9F1'}}>
       <Header></Header>
       <Form></Form>
       <Footer></Footer>
