@@ -13,7 +13,8 @@ function StartButton({
   styleName: string;
   firstImg: string;
 }) {
-  const {ZustandNickname, setZustandImageUrl} = useUserInfoStore();
+  const {ZustandNickname, setZustandImageUrl, ZustandToken} =
+    useUserInfoStore();
 
   const handleClick = async (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault(); // <a> 태그의 기본 동작 방지
@@ -21,10 +22,16 @@ function StartButton({
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/nickname`, {
         nickname: ZustandNickname,
+        headers: {
+          Authorization: `Bearer ${ZustandToken}`,
+        },
       });
       if (firstImg) {
         await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/profile`, {
           userImg: firstImg,
+          headers: {
+            Authorization: `Bearer ${ZustandToken}`,
+          },
         });
         setZustandImageUrl(firstImg);
       } else {
