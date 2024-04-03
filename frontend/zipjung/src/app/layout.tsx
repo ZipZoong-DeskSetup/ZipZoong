@@ -4,8 +4,8 @@ export const metadata = {
   title: 'ZIPZOONG | 집중',
   description: '',
   icons: {
-    icon:"/Images/LOGO3.png",
-  }
+    icon: '/Images/LOGO3.png',
+  },
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
