@@ -4,6 +4,7 @@ import com.ssafy.zipjoong.product.dto.ProductResponse;
 import lombok.Builder;
 import lombok.Data;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -15,5 +16,11 @@ public class RecommendRespone {
     private ProductResponse keyboard;
     private ProductResponse mouse;
     private Map<String, List<ProductResponse>> similarProduct;
-    private int totalPrice;
+    private String totalPrice;
+
+    /* 가격 ',' 붙이기 */
+    public void setPrice(int price){
+        DecimalFormat formatter = new DecimalFormat("###,###");
+        this.totalPrice = formatter.format(price);
+    }
 }
