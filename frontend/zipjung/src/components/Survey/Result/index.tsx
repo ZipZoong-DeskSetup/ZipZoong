@@ -54,6 +54,9 @@ const Form = () => {
       <Question questionContent="이런 조합은 어떠세요?" />
       <div className={styles.middleContainer}>
         <div className={styles.imgContainer}>
+          {recommendCombi === null && recommendCombi === undefined && (
+            <div>추천 중</div>
+          )}
           {recommendCombi !== null &&
             recommendCombi !== undefined &&
             recommendCombi.map((data, index) =>
