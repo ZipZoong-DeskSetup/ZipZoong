@@ -27,3 +27,19 @@
   display: flex;
   font-size: 20px;
 }
+
+.waitingMent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 전체 뷰포트 높이 */
+  width: 100vw; /* 전체 뷰포트 너비 */
+  position: fixed; /* 페이지 스크롤에 영향을 받지 않도록 고정 */
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+  color: #fff; /* 글자 색상 */
+  font-size: 30px; /* 글자 크기 */
+  font-weight: bold;
+  z-index: 1000; /* 다른 요소들 위에 오도록 z-index 설정 */
+}
