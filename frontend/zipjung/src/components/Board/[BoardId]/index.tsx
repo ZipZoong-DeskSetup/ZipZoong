@@ -190,7 +190,7 @@ function Form() {
               return {
                 combinationId: combination.combinationId,
                 products,
-                totalPrice: combination.totalPrice,
+                totalPrice: 723000,
               };
             });
 
