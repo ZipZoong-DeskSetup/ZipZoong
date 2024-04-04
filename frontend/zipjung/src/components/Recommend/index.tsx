@@ -174,7 +174,7 @@ function Form() {
     );
   }
 
-  if (ZustandRecommendList.length === 0 && !isLoading) {
+  if (ZustandRecommendList?.length === 0 && !isLoading) {
     return (
       <div className={styles.waitingMent}>추천 정보를 받고 있습니다...</div>
     );
@@ -338,43 +338,47 @@ function Form() {
         </div>
       </div>
       <div>
-        {ZustandRecommendList.map((item, index) => [
-          <div className={styles.contain} key={item.combinationId}>
-            <div className={styles.recommendHead}>
-              <div className={styles.recommendId}>추천 {index + 1}</div>
-              {/* 관심목록 추가 */}
-              <div className={styles.shareLike}>
-                <RecommendLikeButton
-                  isLiked={isCombinationLiked(index)}
-                  onToggleLike={() => toggleLike(index)}
-                />
+        {ZustandRecommendList &&
+          ZustandRecommendList?.map((item, index) => [
+            <div className={styles.contain} key={item.combinationId}>
+              <div className={styles.recommendHead}>
+                <div className={styles.recommendId}>추천 {index + 1}</div>
+                {/* 관심목록 추가 */}
+                <div className={styles.shareLike}>
+                  <RecommendLikeButton
+                    isLiked={isCombinationLiked(index)}
+                    onToggleLike={() => toggleLike(index)}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className={styles.ImgPrice}>
-              <div>
-                <RecommendImgList
-                  key={item.combinationId}
-                  monitorImg={item.monitors[0].img}
-                  keyboardImg={item.keyboard.img}
-                  mouseImg={item.mouse.img}
-                />
+              <div className={styles.ImgPrice}>
+                <div>
+                  <RecommendImgList
+                    key={item.combinationId}
+                    monitorImg={item.monitors[0].img}
+                    keyboardImg={item.keyboard.img}
+                    mouseImg={item.mouse.img}
+                  />
+                </div>
+                <div className={styles.BtnPrice}>
+                  <RecommendDetailButton
+                    onClick={() => handleDetailClick(index)}
+                  />
+                  <div className={styles.totalPrice}>{item.totalPrice} 원</div>
+                </div>
               </div>
-              <div className={styles.BtnPrice}>
-                <RecommendDetailButton
-                  onClick={() => handleDetailClick(index)}
-                />
-                <div className={styles.totalPrice}>{item.totalPrice} 원</div>
+              <div className={styles.toggleButton}>
+                <button
+                  onClick={() => toggleDropdown(index)}
+                  id="dropdownButton"
+                >
+                  <TiArrowSortedDown className={styles.toggleBtn} />
+                </button>
               </div>
-            </div>
-            <div className={styles.toggleButton}>
-              <button onClick={() => toggleDropdown(index)} id="dropdownButton">
-                <TiArrowSortedDown className={styles.toggleBtn} />
-              </button>
-            </div>
-            {openDropdownIndex === index && <RecommendList item={item} />}
-          </div>,
-        ])}
+              {openDropdownIndex === index && <RecommendList item={item} />}
+            </div>,
+          ])}
       </div>
     </div>
   );
