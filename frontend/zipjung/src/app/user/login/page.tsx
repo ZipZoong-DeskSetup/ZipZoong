@@ -1,4 +1,4 @@
-import Footer from '@/components/Common/Footer/Footer';
+// import Footer from '@/components/Common/Footer/Footer';
 import Form from '@/components/User/login';
 
 export default function Page() {
@@ -6,7 +6,7 @@ export default function Page() {
     <>
       <header style={{height: '60px'}}></header>
       <Form></Form>
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </>
   );
 }

@@ -66,11 +66,11 @@ const Form = () => {
     );
   }
 
-  if (!isLoading) {
-    return (
-      <div className={styles.waitingMent}>추천 정보를 받고 있습니다...</div>
-    );
-  }
+  // if (!isLoading) {
+  //   return (
+  //     <div className={styles.waitingMent}>추천 정보를 받고 있습니다...</div>
+  //   );
+  // }
   return (
     <div className={styles.FirstContainer}>
       <Question questionContent="이런 조합은 어떠세요?" />
