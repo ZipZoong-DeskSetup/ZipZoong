@@ -3,10 +3,9 @@
 import {useEffect, useState} from 'react';
 import useFirstSurveyStore from '@/stores/firstSurvey';
 import Question from '@/components/Survey/Question';
-import DoubleHandleRangeSlider from '@/components/Survey/DoubleHandleRangeSlider';
 import PricePageMove from '@/components/Survey/PricePageMove';
-
 import styles from '@/components/Survey/index.module.scss';
+import SlideBar from '@/components/Survey/SlideBar';
 /**
  * 내용, 클릭 체크 함수, 선택지 중복 개수 넣기
  */
@@ -29,7 +28,7 @@ const Form = () => {
   return (
     <div className={styles.container}>
       <Question questionContent={questionContent} />
-      <DoubleHandleRangeSlider maxValue={maxValue} setMaxValue={setMaxValue} />
+      <SlideBar setMaxValue={setMaxValue} />
       <PricePageMove
         onPageMove={handlePageMove}
         presentPage={presentPage}

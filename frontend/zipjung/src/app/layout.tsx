@@ -1,5 +1,4 @@
 import '@/styles/globals.css';
-import Footer from '@/components/Common/Footer/Footer';
 
 export const metadata = {
   title: 'ZIPZOONG | 집중',
