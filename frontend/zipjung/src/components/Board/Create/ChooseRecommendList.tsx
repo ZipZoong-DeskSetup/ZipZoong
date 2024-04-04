@@ -35,7 +35,7 @@ function ChooseRecommendList({
     combination.mouse,
   ];
 
-  console.log(products);
+  // console.log(products);
   // const filteredProducts = products.filter(product => product.img !== null);
 
   return (
