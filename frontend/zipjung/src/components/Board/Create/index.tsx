@@ -12,7 +12,7 @@ import ChooseRecommendButton from '@/components/Board/ChooseRecommendButton';
 import QuillEditor from '@/components/Board/Create/QuillEditor';
 import GoBackButton from '@/components/Common/GoBackButton';
 import CreateButton from '@/components/Board/Create/CreateButton';
-import useUserInfoStore from '@/stores/userInfo';
+// import useUserInfoStore from '@/stores/userInfo';
 import useBoardProductStore from '@/stores/boardRecommend';
 import styles from '@/components/Board/Create/index.module.scss';
 import ChooseRecommendModal from '@/components/Board/ChooseRecommendModal';
@@ -100,7 +100,7 @@ function Form() {
   // );
   // const [setCombinationDetails] = useState<ICombination[]>([]);
   const [boardThumbnail, setBoardThumbnail] = useState<string>('');
-  const {ZustandId, ZustandToken} = useUserInfoStore();
+  // const {ZustandId, ZustandToken} = useUserInfoStore();
   const {
     zustandLikedCombination,
     setZustandLikedCombination,
@@ -227,7 +227,7 @@ function Form() {
       const postData = {
         boardTitle: formTitle,
         boardContent: formContent,
-        boardCreatorId: ZustandId,
+        // boardCreatorId: ZustandId,
         boardThumbnail, // 첫 번째 이미지 URL 추가
         combinationIdList: zustandLikedCombination,
       };
@@ -239,8 +239,9 @@ function Form() {
         postData,
         {
           headers: {
-            Authorization: `Bearer ${ZustandToken}`,
-            // Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwidXNlcklkIjoiZ29vZ2xlIDExNTk4MzE4OTYyODE1NDU2MTU1NSIsImlhdCI6MTcxMjE4MDg0NCwiZXhwIjoxNzEyMjY3MjQ0fQ.Zg6WVELOGpycS1bXs_PAvSJLk4d7NdwPZ7bsEtWxz2B5ofCzKN3Xkgapws-6e-genFwKbMKEHa4ExJJZNKB7Mw',
+            // Authorization: `Bearer ${ZustandToken}`,
+            Authorization:
+              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwidXNlcklkIjoiZ29vZ2xlIDExNTk4MzE4OTYyODE1NDU2MTU1NSIsImlhdCI6MTcxMjE4MDg0NCwiZXhwIjoxNzEyMjY3MjQ0fQ.Zg6WVELOGpycS1bXs_PAvSJLk4d7NdwPZ7bsEtWxz2B5ofCzKN3Xkgapws-6e-genFwKbMKEHa4ExJJZNKB7Mw',
           },
         },
       );

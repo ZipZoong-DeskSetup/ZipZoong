@@ -1,4 +1,4 @@
-import Footer from '@/components/Common/Footer/Footer';
+// import Footer from '@/components/Common/Footer/Footer';
 import Header from '@/components/Common/Header';
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
@@ -8,7 +8,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <Header />
       </section>
       <section>{children}</section>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
