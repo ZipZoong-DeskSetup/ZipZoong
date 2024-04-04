@@ -2,20 +2,22 @@ import Image from 'next/image';
 
 import styles from '@/components/Board/Create/ChooseRecommendList.module.scss';
 
-interface IProducts {
+interface IProduct {
   id: number;
   name: string;
-  price: number;
-  img: string;
+  price: string;
+  img: null | string;
   brand: null | string;
   url: null | string;
-  category: 'KEYBOARD' | 'MONITOR' | 'MOUSE';
+  category: null | 'KEYBOARD' | 'MONITOR' | 'MOUSE';
 }
 
 interface ICombination {
   combinationId: number;
-  products: IProducts[];
-  totalPrice: number;
+  monitors: IProduct[];
+  keyboard: IProduct;
+  mouse: IProduct;
+  totalPrice: string;
 }
 
 interface ChooseRecommendListProps {
@@ -27,6 +29,15 @@ function ChooseRecommendList({
   combination,
   onSelectCombination,
 }: ChooseRecommendListProps) {
+  const products = [
+    ...combination.monitors,
+    combination.keyboard,
+    combination.mouse,
+  ];
+
+  console.log(products);
+  // const filteredProducts = products.filter(product => product.img !== null);
+
   return (
     <div
       className={styles.combination}
@@ -35,10 +46,10 @@ function ChooseRecommendList({
       <div>
         {/* 제품 이미지 */}
         <div className={styles.productImages}>
-          {combination.products.map(product => (
+          {products.map(product => (
             <div key={product.id} className={styles.productImage}>
               <Image
-                src={product.img}
+                src={product.img || '/Images/boardThumbnail.png'}
                 alt={product.name}
                 width={100}
                 height={100}
@@ -51,7 +62,7 @@ function ChooseRecommendList({
       <div className={styles.Detail}>
         {/* 제품 이름 */}
         <div className={styles.productNames}>
-          {combination.products.map(product => (
+          {products.map(product => (
             <div key={product.id} className={styles.productName}>
               {product.name}
             </div>
