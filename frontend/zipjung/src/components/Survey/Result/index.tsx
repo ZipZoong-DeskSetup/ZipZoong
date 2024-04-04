@@ -36,8 +36,11 @@ const Form = () => {
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
 
   useEffect(() => {
-    setIsLoading(true);
     setToken(ZustandToken);
+  }, [ZustandToken]);
+
+  useEffect(() => {
+    setIsLoading(true);
     axios
       .get<ICombinationResponse>(
         `${process.env.NEXT_PUBLIC_BASE_URL}/combination/recommend`,
@@ -56,7 +59,7 @@ const Form = () => {
       // eslint-disable-next-line no-console
       .catch(error => console.error('combination recommend: ', error));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ZustandToken, token]);
+  }, [token]);
 
   if (isLoading) {
     return (
