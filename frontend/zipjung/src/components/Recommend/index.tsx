@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-console */
 
 'use client';
@@ -130,7 +131,7 @@ function Form() {
     setZustandRecommendList,
     setZustandRecommendDetail,
   } = useRecommendStore();
-  const {ZustandToken} = useUserInfoStore();
+  const {ZustandId, ZustandToken} = useUserInfoStore();
   const [token, setToken] = useState<string>('');
   const [openDropdownIndex, setOpenDropdownIndex] = useState<number | null>(
     null,
@@ -138,9 +139,11 @@ function Form() {
   const [likedCombinations, setLikedCombinations] = useState<LikedCombinations>(
     {},
   );
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
   const router = useRouter();
 
   useEffect(() => {
+    setIsLoading(true);
     setToken(ZustandToken);
 
     axios
@@ -148,20 +151,34 @@ function Form() {
         `${process.env.NEXT_PUBLIC_BASE_URL}/combination/recommend`,
         {
           headers: {
-            // Authorization: `Bearer ${token}`,
-            Authorization:
-              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwidXNlcklkIjoiZ29vZ2xlIDExNTk4MzE4OTYyODE1NDU2MTU1NSIsImlhdCI6MTcxMjE1MTI2MSwiZXhwIjoxNzEyMjM3NjYxfQ.vG8VqgcCYl8BnlkhZkrEvpAqgf9Pu4SCKRR4s6Wv3iDVC0bpWvVChyFbTPe5NIhzY3dkwBC8RUrv0dphorbK6g',
+            Authorization: `Bearer ${token}`,
+            // Authorization:
+            //   'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwidXNlcklkIjoiZ29vZ2xlIDExNTk4MzE4OTYyODE1NDU2MTU1NSIsImlhdCI6MTcxMjE1MTI2MSwiZXhwIjoxNzEyMjM3NjYxfQ.vG8VqgcCYl8BnlkhZkrEvpAqgf9Pu4SCKRR4s6Wv3iDVC0bpWvVChyFbTPe5NIhzY3dkwBC8RUrv0dphorbK6g',
           },
         },
       )
       .then(response => {
         if (response !== null) {
           setZustandRecommendList(response.data.data);
+          setIsLoading(false);
         }
       })
       .catch(error => console.error('Fetching recommend list failed:', error));
   }, [setZustandRecommendList, ZustandToken, token]);
 
+  if (isLoading) {
+    return (
+      <div className={styles.waitingMent}>
+        추천을 받고 있습니다. 잠시만 기다려주세요...
+      </div>
+    );
+  }
+
+  if (ZustandRecommendList.length === 0 && !isLoading) {
+    return (
+      <div className={styles.waitingMent}>추천 정보를 받고 있습니다...</div>
+    );
+  }
   // 상세 정보 조회를 위한 비동기 함수
   const fetchCombinationDetail = async (index: number) => {
     const selectedCombination = ZustandRecommendList[index];
@@ -266,6 +283,14 @@ function Form() {
   };
 
   const toggleLike = (index: number) => {
+    if (!ZustandId) {
+      // 경고 메시지 표시
+      alert('로그인이 필요한 기능입니다.');
+      // 로그인 페이지로 리다이렉트
+      router.push('/user/login');
+      return;
+    }
+
     const isCurrentlyLiked = isCombinationLiked(index);
     if (isCurrentlyLiked) {
       removeCombinationFromLikes(index).catch(error => {
@@ -297,7 +322,7 @@ function Form() {
           <iframe
             src="https://deskspacing.com/mainApp.html"
             width="900px"
-            height="400px"
+            height="450px"
             style={{
               transform: 'scale(0.7)',
               transformOrigin: '0 0',
@@ -339,7 +364,7 @@ function Form() {
                 <RecommendDetailButton
                   onClick={() => handleDetailClick(index)}
                 />
-                <div className={styles.price}>{item.totalPrice} 원</div>
+                <div className={styles.totalPrice}>{item.totalPrice} 원</div>
               </div>
             </div>
             <div className={styles.toggleButton}>

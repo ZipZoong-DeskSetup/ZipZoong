@@ -5,7 +5,7 @@
 }
 
 .contain {
-  width: 700px;
+  width: 900px;
   height: auto;
   min-height: 250px;
   background-color: #f0ede6;
@@ -26,7 +26,7 @@
 .simulationDiv{
     overflow: hidden;
     width: 900px;
-    height: 450px;
+    height: 500px;
     border: 1px solid #F0EDE6;
     padding: 10px;
     background-color: #F0EDE6;
@@ -34,6 +34,10 @@
     border-radius: 5px;
 }
 
+.recommendHead{
+  display: flex;
+  justify-content: space-between;
+}
 .recommendId {
   font-size: 20px;
   font-weight: bold;
@@ -74,4 +78,37 @@
   font-size: 27px;
   font-weight: bold;
   color: var(--main-color-dark);
+}
+
+.simulationDiv2 {
+  height: 450px;
+}
+
+.memo {
+  height: 100px;
+  color: red;
+  font-weight: bold;
+}
+
+.ment{
+  font-size: 25px;
+  font-weight: bold;
+  color: var(--original-font-color);
+  margin-top: 20px;
+}
+
+.waitingMent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 전체 뷰포트 높이 */
+  width: 100vw; /* 전체 뷰포트 너비 */
+  position: fixed; /* 페이지 스크롤에 영향을 받지 않도록 고정 */
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+  color: #fff; /* 글자 색상 */
+  font-size: 30px; /* 글자 크기 */
+  font-weight: bold;
+  z-index: 1000; /* 다른 요소들 위에 오도록 z-index 설정 */
 }
