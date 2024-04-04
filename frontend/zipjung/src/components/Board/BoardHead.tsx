@@ -1,6 +1,6 @@
+import {FaSearch} from 'react-icons/fa';
 import BoardCreateButton from '@/components/Board/BoardCreateButton';
 import SearchInput from '@/components/Board/SearchInput';
-import {FaSearch} from 'react-icons/fa';
 import styles from '@/components/Board/BoardHead.module.scss';
 
 // 타입을 all, mine 로 지정할 수 있음
