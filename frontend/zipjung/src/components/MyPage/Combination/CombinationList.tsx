@@ -1,77 +1,84 @@
 import Image from 'next/image';
-import ProductLikeButton from '@/components/Common/Recommend/ProductLikeButton';
 import styles from '@/components/Common/Recommend/RecommendList.module.scss';
 
 interface IProducts {
   id: number;
   name: string;
   price: number;
+  img: string;
   brand: null | string;
   url: null | string;
-  category: 'KEYBOARD' | 'MONITOR' | 'MOUSE';
+  category: null;
 }
 
-const CombinationList = ({Products}: {Products: IProducts[]}) => {
-  const renderItems = (type: 'KEYBOARD' | 'MONITOR' | 'MOUSE') => {
-    return Products.filter(item => item.category === type).map(
-      (item, index) => (
-        <div key={index} className={styles.productDiv1}>
+const CombinationList = ({
+  monitor,
+  mouse,
+  keyboard,
+}: {
+  monitor: IProducts;
+  mouse: IProducts;
+  keyboard: IProducts;
+}) => {
+  const example = (data: IProducts) => (
+    <>
+      <div className={styles.productModel}>{data.name}</div>
+      <div className={styles.PriceBtn}>
+        <div className={styles.productPrice}>{data.price}</div>
+      </div>
+    </>
+  );
+
+  return (
+    <>
+      <div className={styles.recommendList}>
+        <div className={styles.productDiv1}>
           <div className={styles.productDiv2}>
-            {item.category === 'MONITOR' && (
-              <>
-                <Image
-                  src="/Images/monitorIcon.png"
-                  width={20}
-                  height={20}
-                  alt={`${item.category}icon`}
-                />
-                <div className={styles.productTitle}>모니터</div>
-              </>
-            )}
-            {item.category === 'KEYBOARD' && (
-              <>
-                <Image
-                  src="/Images/keyboardIcon.png"
-                  width={20}
-                  height={20}
-                  alt={`${item.category}icon`}
-                />
-                <div className={styles.productTitle}>키보드</div>
-              </>
-            )}
-            {item.category === 'MOUSE' && (
-              <>
-                <Image
-                  src="/Images/mouseIcon.png"
-                  width={20}
-                  height={20}
-                  alt={`${item.category}icon`}
-                />
-                <div className={styles.productTitle}>마우스</div>
-              </>
-            )}
-            <div className={styles.productModel}>{item.name}</div>
-          </div>
-          <div className={styles.PriceBtn}>
-            <div className={styles.productPrice}>{item.price}</div>
-            <ProductLikeButton key={item.name} itemId={item.id} />
+            <Image
+              src="/Images/monitorIcon.png"
+              width={20}
+              height={20}
+              alt="Monitor Icon"
+            />
+            <div className={styles.productTitle}>모니터</div>
+            {example(monitor)}
           </div>
           <hr />
         </div>
-      ),
-    );
-  };
+      </div>
 
-  return (
-    <div className={styles.recommendList}>
-      {Products && (
-        <>
-          <div className={styles.monitorDiv}>{renderItems('MONITOR')}</div>
-          <div className={styles.monitorDiv}>{renderItems('KEYBOARD')}</div>
-          <div className={styles.monitorDiv}>{renderItems('MOUSE')}</div>
-        </>
-      )}
-    </div>
+      <div className={styles.recommendList}>
+        <div className={styles.productDiv1}>
+          <div className={styles.productDiv2}>
+            <Image
+              src="/Images/keyboardIcon.png"
+              width={20}
+              height={20}
+              alt="Keyboard Icon"
+            />
+            <div className={styles.productTitle}>키보드</div>
+            {example(keyboard)}
+          </div>
+          <hr />
+        </div>
+      </div>
+
+      <div className={styles.recommendList}>
+        <div className={styles.productDiv1}>
+          <div className={styles.productDiv2}>
+            <Image
+              src="/Images/mouseIcon.png"
+              width={20}
+              height={20}
+              alt="Mouse Icon"
+            />
+            <div className={styles.productTitle}>마우스</div>
+            {example(mouse)}
+          </div>
+          <hr />
+        </div>
+      </div>
+    </>
   );
 };
 
