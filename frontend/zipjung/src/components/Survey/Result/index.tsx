@@ -33,8 +33,10 @@ const Form = () => {
   );
   const {ZustandToken} = useUserInfoStore();
   const [token, setToken] = useState<string>(ZustandToken);
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
 
   useEffect(() => {
+    setIsLoading(true);
     setToken(ZustandToken);
     axios
       .get<ICombinationResponse>(
@@ -48,6 +50,7 @@ const Form = () => {
       .then(response => {
         if (response !== null) {
           setRecommendCombi(response.data.data);
+          setIsLoading(false);
         }
       })
       // eslint-disable-next-line no-console
@@ -55,6 +58,19 @@ const Form = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ZustandToken, token]);
 
+  if (isLoading) {
+    return (
+      <div className={styles.waitingMent}>
+        추천을 받고 있습니다. 잠시만 기다려주세요...
+      </div>
+    );
+  }
+
+  if (!isLoading) {
+    return (
+      <div className={styles.waitingMent}>추천 정보를 받고 있습니다...</div>
+    );
+  }
   return (
     <div className={styles.FirstContainer}>
       <Question questionContent="이런 조합은 어떠세요?" />
