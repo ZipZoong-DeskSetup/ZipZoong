@@ -9,11 +9,11 @@ import styles from '@/components/Common/Recommend/ProductLikeButton.module.scss'
 
 function ProductLikeButton({itemId}: {itemId: number}) {
   const [isLiked, setIsLiked] = useState<boolean | null>(null);
-  const {ZustandId, ZustandToken} = useUserInfoStore();
+  const {ZustandToken} = useUserInfoStore();
   const router = useRouter();
 
   const handleLike = () => {
-    if (!ZustandId) {
+    if (!ZustandToken) {
       // 경고 메시지 표시
       alert('로그인이 필요한 기능입니다.');
       // 로그인 페이지로 리다이렉트
