@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Image from 'next/image';
 // import Link from 'next/link';
 import {IoIosArrowDown} from 'react-icons/io';
@@ -8,15 +8,22 @@ import styles from '@/components/Common/Header.module.scss';
 import useUserInfoStore from '@/stores/userInfo';
 
 function Header() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const {
     ZustandNickname,
     setZustandNickname,
     ZustandImageUrl,
     setZustandImageUrl,
+    ZustandToken,
   } = useUserInfoStore();
   // const userName = "라벤더";
+
+  useEffect(() => {
+    if (ZustandToken.length > 10) {
+      setIsLogin(true);
+    }
+  }, [ZustandToken]);
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
