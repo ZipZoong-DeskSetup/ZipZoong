@@ -61,3 +61,10 @@
   display: flex;
   justify-content: space-between;
 }
+.textbox{
+  // background-color: red;
+  width: 120px;
+  height: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
