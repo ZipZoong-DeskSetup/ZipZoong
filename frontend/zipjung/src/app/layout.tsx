@@ -15,7 +15,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <body style={{minHeight: '100%'}}>
         <section style={{height: '100%', position: 'relative'}}>
           <section>{children}</section>
-          <Footer />
         </section>
       </body>
     </html>
