@@ -41,15 +41,15 @@ const ResultImage = ({data, index}: {data: ICombination; index: number}) => {
         <div className={styles.title}>추천{index + 1}</div>
         <div>
           <div className={styles.info}>
-            <span>{data.monitors[0].name}</span>
+            <span className={styles.textbox}>{data.monitors[0].name}</span>
             <span>{data.monitors[0].price}</span>
           </div>
           <div className={styles.info}>
-            <span>{data.keyboard.name}</span>
+            <span className={styles.textbox}>{data.keyboard.name}</span>
             <span>{data.keyboard.price}</span>
           </div>
           <div className={styles.info}>
-            <span>{data.mouse.name}</span>
+            <span className={styles.textbox}>{data.mouse.name}</span>
             <span>{data.mouse.price}</span>
           </div>
         </div>
