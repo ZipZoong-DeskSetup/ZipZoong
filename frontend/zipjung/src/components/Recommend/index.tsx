@@ -131,7 +131,7 @@ function Form() {
     setZustandRecommendList,
     setZustandRecommendDetail,
   } = useRecommendStore();
-  const {ZustandId, ZustandToken} = useUserInfoStore();
+  const {ZustandToken} = useUserInfoStore();
   const [token, setToken] = useState<string>('');
   const [openDropdownIndex, setOpenDropdownIndex] = useState<number | null>(
     null,
@@ -283,7 +283,7 @@ function Form() {
   };
 
   const toggleLike = (index: number) => {
-    if (!ZustandId) {
+    if (!ZustandToken) {
       // 경고 메시지 표시
       alert('로그인이 필요한 기능입니다.');
       // 로그인 페이지로 리다이렉트
