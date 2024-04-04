@@ -1,5 +1,7 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-console */
 import {useState} from 'react';
+import {useRouter} from 'next/navigation';
 import axios from 'axios';
 import {FaBookmark, FaRegBookmark} from 'react-icons/fa6';
 import useUserInfoStore from '@/stores/userInfo';
@@ -7,9 +9,17 @@ import styles from '@/components/Common/Recommend/ProductLikeButton.module.scss'
 
 function ProductLikeButton({itemId}: {itemId: number}) {
   const [isLiked, setIsLiked] = useState<boolean | null>(null);
-  const {ZustandToken} = useUserInfoStore();
+  const {ZustandId, ZustandToken} = useUserInfoStore();
+  const router = useRouter();
 
   const handleLike = () => {
+    if (!ZustandId) {
+      // 경고 메시지 표시
+      alert('로그인이 필요한 기능입니다.');
+      // 로그인 페이지로 리다이렉트
+      router.push('/user/login');
+      return;
+    }
     if (isLiked) {
       // 좋아요를 취소하는 경우
       axios

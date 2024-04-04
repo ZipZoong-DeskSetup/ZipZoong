@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default */
+
 'use client';
 
 /* eslint-disable no-console */
@@ -6,179 +8,180 @@ import {useState, useEffect} from 'react';
 import axios from 'axios';
 import TitleInput from '@/components/Board/Create/TitleInput';
 import ChooseRecommendButton from '@/components/Board/ChooseRecommendButton';
-import ChooseRecommendModal from '@/components/Board/ChooseRecommendModal';
-import ChooseRecommendList from '@/components/Board/Create/ChooseRecommendList';
+// import ChooseRecommendList from '@/components/Board/Create/ChooseRecommendList';
 import QuillEditor from '@/components/Board/Create/QuillEditor';
 import GoBackButton from '@/components/Common/GoBackButton';
 import CreateButton from '@/components/Board/Create/CreateButton';
 import useUserInfoStore from '@/stores/userInfo';
 import useBoardProductStore from '@/stores/boardRecommend';
 import styles from '@/components/Board/Create/index.module.scss';
+import ChooseRecommendModal from '@/components/Board/ChooseRecommendModal';
 
-interface IProducts {
-  id: number;
-  name: string;
-  price: number;
-  img: string;
-  brand: null | string;
-  url: null | string;
-  category: 'KEYBOARD' | 'MONITOR' | 'MOUSE';
-}
+// interface IProducts {
+//   id: number;
+//   name: string;
+//   price: number;
+//   img: string;
+//   brand: null | string;
+//   url: null | string;
+//   category: 'KEYBOARD' | 'MONITOR' | 'MOUSE';
+// }
 
-interface IProductBase {
-  id: number;
-  name: string;
-  price: number;
-  img: string;
-  brand: string | null;
-  url: string;
-  category: 'KEYBOARD' | 'MONITOR' | 'MOUSE';
-}
+// interface IProductBase {
+//   id: number;
+//   name: string;
+//   price: number;
+//   img: string;
+//   brand: string | null;
+//   url: string;
+//   category: 'KEYBOARD' | 'MONITOR' | 'MOUSE';
+// }
 
-interface IMonitor extends IProductBase {
-  size: number;
-  resolution: string;
-  aspectRatio: string;
-  refreshRate: number;
-  panelType: string;
-  panelFormType: string;
-}
+// interface IMonitor extends IProductBase {
+//   size: number;
+//   resolution: string;
+//   aspectRatio: string;
+//   refreshRate: number;
+//   panelType: string;
+//   panelFormType: string;
+// }
 
-interface IKeyboard extends IProductBase {
-  connect: string;
-  connectInterface: string | null;
-  keySwitch: string | null;
-  led: string | null;
-  num: number;
-  force: number;
-  color: string;
-  form: string;
-  contact: string;
-}
+// interface IKeyboard extends IProductBase {
+//   connect: string;
+//   connectInterface: string | null;
+//   keySwitch: string | null;
+//   led: string | null;
+//   num: number;
+//   force: number;
+//   color: string;
+//   form: string;
+//   contact: string;
+// }
 
-interface IMouse extends IProductBase {
-  connect: string;
-  connectInterface: string;
-  mouseType: string;
-  dpi: number;
-  color: string;
-  weight: number;
-  width: number;
-  length: number;
-  height: number;
-  isSound: boolean;
-}
+// interface IMouse extends IProductBase {
+//   connect: string;
+//   connectInterface: string;
+//   mouseType: string;
+//   dpi: number;
+//   color: string;
+//   weight: number;
+//   width: number;
+//   length: number;
+//   height: number;
+//   isSound: boolean;
+// }
 
-interface ICombinationData {
-  combinationId: number;
-  monitors: IMonitor[] | null;
-  keyboard: IKeyboard | null;
-  mouse: IMouse | null;
-  totalPrice: number;
-}
+// interface ICombinationData {
+//   combinationId: number;
+//   monitors: IMonitor[] | null;
+//   keyboard: IKeyboard | null;
+//   mouse: IMouse | null;
+//   totalPrice: number;
+// }
 
-interface ICombinationResponseData {
-  message: string;
-  data: ICombinationData;
-}
+// interface ICombinationResponseData {
+//   message: string;
+//   data: ICombinationData;
+// }
 
-interface ICombination {
-  combinationId: number;
-  products: IProducts[];
-  totalPrice: number;
-}
+// interface ICombination {
+//   combinationId: number;
+//   products: IProducts[];
+//   totalPrice: number;
+// }
 
 function Form() {
   const [formTitle, setFormTitle] = useState<string>('');
   const [formContent, setFormContent] = useState<string>('');
   const [showModal, setShowModal] = useState<boolean>(false);
   // const [likeRecommend, setLikeRecommend] = useState<ICombination>();
-  const [combinationDetails, setCombinationDetails] = useState<ICombination[]>(
-    [],
-  );
+  // const [combinationDetails, setCombinationDetails] = useState<ICombination[]>(
+  //   [],
+  // );
+  // const [setCombinationDetails] = useState<ICombination[]>([]);
   const [boardThumbnail, setBoardThumbnail] = useState<string>('');
   const {ZustandId, ZustandToken} = useUserInfoStore();
   const {
     zustandLikedCombination,
     setZustandLikedCombination,
-    deleteZustandLikedCombination,
+    // deleteZustandLikedCombination,
   } = useBoardProductStore();
 
   // 새로고침 시 zustand 초기화
-  useEffect(() => {
-    const fetchCombinationDetails = async () => {
-      if (zustandLikedCombination.length > 0) {
-        const allCombinationDetails = await Promise.all(
-          zustandLikedCombination.map(async combinationId => {
-            const response = await axios.get<ICombinationResponseData>(
-              `${process.env.NEXT_PUBLIC_BASE_URL}/combination/${combinationId}`,
-              {
-                headers: {
-                  Authorization: ZustandToken,
-                },
-              },
-            );
+  // useEffect(() => {
+  //   const fetchCombinationDetails = async () => {
+  //     if (zustandLikedCombination.length > 0) {
+  //       const allCombinationDetails = await Promise.all(
+  //         zustandLikedCombination.map(async combinationId => {
+  //           const response = await axios.get<ICombinationResponseData>(
+  //             `${process.env.NEXT_PUBLIC_BASE_URL}/combination/${combinationId}`,
+  //             {
+  //               headers: {
+  //                 Authorization: ZustandToken,
+  //               },
+  //             },
+  //           );
 
-            const {data} = response.data;
-            const products: IProducts[] = [];
+  //           const {data} = response.data;
+  //           const products: IProducts[] = [];
 
-            // Keyboard 처리
-            if (data.keyboard) {
-              const {id, name, price, img, brand, url} = data.keyboard; // 선택된 필드 추출
-              products.push({
-                id,
-                name,
-                price,
-                img,
-                brand,
-                url,
-                category: 'KEYBOARD',
-              });
-            }
+  //           // Keyboard 처리
+  //           if (data.keyboard) {
+  //             const {id, name, price, img, brand, url} = data.keyboard; // 선택된 필드 추출
+  //             products.push({
+  //               id,
+  //               name,
+  //               price,
+  //               img,
+  //               brand,
+  //               url,
+  //               category: 'KEYBOARD',
+  //             });
+  //           }
 
-            // Mouse 처리
-            if (data.mouse) {
-              const {id, name, price, img, brand, url} = data.mouse; // 선택된 필드 추출
-              products.push({
-                id,
-                name,
-                price,
-                img,
-                brand,
-                url,
-                category: 'MOUSE',
-              });
-            }
+  //           // Mouse 처리
+  //           if (data.mouse) {
+  //             const {id, name, price, img, brand, url} = data.mouse; // 선택된 필드 추출
+  //             products.push({
+  //               id,
+  //               name,
+  //               price,
+  //               img,
+  //               brand,
+  //               url,
+  //               category: 'MOUSE',
+  //             });
+  //           }
 
-            // Monitors 처리
-            data.monitors?.forEach(monitor => {
-              const {id, name, price, img, brand, url} = monitor; // 선택된 필드 추출
-              products.push({
-                id,
-                name,
-                price,
-                img,
-                brand,
-                url,
-                category: 'MONITOR',
-              });
-            });
+  //           // Monitors 처리
+  //           data.monitors?.forEach(monitor => {
+  //             const {id, name, price, img, brand, url} = monitor; // 선택된 필드 추출
+  //             products.push({
+  //               id,
+  //               name,
+  //               price,
+  //               img,
+  //               brand,
+  //               url,
+  //               category: 'MONITOR',
+  //             });
+  //           });
 
-            return {
-              combinationId: data.combinationId,
-              products,
-              totalPrice: data.totalPrice,
-            };
-          }),
-        );
-        setCombinationDetails(allCombinationDetails);
-      } else {
-        setCombinationDetails([]);
-      }
-    };
+  //           return {
+  //             combinationId: data.combinationId,
+  //             products,
+  //             totalPrice: data.totalPrice,
+  //           };
+  //         }),
+  //       );
+  //       // setCombinationDetails(allCombinationDetails);
+  //     } else {
+  //       // setCombinationDetails([]);
+  //     }
+  //   };
 
-    fetchCombinationDetails().catch(console.error);
-  }, [zustandLikedCombination, ZustandToken]);
+  //   fetchCombinationDetails().catch(console.error);
+  // }, [zustandLikedCombination, ZustandToken]);
 
   useEffect(() => {
     const shouldReset = true;
@@ -207,15 +210,15 @@ function Form() {
     setShowModal(false);
   };
   // 조합 삭제
-  const onSelectCombination = (combinationId: number) => {
-    if (zustandLikedCombination.includes(combinationId)) {
-      // 이미 선택된 조합이면 제거
-      deleteZustandLikedCombination(combinationId);
-    } else {
-      // 새로 선택된 조합이면 추가
-      setZustandLikedCombination(combinationId);
-    }
-  };
+  // const onSelectCombination = (combinationId: number) => {
+  //   if (zustandLikedCombination.includes(combinationId)) {
+  //     // 이미 선택된 조합이면 제거
+  //     deleteZustandLikedCombination(combinationId);
+  //   } else {
+  //     // 새로 선택된 조합이면 추가
+  //     setZustandLikedCombination(combinationId);
+  //   }
+  // };
 
   // 게시글 작성
   const goCreate = async () => {
@@ -229,18 +232,17 @@ function Form() {
         combinationIdList: zustandLikedCombination,
       };
 
-      console.log(postData);
-
-      const config = {
-        headers: {
-          Authorization: `Bearer ${ZustandToken}`,
-        },
-      };
+      // console.log(postData);
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/board`, // 요청 URL
+        `${process.env.NEXT_PUBLIC_BASE_URL}/board`,
         postData,
-        config,
+        {
+          headers: {
+            Authorization: `Bearer ${ZustandToken}`,
+            // Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwidXNlcklkIjoiZ29vZ2xlIDExNTk4MzE4OTYyODE1NDU2MTU1NSIsImlhdCI6MTcxMjE4MDg0NCwiZXhwIjoxNzEyMjY3MjQ0fQ.Zg6WVELOGpycS1bXs_PAvSJLk4d7NdwPZ7bsEtWxz2B5ofCzKN3Xkgapws-6e-genFwKbMKEHa4ExJJZNKB7Mw',
+          },
+        },
       );
       // 처리 성공
       console.log('Post created successfully', response);
@@ -262,13 +264,13 @@ function Form() {
         <TitleInput title={formTitle} onChange={handleChangeTitle} />
       </div>
       <div className={styles.combinationDiv}>
-        {combinationDetails.map(combination => (
+        {/* {combinationDetails.map(combination => (
           <ChooseRecommendList
             key={combination.combinationId}
             combination={combination}
             onSelectCombination={onSelectCombination}
           />
-        ))}
+        ))} */}
       </div>
       <div>
         {!showModal ? (
