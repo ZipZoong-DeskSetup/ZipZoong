@@ -12,6 +12,14 @@ interface RecommendListProps {
   item: Hardware;
 }
 
+// interface ChooseRecommendListProps {
+//   combination: {
+//     combinationId: number;
+//     products: IProducts[];
+//     totalPrice: number;
+//   };
+// }
+
 const RecommendList: React.FC<RecommendListProps> = ({item}) => {
   const {monitors, keyboard, mouse} = item;
 

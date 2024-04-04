@@ -7,7 +7,7 @@ import axios from 'axios';
 import TitleInput from '@/components/Board/Create/TitleInput';
 import ChooseRecommendButton from '@/components/Board/ChooseRecommendButton';
 import ChooseRecommendModal from '@/components/Board/ChooseRecommendModal';
-import ChooseRecommendList from '@/components/Board/Create/ChooseRecommendList';
+// import ChooseRecommendList from '@/components/Board/Create/ChooseRecommendList';
 import QuillEditor from '@/components/Board/Create/QuillEditor';
 import GoBackButton from '@/components/Common/GoBackButton';
 import CreateButton from '@/components/Board/Create/CreateButton';
@@ -16,15 +16,15 @@ import useBoardProductStore from '@/stores/boardRecommend';
 import useBoardStore from '@/stores/board';
 import styles from '@/components/Board/Create/index.module.scss';
 
-interface IProducts {
-  id: number;
-  name: string;
-  price: number;
-  img: string;
-  brand: null | string;
-  url: null | string;
-  category: 'KEYBOARD' | 'MONITOR' | 'MOUSE';
-}
+// interface IProducts {
+//   id: number;
+//   name: string;
+//   price: number;
+//   img: string;
+//   brand: null | string;
+//   url: null | string;
+//   category: 'KEYBOARD' | 'MONITOR' | 'MOUSE';
+// }
 
 interface IProductBase {
   id: number;
@@ -78,16 +78,16 @@ interface ICombinationData {
   totalPrice: number;
 }
 
-interface ICombinationResponseData {
-  message: string;
-  data: ICombinationData;
-}
+// interface ICombinationResponseData {
+//   message: string;
+//   data: ICombinationData;
+// }
 
-interface ICombination {
-  combinationId: number;
-  products: IProducts[];
-  totalPrice: number;
-}
+// interface ICombination {
+//   combinationId: number;
+//   products: IProducts[];
+//   totalPrice: number;
+// }
 
 interface IBoardDetail {
   boardId: number;
@@ -111,14 +111,14 @@ function Form() {
   const [formTitle, setFormTitle] = useState<string>('');
   const [formContent, setFormContent] = useState<string>('');
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [combinationDetails, setCombinationDetails] = useState<ICombination[]>(
-    [],
-  );
+  // const [combinationDetails, setCombinationDetails] = useState<ICombination[]>(
+  //   [],
+  // );
   const {ZustandId, ZustandToken} = useUserInfoStore();
   const {
     zustandLikedCombination,
     setZustandLikedCombination,
-    deleteZustandLikedCombination,
+    // deleteZustandLikedCombination,
   } = useBoardProductStore();
 
   const {ZustandboardModifyId} = useBoardStore();
@@ -146,80 +146,80 @@ function Form() {
     });
   }, [ZustandboardModifyId, ZustandToken]);
   // 새로고침 시 zustand 초기화
-  useEffect(() => {
-    const fetchCombinationDetails = async () => {
-      if (zustandLikedCombination.length > 0) {
-        const allCombinationDetails = await Promise.all(
-          zustandLikedCombination.map(async combinationId => {
-            const response = await axios.get<ICombinationResponseData>(
-              `${process.env.NEXT_PUBLIC_BASE_URL}/combination/${combinationId}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${ZustandToken}`,
-                },
-              },
-            );
+  // useEffect(() => {
+  //   const fetchCombinationDetails = async () => {
+  //     if (zustandLikedCombination.length > 0) {
+  //       const allCombinationDetails = await Promise.all(
+  //         zustandLikedCombination.map(async combinationId => {
+  //           const response = await axios.get<ICombinationResponseData>(
+  //             `${process.env.NEXT_PUBLIC_BASE_URL}/combination/${combinationId}`,
+  //             {
+  //               headers: {
+  //                 Authorization: `Bearer ${ZustandToken}`,
+  //               },
+  //             },
+  //           );
 
-            const {data} = response.data;
-            const products: IProducts[] = [];
+  //           const {data} = response.data;
+  //           const products: IProducts[] = [];
 
-            // Keyboard 처리
-            if (data.keyboard) {
-              const {id, name, price, img, brand, url} = data.keyboard; // 선택된 필드 추출
-              products.push({
-                id,
-                name,
-                price,
-                img,
-                brand,
-                url,
-                category: 'KEYBOARD',
-              });
-            }
+  //           // Keyboard 처리
+  //           if (data.keyboard) {
+  //             const {id, name, price, img, brand, url} = data.keyboard; // 선택된 필드 추출
+  //             products.push({
+  //               id,
+  //               name,
+  //               price,
+  //               img,
+  //               brand,
+  //               url,
+  //               category: 'KEYBOARD',
+  //             });
+  //           }
 
-            // Mouse 처리
-            if (data.mouse) {
-              const {id, name, price, img, brand, url} = data.mouse; // 선택된 필드 추출
-              products.push({
-                id,
-                name,
-                price,
-                img,
-                brand,
-                url,
-                category: 'MOUSE',
-              });
-            }
+  //           // Mouse 처리
+  //           if (data.mouse) {
+  //             const {id, name, price, img, brand, url} = data.mouse; // 선택된 필드 추출
+  //             products.push({
+  //               id,
+  //               name,
+  //               price,
+  //               img,
+  //               brand,
+  //               url,
+  //               category: 'MOUSE',
+  //             });
+  //           }
 
-            // Monitors 처리
-            data.monitors?.forEach(monitor => {
-              const {id, name, price, img, brand, url} = monitor; // 선택된 필드 추출
-              products.push({
-                id,
-                name,
-                price,
-                img,
-                brand,
-                url,
-                category: 'MONITOR',
-              });
-            });
+  //           // Monitors 처리
+  //           data.monitors?.forEach(monitor => {
+  //             const {id, name, price, img, brand, url} = monitor; // 선택된 필드 추출
+  //             products.push({
+  //               id,
+  //               name,
+  //               price,
+  //               img,
+  //               brand,
+  //               url,
+  //               category: 'MONITOR',
+  //             });
+  //           });
 
-            return {
-              combinationId: data.combinationId,
-              products,
-              totalPrice: data.totalPrice,
-            };
-          }),
-        );
-        setCombinationDetails(allCombinationDetails);
-      } else {
-        setCombinationDetails([]);
-      }
-    };
+  //           return {
+  //             combinationId: data.combinationId,
+  //             products,
+  //             totalPrice: data.totalPrice,
+  //           };
+  //         }),
+  //       );
+  //       // setCombinationDetails(allCombinationDetails);
+  //     } else {
+  //       // setCombinationDetails([]);
+  //     }
+  //   };
 
-    fetchCombinationDetails().catch(console.error);
-  }, [zustandLikedCombination, ZustandToken]);
+  //   fetchCombinationDetails().catch(console.error);
+  // }, [zustandLikedCombination, ZustandToken]);
 
   useEffect(() => {
     const shouldReset = true;
@@ -248,15 +248,15 @@ function Form() {
     setShowModal(false);
   };
   // 조합 삭제
-  const onSelectCombination = (combinationId: number) => {
-    if (zustandLikedCombination.includes(combinationId)) {
-      // 이미 선택된 조합이면 제거
-      deleteZustandLikedCombination(combinationId);
-    } else {
-      // 새로 선택된 조합이면 추가
-      setZustandLikedCombination(combinationId);
-    }
-  };
+  // const onSelectCombination = (combinationId: number) => {
+  //   if (zustandLikedCombination.includes(combinationId)) {
+  //     // 이미 선택된 조합이면 제거
+  //     deleteZustandLikedCombination(combinationId);
+  //   } else {
+  //     // 새로 선택된 조합이면 추가
+  //     setZustandLikedCombination(combinationId);
+  //   }
+  // };
 
   // 게시글 작성
   const goCreate = async () => {
@@ -302,13 +302,13 @@ function Form() {
         <TitleInput onChange={handleChangeTitle} />
       </div>
       <div className={styles.combinationDiv}>
-        {combinationDetails.map(combination => (
+        {/* {combinationDetails.map(combination => (
           <ChooseRecommendList
             key={combination.combinationId}
             combination={combination}
             onSelectCombination={onSelectCombination}
           />
-        ))}
+        ))} */}
       </div>
       <div>
         {!showModal ? (
