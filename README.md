@@ -100,8 +100,9 @@
 
  ![image](/uploads/7dfe58fcf90e51aa1594559fced012b2/image.png)
 
----
-
+<br>
+<br>
+      
 ## 📌 - 설문 기반 추천
 
  - 설문을 기반으로 개인의 선호도에 따른 제품 조합을 추천받을 수 있다.
@@ -109,34 +110,54 @@
 ![image2](/uploads/eeec73abc283b415627968275fb60cd0/zipzoong_recommand_3.gif)
 
 
----
-  
+<br>
+<br>
+   
+
 ## 📌 - 설문 기반 추천 상세
 
  - 제품 조합 상세를 확인할 수 있다.
 ![image3](/uploads/f5444fcadd8c4558491d91c8290e8b58/image1.gif)
 
 
----
+<br>
+<br> 
+
+  
 
 ## 📌 - 최저가 사이트 연동
  - 자신이 추천 받은 조합 제품의 최저가 사이트로 접속할 수 있다.
  
 ![사이트이동](/uploads/5f22543e6a2fb78c85729d60bf6ea7b1/사이트이동.gif)
 
----
+<br>
+<br> 
+  
 
-## 📌 - 관심 조합
+
+## 📌 - 관심 조합 및 제품
  - 추천받은 데스크 셋업의 조합 및 제품을 저장할 수 있다.
 
 ![관심조합제품](/uploads/3251c0d43d85b0ea3b72f3981cbb8d16/관심조합제품.gif)
 
----
+  
 <br>
+<br>  
+     
+  
+## 📌 - 게시판
+ - 게시판에 게시글을 작성할 수 있고 글 내부에 추천받은 조합을 추가할 수 있다. 
+   
+![게시판](/uploads/239ad9dba8d8ea0b39382afaececa26a/게시판.gif)
+
+  
+<br>
+<br>  
+  
 
 ## 💾 실행방법
 
-### [🔗 포팅 메뉴얼 바로가기]()
+### [🔗 포팅 메뉴얼 바로가기](https://lab.ssafy.com/s10-bigdata-recom-sub2/S10P22A204/-/tree/master/exec?ref_type=heads)
 - exec 폴더 내 포팅 메뉴얼 참조
 
 
@@ -212,7 +233,7 @@
 <br>
 
 ## ⚙ 기술 아키텍쳐
-![]()
+![image](/uploads/8000576cd66ae28e5f41199eb5ca9a52/image.png)
 
 <br>
 
