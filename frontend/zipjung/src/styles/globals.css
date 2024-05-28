@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: rgb(0, 0, 0);
+  --background-start-rgb: rgb(214, 219, 220);
+  --background-end-rgb: rgb(255, 255, 255);
+  --main-color: #92c7cf;
+  --main-color-dark: #55a8b4;
+  --button-main-color: #e5e1da;
+  --button-main-hover-color: #d5ccbc;
+  --button-main-disabled-color: #e5e1da99;
+  --custom-background-color: #fbf9f1;
+  --custom-header-color: #fff8da;
+  --font-color: #363636;
+  --original-font-color: #6d758f;
+  --result-background-color: #f0ede6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

@@ -1,0 +1,12 @@
+.GoUpdateButton {
+  font-size: 15px;
+  font-weight: bold;
+  width: 80px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: var(--button-main-color);
+}
+
+.GoUpdateButton:hover {
+  background-color: var(--button-main-hover-color);
+}

@@ -1,0 +1,71 @@
+.BoardDetailDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ButtonDiv {
+  width: 70%;
+  display: flex;
+  justify-content: right;
+  gap: 20px;
+}
+
+.creatorButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  width: 70%;
+}
+
+.buttons {
+  display: flex;
+  width: 70%;
+  margin-top: 30px;
+  justify-content: left;
+}
+
+.HeadDiv {
+  width: 70%;
+}
+
+.boardContentDiv {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 30px;
+  border-bottom: 2px solid var(--main-color-dark);
+}
+
+.boardContent {
+  width: 100%;
+  border: 1px solid black;
+}
+
+.recommendsDiv {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.recommendDiv {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+}
+
+.boardCommentInputDiv {
+  width: 70%;
+  border-bottom: 2px solid var(--main-color-dark);
+  padding: 20px 0;
+}
+
+.boardCommentDiv {
+  width: 70%;
+}
+
+.boardListDiv {
+  margin: 20px 0;
+  width: 70%;
+}
