@@ -1,0 +1,27 @@
+.listDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--button-main-disabled-color);
+}
+
+.titleDiv {
+  display: flex;
+  gap: 30px;
+}
+
+.createDiv {
+  display: flex;
+  width: 30%;
+  // gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.HitImg {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

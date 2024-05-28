@@ -1,0 +1,13 @@
+.goDetailButton {
+  width: 110px;
+  height: 38px;
+  background-color: var(--main-color);
+  color: white;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 19px;
+}
+
+.goDetailButton:hover {
+  background-color: var(--main-color-dark);
+}

@@ -1,0 +1,38 @@
+.ListItem {
+  width: 270px;
+  height: 350px;
+  margin: 23px;
+  border: 1px #292d32 solid;
+  box-shadow: 2px 2px #292d32;
+  padding: 20px;
+}
+
+.Head {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  align-items: center;
+}
+
+.Content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+  width: 100%;
+  height: 80%;
+}
+
+.CreatorNickname {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.Title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}

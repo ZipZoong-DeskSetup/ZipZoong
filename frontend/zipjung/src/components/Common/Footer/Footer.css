@@ -1,0 +1,31 @@
+/* Footer.css */
+.footer {
+  width: 100%;
+  padding: 20px 0;
+  box-sizing: border-box;
+  background-color: #f8f8f8;
+  border-top: 1px solid #e1e1e1;
+}
+
+.footerTop {
+  padding-top: 80px;
+  width: 100%;
+  position: absolute;
+
+}
+
+.footer-content {
+  text-align: center;
+  color: #666;
+  font-size: 12px;
+}
+
+.footer-content a {
+  color: #666;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer-content a:hover {
+  text-decoration: underline;
+}

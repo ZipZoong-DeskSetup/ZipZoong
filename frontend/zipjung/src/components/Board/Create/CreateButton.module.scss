@@ -1,0 +1,12 @@
+.creatBtn {
+  width: 80px;
+  height: 35px;
+  background-color: var(--button-main-color);
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.creatBtn:hover {
+  background-color: var(--button-main-hover-color);
+}

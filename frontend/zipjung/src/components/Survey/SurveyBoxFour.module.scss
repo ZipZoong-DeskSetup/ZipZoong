@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  justify-content: space-evenly;
+}
+.box {
+  width: 250px;
+  height: 250px;
+  background-color: white;
+  border-radius: 20px;
+  border: solid 2px var(--main-color);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.focusBox {
+  width: 250px;
+  height: 250px;
+  background-color: var(--main-color);
+  border-radius: 20px;
+  border: solid 2px var(--main-color);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.positionContainer {
+  margin: auto;
+}
+.content {
+  font-size: 20px;
+  text-align: center;
+}
